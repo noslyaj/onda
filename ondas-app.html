@@ -157,8 +157,8 @@ tailwind.config = {
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
         <div class="absolute bottom-3 left-4 right-4 text-white">
           <p class="font-semibold text-sm">Mindelo to Porto Novo</p>
-          <p class="text-xs text-white/80 mt-0.5">60 min · CV Inter-Ilhas</p>
-          <p class="text-xs font-semibold text-tertiary-fixed mt-1">From €24</p>
+          <p class="text-xs text-white/80 mt-0.5">60 min · CV Interilhas</p>
+          <p class="text-xs font-semibold text-tertiary-fixed mt-1">From €14</p>
         </div>
       </div>
     </button>
@@ -169,8 +169,8 @@ tailwind.config = {
         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
         <div class="absolute bottom-3 left-4 right-4 text-white">
           <p class="font-semibold text-sm">Praia to São Filipe</p>
-          <p class="text-xs text-white/80 mt-0.5">4h · Nôsferry</p>
-          <p class="text-xs font-semibold text-tertiary-fixed mt-1">From €32</p>
+          <p class="text-xs text-white/80 mt-0.5">4h · CV Interilhas</p>
+          <p class="text-xs font-semibold text-tertiary-fixed mt-1">From €40</p>
         </div>
       </div>
     </button>
@@ -183,15 +183,15 @@ tailwind.config = {
         <p data-i18n="islands" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
       </div>
       <div>
-        <p class="font-serif-italic text-secondary-container text-2xl">5</p>
+        <p class="font-serif-italic text-secondary-container text-2xl">3</p>
         <p data-i18n="ferries" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
       </div>
       <div>
-        <p class="font-serif-italic text-secondary-container text-2xl">4</p>
+        <p class="font-serif-italic text-secondary-container text-2xl">3</p>
         <p data-i18n="weekly" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
       </div>
       <div>
-        <p class="font-serif-italic text-secondary-container text-2xl">14+</p>
+        <p class="font-serif-italic text-secondary-container text-2xl">16+</p>
         <p data-i18n="lines" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
       </div>
     </div>
@@ -441,19 +441,25 @@ const PORTS = {
 };
 
 const SCHEDULES = [
-  {id:1,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'CV-204',dep:'08:00',arr:'09:00',duration:'60 min',priceCVE:2650,priceEUR:24,operator:'Nôsferry',line:'Northern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'98% Reliable',reliabilityType:'high',badge:'Fastest',badgeType:'gold',days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
-  {id:2,from:'SV',to:'SA',vessel:'Interilhas Jet',code:'High Speed',dep:'11:30',arr:'12:15',duration:'45 min',priceCVE:3600,priceEUR:33,operator:'CV Inter-Ilhas',line:'Northern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Scheduled',reliabilityType:'medium',badge:null,days:['Mon','Wed','Fri','Sat']},
-  {id:3,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'CV-204',dep:'15:00',arr:'16:00',duration:'60 min',priceCVE:2650,priceEUR:24,operator:'Nôsferry',line:'Northern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'98% Reliable',reliabilityType:'high',badge:'3 Seats Left',badgeType:'peach',days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
-  {id:4,from:'SA',to:'SV',vessel:"Mar d'Canal",code:'CV-204',dep:'07:00',arr:'08:00',duration:'60 min',priceCVE:2650,priceEUR:24,operator:'Nôsferry',line:'Northern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'98% Reliable',reliabilityType:'high',badge:'Fastest',badgeType:'gold',days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
-  {id:5,from:'SA',to:'SV',vessel:'Interilhas Jet',code:'High Speed',dep:'14:00',arr:'14:45',duration:'45 min',priceCVE:3600,priceEUR:33,operator:'CV Inter-Ilhas',line:'Northern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Scheduled',reliabilityType:'medium',badge:null,days:['Mon','Wed','Fri','Sat']},
-  {id:6,from:'ST',to:'FG',vessel:'Sotavento Star',code:'CV-101',dep:'23:00',arr:'03:00',duration:'4h 00m',priceCVE:3500,priceEUR:32,operator:'Nôsferry',line:'Southern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Tue','Thu','Sat']},
-  {id:7,from:'FG',to:'ST',vessel:'Sotavento Star',code:'CV-101',dep:'05:00',arr:'09:00',duration:'4h 00m',priceCVE:3500,priceEUR:32,operator:'Nôsferry',line:'Southern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Wed','Fri','Sun']},
-  {id:8,from:'ST',to:'BR',vessel:'Brava Express',code:'CV-302',dep:'08:00',arr:'13:30',duration:'5h 30m',priceCVE:4200,priceEUR:38,operator:'Nôsferry',line:'Southern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'Unreliable',reliabilityType:'low',badge:null,days:['Mon','Thu']},
-  {id:9,from:'BR',to:'ST',vessel:'Brava Express',code:'CV-302',dep:'14:30',arr:'20:00',duration:'5h 30m',priceCVE:4200,priceEUR:38,operator:'Nôsferry',line:'Southern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'Unreliable',reliabilityType:'low',badge:null,days:['Mon','Thu']},
-  {id:10,from:'SL',to:'BV',vessel:'Barlavento Link',code:'CV-501',dep:'09:00',arr:'12:30',duration:'3h 30m',priceCVE:3800,priceEUR:35,operator:'CV Inter-Ilhas',line:'Eastern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Scheduled',reliabilityType:'medium',badge:null,days:['Wed','Sat']},
-  {id:11,from:'BV',to:'SL',vessel:'Barlavento Link',code:'CV-501',dep:'14:00',arr:'17:30',duration:'3h 30m',priceCVE:3800,priceEUR:35,operator:'CV Inter-Ilhas',line:'Eastern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Scheduled',reliabilityType:'medium',badge:null,days:['Wed','Sat']},
-  {id:12,from:'SN',to:'SV',vessel:'Norte Link',code:'CV-401',dep:'07:00',arr:'11:00',duration:'4h 00m',priceCVE:4000,priceEUR:36,operator:'CV Inter-Ilhas',line:'Northern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Thu']},
-  {id:13,from:'SV',to:'SN',vessel:'Norte Link',code:'CV-401',dep:'13:00',arr:'17:00',duration:'4h 00m',priceCVE:4000,priceEUR:36,operator:'CV Inter-Ilhas',line:'Northern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Thu']}
+  // ── LINHA BARLAVENTO — CHIQUINHO (SV ↔ SA, daily) ────────
+  {id:1,from:'SV',to:'SA',vessel:'Chiquinho',code:'Linha Barlavento',dep:'07:00',arr:'08:00',duration:'60 min',priceCVE:1500,priceEUR:14,operator:'CV Interilhas',line:'Barlavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'98% Reliable',reliabilityType:'high',badge:'Fastest',badgeType:'gold',days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
+  {id:2,from:'SV',to:'SA',vessel:'Chiquinho',code:'Linha Barlavento',dep:'14:00',arr:'15:00',duration:'60 min',priceCVE:1500,priceEUR:14,operator:'CV Interilhas',line:'Barlavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
+  {id:3,from:'SA',to:'SV',vessel:'Chiquinho',code:'Linha Barlavento',dep:'09:00',arr:'10:00',duration:'60 min',priceCVE:1500,priceEUR:14,operator:'CV Interilhas',line:'Barlavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'98% Reliable',reliabilityType:'high',badge:'Fastest',badgeType:'gold',days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
+  {id:4,from:'SA',to:'SV',vessel:'Chiquinho',code:'Linha Barlavento',dep:'16:00',arr:'17:00',duration:'60 min',priceCVE:1500,priceEUR:14,operator:'CV Interilhas',line:'Barlavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
+  // ── LINHA REDONDA — HSC LIBERDADI (2x/week) ──────────────
+  {id:5,from:'SV',to:'SN',vessel:'HSC Liberdadi',code:'Linha Redonda',dep:'09:00',arr:'12:00',duration:'3h 00m',priceCVE:2850,priceEUR:26,operator:'CV Interilhas',line:'Redonda Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Fri']},
+  {id:6,from:'SV',to:'SL',vessel:'HSC Liberdadi',code:'Linha Redonda',dep:'09:00',arr:'19:00',duration:'10h 00m',priceCVE:5000,priceEUR:45,operator:'CV Interilhas',line:'Redonda Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Fri']},
+  {id:7,from:'SV',to:'BV',vessel:'HSC Liberdadi',code:'Linha Redonda',dep:'09:00',arr:'22:00',duration:'13h 00m',priceCVE:5250,priceEUR:48,operator:'CV Interilhas',line:'Redonda Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Fri']},
+  {id:8,from:'SV',to:'ST',vessel:'HSC Liberdadi',code:'Linha Redonda',dep:'09:00',arr:'04:00',duration:'19h 00m',priceCVE:6070,priceEUR:55,operator:'CV Interilhas',line:'Redonda Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Fri']},
+  // ── LINHA SOTAVENTO — KRIOLA ──────────────────────────────
+  {id:9,from:'ST',to:'FG',vessel:'Kriola',code:'Linha Sotavento',dep:'07:00',arr:'11:00',duration:'4h 00m',priceCVE:4450,priceEUR:40,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Thu','Sat']},
+  {id:10,from:'ST',to:'BR',vessel:'Kriola',code:'Linha Sotavento',dep:'07:00',arr:'13:00',duration:'6h 00m',priceCVE:4450,priceEUR:40,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Thu','Sat']},
+  {id:11,from:'FG',to:'ST',vessel:'Kriola',code:'Linha Sotavento',dep:'16:00',arr:'20:00',duration:'4h 00m',priceCVE:4450,priceEUR:40,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Thu','Sat']},
+  {id:12,from:'BR',to:'ST',vessel:'Kriola',code:'Linha Sotavento',dep:'14:00',arr:'20:00',duration:'6h 00m',priceCVE:4450,priceEUR:40,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Thu','Sat']},
+  {id:13,from:'ST',to:'MA',vessel:'Kriola',code:'Linha Sotavento',dep:'07:00',arr:'09:00',duration:'2h 00m',priceCVE:2300,priceEUR:21,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Wed','Fri','Sun']},
+  {id:14,from:'MA',to:'ST',vessel:'Kriola',code:'Linha Sotavento',dep:'10:00',arr:'12:00',duration:'2h 00m',priceCVE:2300,priceEUR:21,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Wed','Fri','Sun']},
+  {id:15,from:'FG',to:'BR',vessel:'Kriola',code:'Linha Sotavento',dep:'12:00',arr:'13:00',duration:'1h 00m',priceCVE:1500,priceEUR:14,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:'Shortest',badgeType:'gold',days:['Mon','Thu','Sat']},
+  {id:16,from:'BR',to:'FG',vessel:'Kriola',code:'Linha Sotavento',dep:'14:00',arr:'15:00',duration:'1h 00m',priceCVE:1500,priceEUR:14,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 232 0530',email:'info@cvinterilhas.cv',bookUrl:'https://cvinterilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:'Shortest',badgeType:'gold',days:['Mon','Thu','Sat']}
 ];
 
 // Add derived port fields

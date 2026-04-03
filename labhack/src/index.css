@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  --font-manrope: 'Manrope', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --color-primary: #0050D4;
+  --color-primary-light: #3B7BF7;
+  --color-mint: #38EE90;
+  --color-mint-dark: #2BC975;
+  --color-error: #B31B25;
+  --color-error-light: #FF4D58;
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F0F2F5;
+    overscroll-behavior: none;
+  }
+}
+
+@keyframes scanline {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(0, 80, 212, 0.4));
+    opacity: 1;
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(0, 80, 212, 0.8));
+    opacity: 0.85;
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.6); opacity: 0.5; }
+}
+
+@keyframes float-up {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes progress-fill {
+  0% { width: 0%; }
+  100% { width: var(--tw-progress-width); }
+}
+
+.animate-scanline {
+  animation: scanline 2.5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.animate-float-up {
+  animation: float-up 0.5s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+.animate-progress-fill {
+  animation: progress-fill 1.2s ease-out forwards;
+}
+
+.frosted-glass {
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.frosted-glass-dark {
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: rgba(15, 15, 20, 0.75);
+}

@@ -471,7 +471,10 @@ const STRINGS = {
 };
 
 // ===== STATE =====
-let currentLang = localStorage.getItem('ondas-lang') || 'EN';
+let currentLang = localStorage.getItem('ondas-lang') || (() => {
+  const bl = (navigator.language || '').slice(0,2).toUpperCase();
+  return ['EN','PT','FR','ES'].includes(bl) ? bl : 'EN';
+})();
 let currentScreen = 'home';
 let screenHistory = ['home'];
 let currentResults = [];

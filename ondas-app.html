@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0f2557">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="description" content="Ondas – Ilha a ilha. Ferry connections across all 9 Cabo Verde islands.">
+<title>Ondas – Cabo Verde Ferry Finder</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:ital@1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#001038',
+        'primary-container': '#0f2557',
+        secondary: '#0055c9',
+        'secondary-container': '#326fe5',
+        surface: '#faf8ff',
+        background: '#faf8ff',
+        'surface-container-low': '#f3f2fe',
+        'surface-container-lowest': '#ffffff',
+        'surface-container': '#ededf8',
+        'outline-variant': '#c5c6d0',
+        'on-surface': '#191b23',
+        'on-surface-variant': '#44464f',
+        outline: '#757680',
+        'tertiary-fixed-dim': '#fcbb2f',
+        'tertiary-fixed': '#ffdea7',
+        'on-tertiary-fixed-variant': '#5e4200',
+      },
+      fontFamily: {
+        serif: ['Noto Serif', 'serif'],
+        sans: ['Inter', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #faf8ff; margin: 0; overflow-x: hidden; max-width: 480px; margin: 0 auto; }
+  .font-serif-italic { font-family: 'Noto Serif', serif; font-style: italic; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .gradient-bg { background: linear-gradient(135deg, #0f2557 0%, #326fe5 100%); }
+  .gradient-btn { background: linear-gradient(135deg, #0055c9 0%, #326fe5 100%); }
+  .screen { display: none; position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh; padding-bottom: 80px; background: #faf8ff; }
+  .screen.active { display: block; }
+  .slide-in-right { animation: slideInRight 280ms cubic-bezier(0.4, 0, 0.2, 1); }
+  .slide-in-left { animation: slideInLeft 280ms cubic-bezier(0.4, 0, 0.2, 1); }
+  @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+  @keyframes slideInLeft { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+  .swap-rotate { transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+  .swap-rotated { transform: rotate(180deg); }
+  .timeline-dash { border-left: 2px dashed #c5c6d0; }
+  select, input[type="date"] { -webkit-appearance: none; appearance: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .lang-dropdown { display: none; position: absolute; right: 0; top: 44px; z-index: 50; }
+  .lang-dropdown.open { display: block; }
+</style>
+</head>
+<body class="bg-background font-sans text-on-surface">
+<!-- ===== HEADER (shared) ===== -->
+<header class="gradient-bg sticky top-0 z-50 shadow-lg" style="height:56px">
+  <div class="flex items-center justify-between h-full px-4">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-white" style="font-size:24px">waves</span>
+      <span class="font-serif-italic text-white" style="font-size:22px">ondas</span>
+    </div>
+    <div class="relative">
+      <button id="langBtn" class="flex items-center justify-center" style="width:44px;height:44px" aria-label="Language">
+        <span class="material-symbols-outlined text-white" style="font-size:24px">language</span>
+      </button>
+      <div id="langDropdown" class="lang-dropdown bg-white rounded-xl shadow-xl overflow-hidden" style="min-width:160px">
+        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="EN">🇬🇧 English</button>
+        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="PT">🇵🇹 Português</button>
+        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="FR">🇫🇷 Français</button>
+        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="ES">🇪🇸 Español</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===== SCREEN 1: HOME ===== -->
+<div id="screenHome" class="screen active">
+  <!-- Hero -->
+  <div class="gradient-bg relative" style="height:280px;margin-top:-56px;padding-top:56px">
+    <div class="flex flex-col items-center justify-center h-full px-6 text-center">
+      <p data-i18n="hero_sub" class="text-white/70 text-xs uppercase tracking-widest mb-3"></p>
+      <h1 class="font-serif-italic text-white" style="font-size:44px;line-height:1.1">Ilha a ilha.</h1>
+    </div>
+    <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 480 32" preserveAspectRatio="none" style="height:32px">
+      <path d="M0,32 C120,0 360,0 480,32 L480,32 L0,32 Z" fill="#faf8ff"/>
+    </svg>
+  </div>
+
+  <!-- Search Card -->
+  <div class="bg-white rounded-[22px] mx-5 -mt-10 relative z-10 shadow-xl p-6">
+    <div class="mb-4">
+      <label data-i18n="from" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-1.5"></label>
+      <select id="selFrom" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent focus:border-secondary-container">
+        <option value="" data-i18n-attr="select_dep"></option>
+      </select>
+    </div>
+
+    <div class="flex justify-center -my-2 relative z-10">
+      <button id="swapBtn" class="swap-rotate flex items-center justify-center bg-secondary-container rounded-full shadow-md" style="width:40px;height:40px">
+        <span class="material-symbols-outlined text-white" style="font-size:20px">swap_vert</span>
+      </button>
+    </div>
+
+    <div class="mb-4 mt-2">
+      <label data-i18n="to" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-1.5"></label>
+      <select id="selTo" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent focus:border-secondary-container">
+        <option value="" data-i18n-attr="select_dest"></option>
+      </select>
+    </div>
+
+    <div class="flex gap-3 mb-5">
+      <div class="flex-1">
+        <label data-i18n="date" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-1.5"></label>
+        <input type="date" id="inputDate" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent focus:border-secondary-container">
+      </div>
+      <div class="flex-1">
+        <label data-i18n="passengers" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-1.5"></label>
+        <select id="selPax" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent focus:border-secondary-container">
+        </select>
+      </div>
+    </div>
+
+    <button id="searchBtn" data-i18n="search_btn" class="gradient-btn w-full rounded-xl py-3.5 text-white font-semibold text-sm shadow-lg opacity-50 pointer-events-none flex items-center justify-center gap-2" disabled>
+    </button>
+  </div>
+  <!-- Recent -->
+  <div class="mt-6 px-5">
+    <h3 data-i18n="recent" class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3"></h3>
+    <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="SV" data-to="SA">São Vicente → Santo Antão</button>
+      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="ST" data-to="FG">Santiago → Fogo</button>
+      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="SL" data-to="BV">Sal → Boa Vista</button>
+    </div>
+  </div>
+
+  <!-- Popular Routes -->
+  <div class="mt-6 px-5">
+    <h3 data-i18n="popular" class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3"></h3>
+
+    <button class="popular-card w-full rounded-[18px] overflow-hidden shadow-md mb-3 text-left" data-from="SV" data-to="SA">
+      <div class="relative h-40">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAfDzf7k4TcYB8iX9POt7HuvlMaweBpD6iv-HIqWto9fiu-5vxE2tM8ipSQ2QaGqCxV-HDgO2JtESwEZFBsc6STozYPMHnasx1oIGcixxoP_0Rjk2wmIX6h5BuBgBZ1PtlaA-INvNiLBsMese3sqS1NFwRkWKFEvGP4CP9XWro5H3ZrqvKR0fOos99OtTFcFuGfSTU0isZtCMXCNx3Is399ZFN8-5yhq_50qmE6-YQGmdBsMa6ajC9-j4sfUhJ9VTrifpE1-gMEQ" alt="Mindelo to Porto Novo" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute bottom-3 left-4 right-4 text-white">
+          <p class="font-semibold text-sm">Mindelo to Porto Novo</p>
+          <p class="text-xs text-white/80 mt-0.5">60 min · CV Inter-Ilhas</p>
+          <p class="text-xs font-semibold text-tertiary-fixed mt-1">From €24</p>
+        </div>
+      </div>
+    </button>
+
+    <button class="popular-card w-full rounded-[18px] overflow-hidden shadow-md mb-3 text-left" data-from="ST" data-to="FG">
+      <div class="relative h-40">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAlqFGj_tf0A5wlbFsYCB83M4lxw1cv7DPt-ROuVUKMPGydyOzCNjFuR36Zw7A5snzmJLFI3w8-Ovq1MefzSI4aKVwFBLwjnNZxZfZlEimYmA4j4C_JLv28Ml2dLJ99kDd3GsjfF_WuU9wyx1hf-rSNpoha9c1GJohCUn1rtJCEjlYsshMONq_pktBDCtSlhdlEwR3sIHV6YgqYdkNPYwiUy2WJkzMTfygCAefwh4dgpH0BLX-9OnJtHOiE4r0z5URjsL1yvMI5g" alt="Praia to São Filipe" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute bottom-3 left-4 right-4 text-white">
+          <p class="font-semibold text-sm">Praia to São Filipe</p>
+          <p class="text-xs text-white/80 mt-0.5">4h · Nôsferry</p>
+          <p class="text-xs font-semibold text-tertiary-fixed mt-1">From €32</p>
+        </div>
+      </div>
+    </button>
+  </div>
+  <!-- Stats Bar -->
+  <div class="mt-6 bg-white border-y border-outline-variant py-4">
+    <div class="grid grid-cols-4 text-center">
+      <div>
+        <p class="font-serif-italic text-secondary-container text-2xl" data-i18n-stat="islands_num">9</p>
+        <p data-i18n="islands" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
+      </div>
+      <div>
+        <p class="font-serif-italic text-secondary-container text-2xl">5</p>
+        <p data-i18n="ferries" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
+      </div>
+      <div>
+        <p class="font-serif-italic text-secondary-container text-2xl">4</p>
+        <p data-i18n="weekly" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
+      </div>
+      <div>
+        <p class="font-serif-italic text-secondary-container text-2xl">14+</p>
+        <p data-i18n="lines" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warning -->
+  <div class="mx-5 mt-4 mb-6 bg-tertiary-fixed/20 rounded-xl p-3 flex gap-2 items-start">
+    <span class="material-symbols-outlined text-on-tertiary-fixed-variant" style="font-size:18px;margin-top:1px">warning</span>
+    <p data-i18n="warning" class="text-xs text-on-tertiary-fixed-variant leading-relaxed"></p>
+  </div>
+</div>
+
+<!-- ===== SCREEN 2: RESULTS ===== -->
+<div id="screenResults" class="screen">
+  <!-- Search summary ribbon -->
+  <div class="bg-primary-container px-4 py-3 flex items-center justify-between" style="margin-top:-56px;padding-top:calc(56px + 12px)">
+    <div>
+      <p id="ribbonRoute" class="text-white font-semibold text-sm"></p>
+      <p id="ribbonMeta" class="text-white/70 text-xs mt-0.5"></p>
+    </div>
+    <button id="editSearch" class="flex items-center justify-center" style="width:44px;height:44px">
+      <span class="material-symbols-outlined text-white" style="font-size:20px">edit</span>
+    </button>
+  </div>
+
+  <!-- Sort bar -->
+  <div class="sticky bg-white border-b border-outline-variant px-5 py-3 flex items-center gap-3 z-40" style="top:56px">
+    <span data-i18n="sort_by" class="text-xs text-outline font-medium"></span>
+    <div class="flex gap-1.5">
+      <button class="sort-pill active-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="time" data-i18n="sort_time"></button>
+      <button class="sort-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="price" data-i18n="sort_price"></button>
+      <button class="sort-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="duration" data-i18n="sort_dur"></button>
+    </div>
+  </div>
+
+  <!-- Results count + legend -->
+  <div class="px-5 pt-4 pb-2 flex items-center justify-between">
+    <p id="resultsCount" class="text-sm font-medium text-on-surface"></p>
+    <div class="flex items-center gap-3">
+      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-500"></span><span data-i18n="reliable" class="text-[10px] text-outline"></span></span>
+      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400"></span><span data-i18n="variable" class="text-[10px] text-outline"></span></span>
+      <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span><span data-i18n="unreliable" class="text-[10px] text-outline"></span></span>
+    </div>
+  </div>
+
+  <!-- Results container -->
+  <div id="resultsContainer" class="px-5 pb-4 space-y-4"></div>
+
+  <!-- Empty state -->
+  <div id="emptyState" class="hidden px-5 py-16 text-center">
+    <p class="text-5xl mb-4">🌊</p>
+    <p data-i18n="no_results" class="text-lg font-semibold text-on-surface mb-2"></p>
+    <p data-i18n="no_results_sub" class="text-sm text-outline mb-6 leading-relaxed"></p>
+    <button id="newSearchBtn" data-i18n="new_search" class="gradient-btn rounded-xl px-6 py-3 text-white font-semibold text-sm"></button>
+  </div>
+
+  <!-- Warning -->
+  <div class="mx-5 mt-4 mb-6 bg-tertiary-fixed/20 rounded-xl p-3 flex gap-2 items-start">
+    <span class="material-symbols-outlined text-on-tertiary-fixed-variant" style="font-size:18px;margin-top:1px">warning</span>
+    <p data-i18n="warning" class="text-xs text-on-tertiary-fixed-variant leading-relaxed"></p>
+  </div>
+</div>
+<!-- ===== SCREEN 3: TRIP DETAIL ===== -->
+<div id="screenDetail" class="screen">
+  <!-- Back header override -->
+  <div class="gradient-bg flex items-center justify-between px-4" style="height:56px;margin-top:-56px;padding-top:56px;height:calc(56px + 56px)">
+    <button id="backBtn" class="flex items-center justify-center" style="width:44px;height:44px">
+      <span class="material-symbols-outlined text-white">arrow_back</span>
+    </button>
+    <span class="font-serif-italic text-white" style="font-size:22px">ondas</span>
+    <button id="shareBtn" class="flex items-center justify-center" style="width:44px;height:44px">
+      <span class="material-symbols-outlined text-white" style="font-size:22px">share</span>
+    </button>
+  </div>
+
+  <!-- Operator banner -->
+  <div class="gradient-bg relative px-6 pt-5 pb-10 overflow-hidden">
+    <span id="detailOperatorPill" class="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3"></span>
+    <h2 id="detailVessel" class="font-serif-italic text-white" style="font-size:32px;line-height:1.2"></h2>
+    <p id="detailCode" class="text-white/60 text-[10px] uppercase tracking-widest mt-1"></p>
+    <span class="material-symbols-outlined absolute right-4 bottom-2 text-white/10" style="font-size:80px">directions_boat</span>
+    <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 480 24" preserveAspectRatio="none" style="height:24px">
+      <path d="M0,24 C120,0 360,0 480,24 L480,24 L0,24 Z" fill="#faf8ff"/>
+    </svg>
+  </div>
+
+  <!-- Route timeline card -->
+  <div class="bg-white rounded-[22px] mx-5 -mt-6 relative z-10 shadow-xl p-5">
+    <div class="flex items-start justify-between">
+      <div class="flex-1">
+        <!-- Departure -->
+        <div class="flex items-start gap-3">
+          <div class="flex flex-col items-center mt-1">
+            <div class="w-3 h-3 rounded-full border-2 border-secondary-container bg-white"></div>
+          </div>
+          <div>
+            <p id="detailDepTime" class="text-on-surface font-bold" style="font-size:28px;line-height:1"></p>
+            <p id="detailDepCity" class="text-sm text-on-surface font-medium mt-1"></p>
+            <p id="detailDepPort" class="text-xs text-outline mt-0.5"></p>
+          </div>
+        </div>
+        <!-- Dashed line + duration -->
+        <div class="flex items-center gap-3 my-2">
+          <div class="flex flex-col items-center" style="width:12px">
+            <div class="timeline-dash h-10"></div>
+          </div>
+          <span id="detailDuration" class="bg-surface-container-low text-on-surface-variant text-xs font-medium px-3 py-1 rounded-full"></span>
+        </div>
+        <!-- Arrival -->
+        <div class="flex items-start gap-3">
+          <div class="flex flex-col items-center mt-1">
+            <div class="w-3 h-3 rounded-full bg-secondary-container"></div>
+          </div>
+          <div>
+            <p id="detailArrTime" class="text-on-surface font-bold" style="font-size:28px;line-height:1"></p>
+            <p id="detailArrCity" class="text-sm text-on-surface font-medium mt-1"></p>
+            <p id="detailArrPort" class="text-xs text-outline mt-0.5"></p>
+          </div>
+        </div>
+      </div>
+      <span id="detailReliability" class="text-xs font-semibold px-3 py-1 rounded-full mt-1"></span>
+    </div>
+  </div>
+  <!-- 2x2 metadata grid -->
+  <div class="grid grid-cols-2 gap-3 mx-5 mt-4">
+    <div class="bg-white rounded-xl p-3 shadow-sm border border-outline-variant/30">
+      <span class="material-symbols-outlined text-secondary-container mb-1" style="font-size:18px">calendar_today</span>
+      <p data-i18n="date" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
+      <p id="detailDate" class="text-sm font-semibold text-on-surface mt-0.5"></p>
+    </div>
+    <div class="bg-white rounded-xl p-3 shadow-sm border border-outline-variant/30">
+      <span class="material-symbols-outlined text-secondary-container mb-1" style="font-size:18px">airline_seat_recline_normal</span>
+      <p data-i18n="class_label" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
+      <p id="detailClass" data-i18n="economy" class="text-sm font-semibold text-on-surface mt-0.5"></p>
+    </div>
+    <div class="bg-white rounded-xl p-3 shadow-sm border border-outline-variant/30">
+      <span class="material-symbols-outlined text-secondary-container mb-1" style="font-size:18px">route</span>
+      <p data-i18n="line" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
+      <p id="detailLine" class="text-sm font-semibold text-on-surface mt-0.5"></p>
+    </div>
+    <div class="bg-white rounded-xl p-3 shadow-sm border border-outline-variant/30">
+      <span class="material-symbols-outlined text-secondary-container mb-1" style="font-size:18px">business</span>
+      <p data-i18n="company" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
+      <p id="detailOperator" class="text-sm font-semibold text-on-surface mt-0.5"></p>
+    </div>
+  </div>
+
+  <!-- Price card -->
+  <div class="bg-white rounded-[22px] mx-5 mt-4 shadow-xl p-6 text-center">
+    <p data-i18n="total_fare" class="text-xs uppercase tracking-wider text-outline font-semibold mb-2"></p>
+    <p id="detailPrice" class="font-serif-italic font-bold text-primary-container" style="font-size:42px;line-height:1"></p>
+    <p id="detailPriceSub" class="text-xs text-outline mt-1"></p>
+  </div>
+
+  <!-- Book CTA -->
+  <div class="mx-5 mt-4">
+    <a id="bookLink" target="_blank" rel="noopener" class="gradient-btn w-full rounded-xl py-3.5 text-white font-semibold text-sm shadow-lg flex items-center justify-center gap-2">
+      <span id="bookText"></span>
+      <span class="material-symbols-outlined text-white" style="font-size:18px">open_in_new</span>
+    </a>
+    <p data-i18n="redirected" class="text-xs text-outline text-center mt-2 leading-relaxed"></p>
+  </div>
+
+  <!-- Secondary actions -->
+  <div class="flex gap-3 mx-5 mt-4">
+    <a id="callBtn" class="flex-1 bg-surface-container-low rounded-xl py-3 text-center text-sm font-semibold text-secondary flex items-center justify-center gap-2" style="min-height:44px">
+      <span class="material-symbols-outlined" style="font-size:18px">call</span>
+      <span data-i18n="call"></span>
+    </a>
+    <button id="copyBtn" class="flex-1 bg-surface-container-low rounded-xl py-3 text-center text-sm font-semibold text-secondary flex items-center justify-center gap-2" style="min-height:44px">
+      <span class="material-symbols-outlined" style="font-size:18px">content_copy</span>
+      <span id="copyText" data-i18n="copy"></span>
+    </button>
+  </div>
+
+  <!-- Warning -->
+  <div class="mx-5 mt-4 bg-tertiary-fixed/20 rounded-xl p-3 flex gap-2 items-start">
+    <span class="material-symbols-outlined text-on-tertiary-fixed-variant" style="font-size:18px;margin-top:1px">warning</span>
+    <p data-i18n="warning" class="text-xs text-on-tertiary-fixed-variant leading-relaxed"></p>
+  </div>
+
+  <!-- Operator info -->
+  <div class="bg-white rounded-[22px] mx-5 mt-4 mb-6 shadow-sm border border-outline-variant/30 p-5">
+    <h3 data-i18n="operator_details" class="text-sm font-semibold text-on-surface mb-4"></h3>
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <span data-i18n="company" class="text-xs text-outline"></span>
+        <span id="opCompany" class="text-sm font-medium text-on-surface"></span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span data-i18n="phone" class="text-xs text-outline"></span>
+        <a id="opPhone" class="text-sm font-medium text-secondary"></a>
+      </div>
+      <div class="flex items-center justify-between">
+        <span data-i18n="email" class="text-xs text-outline"></span>
+        <a id="opEmail" class="text-sm font-medium text-secondary"></a>
+      </div>
+      <div class="border-t border-outline-variant/50 my-2"></div>
+      <div class="flex items-center justify-between">
+        <span data-i18n="vessel" class="text-xs text-outline"></span>
+        <span id="opVessel" class="text-sm font-medium text-on-surface"></span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span data-i18n="line" class="text-xs text-outline"></span>
+        <span id="opLine" class="text-sm font-medium text-on-surface"></span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full bg-white border-t border-outline-variant z-50 shadow-lg" style="max-width:480px">
+  <div class="flex items-center justify-around h-16">
+    <button class="nav-tab flex flex-col items-center justify-center gap-0.5 active" data-screen="home" style="min-width:64px;min-height:44px">
+      <span class="material-symbols-outlined" style="font-size:22px">home</span>
+      <span data-i18n="nav_home" class="text-[10px] font-medium"></span>
+    </button>
+    <button class="nav-tab flex flex-col items-center justify-center gap-0.5" data-screen="search" style="min-width:64px;min-height:44px">
+      <span class="material-symbols-outlined" style="font-size:22px">search</span>
+      <span data-i18n="nav_search" class="text-[10px] font-medium"></span>
+    </button>
+    <button class="nav-tab flex flex-col items-center justify-center gap-0.5" data-screen="lines" style="min-width:64px;min-height:44px">
+      <span class="material-symbols-outlined" style="font-size:22px">directions_boat</span>
+      <span data-i18n="nav_lines" class="text-[10px] font-medium"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// ===== DATA =====
+const ISLANDS = {
+  SV:'São Vicente', SA:'Santo Antão', ST:'Santiago',
+  SL:'Sal', BV:'Boa Vista', FG:'Fogo',
+  BR:'Brava', SN:'São Nicolau', MA:'Maio'
+};
+
+const PORTS = {
+  SV:{city:'Mindelo',port:'Porto de São Vicente'},
+  SA:{city:'Porto Novo',port:'Porto de Santo Antão'},
+  ST:{city:'Praia',port:'Porto da Praia'},
+  FG:{city:'São Filipe',port:'Porto de São Filipe'},
+  BR:{city:'Nova Sintra',port:'Porto de Brava'},
+  SL:{city:'Espargos',port:'Porto de Sal'},
+  BV:{city:'Sal Rei',port:'Porto de Boa Vista'},
+  SN:{city:'Ribeira Brava',port:'Porto de São Nicolau'},
+  MA:{city:'Vila do Maio',port:'Porto do Maio'}
+};
+
+const SCHEDULES = [
+  {id:1,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'CV-204',dep:'08:00',arr:'09:00',duration:'60 min',priceCVE:2650,priceEUR:24,operator:'Nôsferry',line:'Northern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'98% Reliable',reliabilityType:'high',badge:'Fastest',badgeType:'gold',days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
+  {id:2,from:'SV',to:'SA',vessel:'Interilhas Jet',code:'High Speed',dep:'11:30',arr:'12:15',duration:'45 min',priceCVE:3600,priceEUR:33,operator:'CV Inter-Ilhas',line:'Northern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Scheduled',reliabilityType:'medium',badge:null,days:['Mon','Wed','Fri','Sat']},
+  {id:3,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'CV-204',dep:'15:00',arr:'16:00',duration:'60 min',priceCVE:2650,priceEUR:24,operator:'Nôsferry',line:'Northern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'98% Reliable',reliabilityType:'high',badge:'3 Seats Left',badgeType:'peach',days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
+  {id:4,from:'SA',to:'SV',vessel:"Mar d'Canal",code:'CV-204',dep:'07:00',arr:'08:00',duration:'60 min',priceCVE:2650,priceEUR:24,operator:'Nôsferry',line:'Northern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'98% Reliable',reliabilityType:'high',badge:'Fastest',badgeType:'gold',days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
+  {id:5,from:'SA',to:'SV',vessel:'Interilhas Jet',code:'High Speed',dep:'14:00',arr:'14:45',duration:'45 min',priceCVE:3600,priceEUR:33,operator:'CV Inter-Ilhas',line:'Northern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Scheduled',reliabilityType:'medium',badge:null,days:['Mon','Wed','Fri','Sat']},
+  {id:6,from:'ST',to:'FG',vessel:'Sotavento Star',code:'CV-101',dep:'23:00',arr:'03:00',duration:'4h 00m',priceCVE:3500,priceEUR:32,operator:'Nôsferry',line:'Southern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Tue','Thu','Sat']},
+  {id:7,from:'FG',to:'ST',vessel:'Sotavento Star',code:'CV-101',dep:'05:00',arr:'09:00',duration:'4h 00m',priceCVE:3500,priceEUR:32,operator:'Nôsferry',line:'Southern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Wed','Fri','Sun']},
+  {id:8,from:'ST',to:'BR',vessel:'Brava Express',code:'CV-302',dep:'08:00',arr:'13:30',duration:'5h 30m',priceCVE:4200,priceEUR:38,operator:'Nôsferry',line:'Southern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'Unreliable',reliabilityType:'low',badge:null,days:['Mon','Thu']},
+  {id:9,from:'BR',to:'ST',vessel:'Brava Express',code:'CV-302',dep:'14:30',arr:'20:00',duration:'5h 30m',priceCVE:4200,priceEUR:38,operator:'Nôsferry',line:'Southern Line',phone:'+238 232 0000',email:'info@nosferry.cv',bookUrl:'https://nosferry.cv',reliability:'Unreliable',reliabilityType:'low',badge:null,days:['Mon','Thu']},
+  {id:10,from:'SL',to:'BV',vessel:'Barlavento Link',code:'CV-501',dep:'09:00',arr:'12:30',duration:'3h 30m',priceCVE:3800,priceEUR:35,operator:'CV Inter-Ilhas',line:'Eastern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Scheduled',reliabilityType:'medium',badge:null,days:['Wed','Sat']},
+  {id:11,from:'BV',to:'SL',vessel:'Barlavento Link',code:'CV-501',dep:'14:00',arr:'17:30',duration:'3h 30m',priceCVE:3800,priceEUR:35,operator:'CV Inter-Ilhas',line:'Eastern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Scheduled',reliabilityType:'medium',badge:null,days:['Wed','Sat']},
+  {id:12,from:'SN',to:'SV',vessel:'Norte Link',code:'CV-401',dep:'07:00',arr:'11:00',duration:'4h 00m',priceCVE:4000,priceEUR:36,operator:'CV Inter-Ilhas',line:'Northern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Thu']},
+  {id:13,from:'SV',to:'SN',vessel:'Norte Link',code:'CV-401',dep:'13:00',arr:'17:00',duration:'4h 00m',priceCVE:4000,priceEUR:36,operator:'CV Inter-Ilhas',line:'Northern Line',phone:'+238 231 0000',email:'info@interilhas.cv',bookUrl:'https://interilhas.cv',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Mon','Thu']}
+];
+
+// Add derived port fields
+SCHEDULES.forEach(s => {
+  s.depCity = PORTS[s.from].city;
+  s.depPort = PORTS[s.from].port;
+  s.arrCity = PORTS[s.to].city;
+  s.arrPort = PORTS[s.to].port;
+});
+const STRINGS = {
+  EN:{hero_sub:'Real schedules. All 9 islands.',from:'From',to:'To',date:'Date',passengers:'Passengers',search_btn:'Search ferries',recent:'Recent',popular:'Popular routes',select_dep:'Select departure',select_dest:'Select destination',sort_by:'Sort by',sort_time:'Time',sort_price:'Price',sort_dur:'Duration',book_btn:'Book on',call:'Call operator',copy:'Copy details',copied:'Copied ✓',per_person:'per person',total_fare:'Total Fare',warning:'Schedules may change due to sea conditions. Always confirm with the operator before travel.',nav_home:'Home',nav_search:'Search',nav_lines:'Lines',no_results:'No ferries on this route',no_results_sub:'Try a different date or swap direction. Some routes only run 2–3x per week.',new_search:'New search',ferries_found:'ferries found',reliable:'Reliable',variable:'Variable',unreliable:'Unreliable',operator_details:'Operator Details',company:'Company',phone:'Phone',email:'Email',vessel:'Vessel',line:'Line',class_label:'Class',economy:'Economy',redirected:"You'll be redirected to the operator's official booking page.",islands:'Islands',ferries:'Ferries',weekly:'Weekly',lines:'Lines'},
+  PT:{hero_sub:'Horários reais em todas as 9 ilhas.',from:'De',to:'Para',date:'Data',passengers:'Passageiros',search_btn:'Pesquisar ferries',recent:'Recentes',popular:'Rotas populares',select_dep:'Selecionar partida',select_dest:'Selecionar destino',sort_by:'Ordenar por',sort_time:'Hora',sort_price:'Preço',sort_dur:'Duração',book_btn:'Reservar em',call:'Ligar',copy:'Copiar detalhes',copied:'Copiado ✓',per_person:'por pessoa',total_fare:'Tarifa Total',warning:'Os horários podem mudar devido às condições do mar. Confirme sempre com o operador antes de viajar.',nav_home:'Início',nav_search:'Pesquisar',nav_lines:'Linhas',no_results:'Sem ferries nesta rota',no_results_sub:'Tente outra data ou troque a direção. Algumas rotas operam apenas 2–3x por semana.',new_search:'Nova pesquisa',ferries_found:'ferries encontrados',reliable:'Fiável',variable:'Variável',unreliable:'Imprevisível',operator_details:'Detalhes do Operador',company:'Empresa',phone:'Telefone',email:'Email',vessel:'Embarcação',line:'Linha',class_label:'Classe',economy:'Económica',redirected:'Será redirecionado para o site oficial do operador.',islands:'Ilhas',ferries:'Ferries',weekly:'Semanais',lines:'Linhas'},
+  FR:{hero_sub:'Horaires réels sur les 9 îles.',from:'De',to:'À',date:'Date',passengers:'Passagers',search_btn:'Rechercher des ferries',recent:'Récents',popular:'Trajets populaires',select_dep:'Choisir départ',select_dest:'Choisir destination',sort_by:'Trier par',sort_time:'Heure',sort_price:'Prix',sort_dur:'Durée',book_btn:'Réserver sur',call:'Appeler',copy:'Copier les détails',copied:'Copié ✓',per_person:'par personne',total_fare:'Tarif Total',warning:"Les horaires peuvent changer selon les conditions maritimes. Confirmez toujours avec l'opérateur avant de voyager.",nav_home:'Accueil',nav_search:'Rechercher',nav_lines:'Lignes',no_results:'Pas de ferries sur ce trajet',no_results_sub:"Essayez une autre date ou inversez le trajet. Certaines lignes n'opèrent que 2–3x par semaine.",new_search:'Nouvelle recherche',ferries_found:'ferries trouvés',reliable:'Fiable',variable:'Variable',unreliable:'Peu fiable',operator_details:'Détails Opérateur',company:'Compagnie',phone:'Téléphone',email:'Email',vessel:'Navire',line:'Ligne',class_label:'Classe',economy:'Économique',redirected:"Vous serez redirigé vers le site officiel de l'opérateur.",islands:'Îles',ferries:'Ferries',weekly:'Hebdomadaires',lines:'Lignes'},
+  ES:{hero_sub:'Horarios reales en las 9 islas.',from:'De',to:'A',date:'Fecha',passengers:'Pasajeros',search_btn:'Buscar ferrys',recent:'Recientes',popular:'Rutas populares',select_dep:'Seleccionar salida',select_dest:'Seleccionar destino',sort_by:'Ordenar por',sort_time:'Hora',sort_price:'Precio',sort_dur:'Duración',book_btn:'Reservar en',call:'Llamar',copy:'Copiar detalles',copied:'Copiado ✓',per_person:'por persona',total_fare:'Tarifa Total',warning:'Los horarios pueden cambiar por las condiciones del mar. Confirme siempre con el operador antes de viajar.',nav_home:'Inicio',nav_search:'Buscar',nav_lines:'Líneas',no_results:'Sin ferrys en esta ruta',no_results_sub:'Prueba otra fecha o cambia la dirección. Algunas rutas solo operan 2–3x por semana.',new_search:'Nueva búsqueda',ferries_found:'ferrys encontrados',reliable:'Fiable',variable:'Variable',unreliable:'Poco fiable',operator_details:'Detalles Operador',company:'Empresa',phone:'Teléfono',email:'Email',vessel:'Embarcación',line:'Línea',class_label:'Clase',economy:'Económica',redirected:'Será redirigido al sitio oficial del operador.',islands:'Islas',ferries:'Ferrys',weekly:'Semanales',lines:'Líneas'}
+};
+
+// ===== STATE =====
+let currentLang = localStorage.getItem('ondas-lang') || 'EN';
+let currentScreen = 'home';
+let screenHistory = ['home'];
+let currentResults = [];
+let currentSort = 'time';
+let selectedTrip = null;
+let searchState = { from: '', to: '', date: '', pax: 1 };
+
+const $ = id => document.getElementById(id);
+const t = key => STRINGS[currentLang][key] || key;
+
+// ===== i18n =====
+function applyLang() {
+  localStorage.setItem('ondas-lang', currentLang);
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    el.textContent = t(el.dataset.i18n);
+  });
+  document.querySelectorAll('[data-i18n-attr]').forEach(el => {
+    el.textContent = t(el.dataset.i18nAttr);
+  });
+  // Update sort pills
+  document.querySelectorAll('.sort-pill').forEach(p => {
+    if(p.dataset.i18n) p.textContent = t(p.dataset.i18n);
+  });
+  // Pax options
+  const selPax = $('selPax');
+  const curVal = selPax.value;
+  selPax.innerHTML = '';
+  for(let i=1;i<=8;i++){
+    const opt=document.createElement('option');
+    opt.value=i;
+    opt.textContent=`${i} ${i===1?'Adult':'Adults'}`;
+    selPax.appendChild(opt);
+  }
+  if(curVal) selPax.value = curVal;
+  updateSearchBtn();
+}
+// ===== NAVIGATION =====
+function showScreen(name, direction) {
+  const screens = { home:'screenHome', results:'screenResults', detail:'screenDetail' };
+  const dir = direction || 'right';
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active','slide-in-right','slide-in-left'));
+  const target = $(screens[name]);
+  target.classList.add('active', dir === 'right' ? 'slide-in-right' : 'slide-in-left');
+  currentScreen = name;
+  // Update nav tabs
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    const isActive = (name === 'home' && tab.dataset.screen === 'home') ||
+                     ((name === 'results' || name === 'detail') && tab.dataset.screen === 'search');
+    tab.classList.toggle('active', isActive);
+    const icon = tab.querySelector('.material-symbols-outlined');
+    const label = tab.querySelector('[data-i18n]');
+    if(isActive) {
+      icon.style.color = '#326fe5';
+      label.style.color = '#326fe5';
+    } else {
+      icon.style.color = '#757680';
+      label.style.color = '#757680';
+    }
+  });
+  window.scrollTo(0,0);
+}
+
+// ===== POPULATE SELECTS =====
+function populateIslands() {
+  ['selFrom','selTo'].forEach(id => {
+    const sel = $(id);
+    const placeholder = sel.querySelector('option');
+    sel.innerHTML = '';
+    sel.appendChild(placeholder);
+    Object.entries(ISLANDS).forEach(([code, name]) => {
+      const opt = document.createElement('option');
+      opt.value = code;
+      opt.textContent = name;
+      sel.appendChild(opt);
+    });
+  });
+}
+
+// ===== SEARCH =====
+function updateSearchBtn() {
+  const from = $('selFrom').value;
+  const to = $('selTo').value;
+  const btn = $('searchBtn');
+  if(from && to && from !== to) {
+    btn.disabled = false;
+    btn.classList.remove('opacity-50','pointer-events-none');
+  } else {
+    btn.disabled = true;
+    btn.classList.add('opacity-50','pointer-events-none');
+  }
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  if(currentLang === 'EN') {
+    return `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}/${d.getFullYear()}`;
+  }
+  return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+
+function getDayName(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
+}
+
+function parseDurationMinutes(dur) {
+  if(dur.includes('min')) return parseInt(dur);
+  const match = dur.match(/(\d+)h\s*(\d+)?/);
+  if(match) return parseInt(match[1])*60 + (parseInt(match[2])||0);
+  return 999;
+}
+
+function doSearch(from, to) {
+  searchState.from = from || $('selFrom').value;
+  searchState.to = to || $('selTo').value;
+  searchState.date = $('inputDate').value;
+  searchState.pax = parseInt($('selPax').value) || 1;
+
+  const dayName = getDayName(searchState.date);
+  currentResults = SCHEDULES.filter(s =>
+    s.from === searchState.from && s.to === searchState.to && s.days.includes(dayName)
+  );
+
+  // Update ribbon
+  $('ribbonRoute').textContent = `${ISLANDS[searchState.from]} → ${ISLANDS[searchState.to]}`;
+  $('ribbonMeta').textContent = `${formatDate(searchState.date)} · ${searchState.pax} ${searchState.pax===1?'Adult':'Adults'}`;
+
+  currentSort = 'time';
+  document.querySelectorAll('.sort-pill').forEach(p => {
+    p.classList.toggle('active-pill', p.dataset.sort === 'time');
+  });
+  updateSortPillStyles();
+  renderResults();
+  screenHistory.push('results');
+  showScreen('results', 'right');
+}
+
+function sortResults() {
+  const arr = [...currentResults];
+  if(currentSort === 'time') arr.sort((a,b) => a.dep.localeCompare(b.dep));
+  else if(currentSort === 'price') arr.sort((a,b) => a.priceEUR - b.priceEUR);
+  else if(currentSort === 'duration') arr.sort((a,b) => parseDurationMinutes(a.duration) - parseDurationMinutes(b.duration));
+  return arr;
+}
+
+function updateSortPillStyles() {
+  document.querySelectorAll('.sort-pill').forEach(p => {
+    if(p.classList.contains('active-pill')) {
+      p.style.background = '#0f2557';
+      p.style.color = '#fff';
+    } else {
+      p.style.background = '#f3f2fe';
+      p.style.color = '#44464f';
+    }
+  });
+}
+// ===== RENDER RESULTS =====
+function renderResults() {
+  const sorted = sortResults();
+  const container = $('resultsContainer');
+  const empty = $('emptyState');
+
+  if(sorted.length === 0) {
+    container.innerHTML = '';
+    container.classList.add('hidden');
+    empty.classList.remove('hidden');
+    $('resultsCount').textContent = '';
+    return;
+  }
+
+  empty.classList.add('hidden');
+  container.classList.remove('hidden');
+  $('resultsCount').textContent = `${sorted.length} ${t('ferries_found')}`;
+
+  container.innerHTML = sorted.map(s => {
+    const reliabilityColor = s.reliabilityType === 'high' ? 'bg-emerald-500/10 text-emerald-700' :
+                             s.reliabilityType === 'medium' ? 'bg-amber-400/10 text-amber-700' :
+                             'bg-red-500/10 text-red-700';
+    const reliabilityDot = s.reliabilityType === 'high' ? 'bg-emerald-500' :
+                           s.reliabilityType === 'medium' ? 'bg-amber-400' : 'bg-red-500';
+    const badgeHtml = s.badge ? `<span class="absolute top-4 right-4 text-[10px] font-bold px-2.5 py-1 rounded-full" style="background:${s.badgeType==='gold'?'#fcbb2f':'#ffdea7'};color:#5e4200">${s.badge}</span>` : '';
+
+    return `<button class="result-card relative w-full bg-white rounded-[22px] shadow-md p-5 text-left" data-id="${s.id}" style="min-height:44px">
+      ${badgeHtml}
+      <div class="flex items-start justify-between mb-4">
+        <div>
+          <p class="font-serif-italic text-on-surface" style="font-size:18px">${s.vessel}</p>
+          <p class="text-[10px] uppercase tracking-widest text-outline mt-0.5">${s.code}</p>
+        </div>
+        <div class="text-right">
+          <p class="text-on-surface font-bold" style="font-size:24px">€${s.priceEUR}</p>
+          <p class="text-[10px] text-outline">${t('per_person')}</p>
+        </div>
+      </div>
+      <div class="flex items-start gap-3">
+        <div class="flex flex-col items-center pt-1" style="width:14px">
+          <div class="w-2.5 h-2.5 rounded-full border-2 border-secondary-container bg-white"></div>
+          <div class="timeline-dash flex-1 my-1" style="min-height:28px"></div>
+          <div class="w-2.5 h-2.5 rounded-full bg-secondary-container"></div>
+        </div>
+        <div class="flex-1">
+          <div class="flex items-baseline justify-between">
+            <p class="text-on-surface font-bold" style="font-size:16px">${s.dep}</p>
+            <p class="text-xs text-outline">${s.depCity}</p>
+          </div>
+          <div class="my-1.5">
+            <span class="bg-surface-container-low text-on-surface-variant text-[10px] font-medium px-2.5 py-0.5 rounded-full">${s.duration}</span>
+          </div>
+          <div class="flex items-baseline justify-between">
+            <p class="text-on-surface font-bold" style="font-size:16px">${s.arr}</p>
+            <p class="text-xs text-outline">${s.arrCity}</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between mt-4">
+        <span class="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${reliabilityColor}">
+          <span class="w-1.5 h-1.5 rounded-full ${reliabilityDot}"></span>
+          ${s.reliability}
+        </span>
+        <span class="gradient-btn text-white text-xs font-semibold px-4 rounded-lg flex items-center gap-1" style="height:44px">
+          <span class="material-symbols-outlined" style="font-size:16px">arrow_forward</span>
+          Select
+        </span>
+      </div>
+    </button>`;
+  }).join('');
+
+  // Attach click handlers
+  container.querySelectorAll('.result-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const id = parseInt(card.dataset.id);
+      selectedTrip = SCHEDULES.find(s => s.id === id);
+      showDetail();
+    });
+  });
+}
+// ===== SHOW DETAIL =====
+function showDetail() {
+  if(!selectedTrip) return;
+  const s = selectedTrip;
+
+  $('detailOperatorPill').textContent = s.operator;
+  $('detailVessel').textContent = s.vessel;
+  $('detailCode').textContent = s.code;
+  $('detailDepTime').textContent = s.dep;
+  $('detailDepCity').textContent = s.depCity;
+  $('detailDepPort').textContent = s.depPort;
+  $('detailArrTime').textContent = s.arr;
+  $('detailArrCity').textContent = s.arrCity;
+  $('detailArrPort').textContent = s.arrPort;
+  $('detailDuration').textContent = s.duration;
+  $('detailDate').textContent = formatDate(searchState.date);
+  $('detailLine').textContent = s.line;
+  $('detailOperator').textContent = s.operator;
+
+  // Reliability badge
+  const rb = $('detailReliability');
+  rb.textContent = s.reliability;
+  if(s.reliabilityType === 'high') { rb.className = 'text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700'; }
+  else if(s.reliabilityType === 'medium') { rb.className = 'text-xs font-semibold px-3 py-1 rounded-full bg-amber-400/10 text-amber-700'; }
+  else { rb.className = 'text-xs font-semibold px-3 py-1 rounded-full bg-red-500/10 text-red-700'; }
+
+  // Price
+  const totalEUR = s.priceEUR * searchState.pax;
+  $('detailPrice').textContent = `€${totalEUR}`;
+  $('detailPriceSub').textContent = searchState.pax > 1 ? `€${s.priceEUR} × ${searchState.pax} ${t('per_person')}` : t('per_person');
+
+  // Book button
+  $('bookLink').href = s.bookUrl;
+  $('bookText').textContent = `${t('book_btn')} ${s.operator}`;
+
+  // Call
+  $('callBtn').href = `tel:${s.phone}`;
+
+  // Operator info
+  $('opCompany').textContent = s.operator;
+  $('opPhone').textContent = s.phone;
+  $('opPhone').href = `tel:${s.phone}`;
+  $('opEmail').textContent = s.email;
+  $('opEmail').href = `mailto:${s.email}`;
+  $('opVessel').textContent = s.vessel;
+  $('opLine').textContent = s.line;
+
+  screenHistory.push('detail');
+  showScreen('detail', 'right');
+}
+
+// ===== COPY DETAILS =====
+function copyDetails() {
+  if(!selectedTrip) return;
+  const s = selectedTrip;
+  const text = `${s.vessel} (${s.code})\n${s.depCity} ${s.dep} → ${s.arrCity} ${s.arr}\n${s.duration} · €${s.priceEUR} ${t('per_person')}\n${s.operator} · ${s.line}`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = $('copyText');
+    btn.textContent = t('copied');
+    setTimeout(() => { btn.textContent = t('copy'); }, 2000);
+  });
+}
+
+// ===== INIT =====
+function init() {
+  // Set today's date
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth()+1).padStart(2,'0');
+  const dd = String(today.getDate()).padStart(2,'0');
+  $('inputDate').value = `${yyyy}-${mm}-${dd}`;
+
+  populateIslands();
+  applyLang();
+
+  // Language dropdown
+  $('langBtn').addEventListener('click', e => {
+    e.stopPropagation();
+    $('langDropdown').classList.toggle('open');
+  });
+  document.addEventListener('click', () => {
+    $('langDropdown').classList.remove('open');
+  });
+  document.querySelectorAll('.lang-opt').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      currentLang = btn.dataset.lang;
+      applyLang();
+      $('langDropdown').classList.remove('open');
+      if(currentResults.length > 0) renderResults();
+    });
+  });
+
+  // From/To change
+  $('selFrom').addEventListener('change', updateSearchBtn);
+  $('selTo').addEventListener('change', updateSearchBtn);
+
+  // Swap button
+  $('swapBtn').addEventListener('click', () => {
+    const tmp = $('selFrom').value;
+    $('selFrom').value = $('selTo').value;
+    $('selTo').value = tmp;
+    const btn = $('swapBtn');
+    btn.classList.toggle('swap-rotated');
+    updateSearchBtn();
+  });
+
+  // Search button
+  $('searchBtn').addEventListener('click', () => doSearch());
+
+  // Recent chips
+  document.querySelectorAll('.recent-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      $('selFrom').value = chip.dataset.from;
+      $('selTo').value = chip.dataset.to;
+      updateSearchBtn();
+      doSearch(chip.dataset.from, chip.dataset.to);
+    });
+  });
+
+  // Popular cards
+  document.querySelectorAll('.popular-card').forEach(card => {
+    card.addEventListener('click', () => {
+      $('selFrom').value = card.dataset.from;
+      $('selTo').value = card.dataset.to;
+      updateSearchBtn();
+      doSearch(card.dataset.from, card.dataset.to);
+    });
+  });
+
+  // Sort pills
+  document.querySelectorAll('.sort-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      currentSort = pill.dataset.sort;
+      document.querySelectorAll('.sort-pill').forEach(p => p.classList.remove('active-pill'));
+      pill.classList.add('active-pill');
+      updateSortPillStyles();
+      renderResults();
+    });
+  });
+
+  // Edit search
+  $('editSearch').addEventListener('click', () => {
+    screenHistory = ['home'];
+    showScreen('home', 'left');
+  });
+
+  // Back button
+  $('backBtn').addEventListener('click', () => {
+    screenHistory.pop();
+    const prev = screenHistory[screenHistory.length - 1] || 'home';
+    showScreen(prev, 'left');
+  });
+
+  // New search
+  $('newSearchBtn').addEventListener('click', () => {
+    screenHistory = ['home'];
+    showScreen('home', 'left');
+  });
+
+  // Copy
+  $('copyBtn').addEventListener('click', copyDetails);
+
+  // Share
+  $('shareBtn').addEventListener('click', () => {
+    if(selectedTrip && navigator.share) {
+      navigator.share({ title:'Ondas Ferry', text:`${selectedTrip.vessel}: ${selectedTrip.depCity} → ${selectedTrip.arrCity}`, url:window.location.href });
+    }
+  });
+
+  // Bottom nav
+  document.querySelectorAll('.nav-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      if(tab.dataset.screen === 'home') {
+        screenHistory = ['home'];
+        showScreen('home', 'left');
+      } else if(tab.dataset.screen === 'search' && currentResults.length > 0) {
+        showScreen('results', currentScreen === 'home' ? 'right' : 'left');
+      }
+    });
+  });
+
+  // Init nav tab styles
+  showScreen('home', 'right');
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

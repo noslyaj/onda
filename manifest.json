@@ -1,0 +1,19 @@
+{
+  "name": "Ondas – Cabo Verde Ferries",
+  "short_name": "Ondas",
+  "description": "Ferry connections across all 9 Cabo Verde islands. Ilha a ilha.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f2557",
+  "theme_color": "#0f2557",
+  "lang": "pt",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

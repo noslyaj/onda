@@ -114,6 +114,7 @@ tailwind.config = {
       <button id="installBtn" onclick="triggerInstall()" style="display:none" class="flex items-center justify-center rounded-full hover:bg-white/10 transition-colors" style="width:44px;height:44px" aria-label="Install app">
         <span class="material-symbols-outlined text-white/90" style="font-size:22px">download</span>
       </button>
+      <button onclick="toggleCurrency()" id="currencyBtn" class="px-2 py-1 text-white/90 hover:bg-white/10 rounded-lg transition-colors text-[11px] font-bold tracking-wider">EUR</button>
       <div class="relative">
       <button id="langBtn" class="flex items-center justify-center" style="width:44px;height:44px" aria-label="Language">
         <span class="material-symbols-outlined text-white" style="font-size:24px">language</span>
@@ -612,6 +613,19 @@ let currentResults = [];
 let currentSort = 'time';
 let selectedTrip = null;
 let tripType = 'one-way';
+let currency = localStorage.getItem('ondas-currency') || 'EUR';
+
+function formatPrice(s) {
+  return currency === 'CVE' ? s.priceCVE.toLocaleString() + ' CVE' : '€' + s.priceEUR;
+}
+
+function toggleCurrency() {
+  currency = currency === 'EUR' ? 'CVE' : 'EUR';
+  localStorage.setItem('ondas-currency', currency);
+  $('currencyBtn').textContent = currency;
+  if(currentResults.length > 0) renderResults();
+  if(selectedTrip && currentScreen === 'detail') showDetail();
+}
 let searchState = { from: '', to: '', date: '', pax: 1, tripType: 'one-way', returnDate: null };
 
 function setTripType(type) {
@@ -796,7 +810,7 @@ function buildCard(s) {
         <p class="text-[10px] uppercase tracking-widest text-outline mt-0.5">${s.code}</p>
       </div>
       <div class="text-right">
-        <p class="text-on-surface font-bold" style="font-size:24px">€${s.priceEUR}</p>
+        <p class="text-on-surface font-bold" style="font-size:24px">${formatPrice(s)}</p>
         <p class="text-[10px] text-outline">${t('per_person')}</p>
       </div>
     </div>
@@ -909,15 +923,21 @@ function showDetail() {
   else { rb.className = 'text-xs font-semibold px-3 py-1 rounded-full bg-red-500/10 text-red-700'; }
 
   // Price
-  const totalEUR = s.priceEUR * searchState.pax;
-  $('detailPrice').textContent = `€${totalEUR}`;
-  $('detailPriceSub').textContent = searchState.pax > 1 ? `€${s.priceEUR} × ${searchState.pax} ${t('per_person')}` : t('per_person');
+  const totalPrice = currency === 'CVE'
+    ? (s.priceCVE * searchState.pax).toLocaleString() + ' CVE'
+    : '€' + (s.priceEUR * searchState.pax);
+  $('detailPrice').textContent = totalPrice;
+  const unitPrice = formatPrice(s);
+  $('detailPriceSub').textContent = searchState.pax > 1 ? `${unitPrice} × ${searchState.pax} ${t('per_person')}` : t('per_person');
   // Operator-specific fare note
   const fareNote = $('detailFareNote');
-  if(s.operator === 'CV Interilhas') {
-    fareNote.textContent = `Tourist fare (CVE ${s.priceCVE}). National residents pay less.`;
+  if(currency === 'CVE' && s.operator === 'CV Interilhas') {
+    const nationalCVE = Math.round(s.priceCVE * 0.63);
+    fareNote.textContent = `Non-national fare · National residents: ${nationalCVE.toLocaleString()} CVE`;
+  } else if(s.operator === 'CV Interilhas') {
+    fareNote.textContent = 'Tourist fare · National residents pay less';
   } else {
-    fareNote.textContent = 'Per person · Economy class';
+    fareNote.textContent = `${t('per_person')} · Economy class`;
   }
   fareNote.style.display = 'block';
 
@@ -1124,6 +1144,7 @@ function init() {
 
   populateIslands();
   applyLang();
+  $('currencyBtn').textContent = currency;
 
   // Language dropdown
   $('langBtn').addEventListener('click', e => {

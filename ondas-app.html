@@ -68,6 +68,15 @@ tailwind.config = {
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   .lang-dropdown { display: none; position: absolute; right: 0; top: 44px; z-index: 50; }
   .lang-dropdown.open { display: block; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+  .cal-header { font-size: 10px; font-weight: 600; color: #757680; text-align: center; padding: 4px 0; text-transform: uppercase; }
+  .cal-day { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 36px; height: 36px; margin: 0 auto; border-radius: 50%; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 150ms, color 150ms; }
+  .cal-day:hover:not(.cal-disabled):not(.cal-selected) { background: #f3f2fe; }
+  .cal-day.cal-disabled { color: #cbd5e1; cursor: default; pointer-events: none; }
+  .cal-day.cal-today:not(.cal-selected) { box-shadow: inset 0 0 0 1.5px #326fe5; }
+  .cal-day.cal-selected { background: #0f2557; color: #fff; }
+  .cal-dot { width: 4px; height: 4px; border-radius: 50%; background: #326fe5; position: absolute; bottom: 3px; }
+  .cal-day.cal-selected .cal-dot { background: #fff; }
 </style>
 </head>
 <body class="bg-background font-sans text-on-surface">
@@ -128,9 +137,14 @@ tailwind.config = {
     </div>
 
     <div class="flex gap-3 mb-5">
-      <div class="flex-1">
+      <div class="flex-1 relative">
         <label data-i18n="date" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-1.5"></label>
-        <input type="date" id="inputDate" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent focus:border-secondary-container">
+        <button id="datePickerBtn" type="button" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent text-left flex items-center justify-between">
+          <span id="datePickerLabel">Select date</span>
+          <span class="material-symbols-outlined text-outline" style="font-size:18px">calendar_today</span>
+        </button>
+        <input type="hidden" id="inputDate">
+        <div id="calendarDropdown" class="hidden absolute left-0 right-0 top-full mt-1 bg-white rounded-[18px] shadow-xl border border-outline-variant/40 z-50 p-4" style="min-width:280px"></div>
       </div>
       <div class="flex-1">
         <label data-i18n="passengers" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-1.5"></label>
@@ -829,6 +843,115 @@ function copyDetails() {
   });
 }
 
+// ===== CALENDAR =====
+const DAY_NAMES = {0:'Sun',1:'Mon',2:'Tue',3:'Wed',4:'Thu',5:'Fri',6:'Sat'};
+let calViewDate = new Date();
+
+function calIsOpen() { return !$('calendarDropdown').classList.contains('hidden'); }
+
+function openCalendar() {
+  $('calendarDropdown').classList.remove('hidden');
+  $('datePickerBtn').style.borderColor = '#326fe5';
+  renderCalendar();
+}
+
+function closeCalendar() {
+  $('calendarDropdown').classList.add('hidden');
+  $('datePickerBtn').style.borderColor = 'transparent';
+}
+
+function toggleCalendar(e) {
+  e.stopPropagation();
+  if(calIsOpen()) closeCalendar(); else openCalendar();
+}
+
+function getRouteDays() {
+  const from = $('selFrom').value;
+  const to = $('selTo').value;
+  if(!from || !to) return null;
+  const daySet = new Set();
+  SCHEDULES.forEach(s => {
+    if(s.from === from && s.to === to) s.days.forEach(d => daySet.add(d));
+  });
+  return daySet;
+}
+
+function renderCalendar() {
+  const dd = $('calendarDropdown');
+  const today = new Date(); today.setHours(0,0,0,0);
+  const year = calViewDate.getFullYear();
+  const month = calViewDate.getMonth();
+  const firstDay = new Date(year, month, 1);
+  const lastDay = new Date(year, month + 1, 0);
+  const startDow = (firstDay.getDay() + 6) % 7; // Mon=0
+  const selectedVal = $('inputDate').value;
+  const routeDays = getRouteDays();
+
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dayHeaders = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+
+  let html = `<div class="flex items-center justify-between mb-3">
+    <button type="button" class="cal-nav flex items-center justify-center" style="width:32px;height:32px" data-dir="-1">
+      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:18px">chevron_left</span>
+    </button>
+    <span class="text-sm font-semibold text-on-surface">${monthNames[month]} ${year}</span>
+    <button type="button" class="cal-nav flex items-center justify-center" style="width:32px;height:32px" data-dir="1">
+      <span class="material-symbols-outlined text-on-surface-variant" style="font-size:18px">chevron_right</span>
+    </button>
+  </div><div class="cal-grid">`;
+
+  dayHeaders.forEach(d => { html += `<div class="cal-header">${d}</div>`; });
+
+  for(let i = 0; i < startDow; i++) html += '<div></div>';
+
+  for(let d = 1; d <= lastDay.getDate(); d++) {
+    const date = new Date(year, month, d);
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isPast = date < today;
+    const isToday = date.getTime() === today.getTime();
+    const isSelected = dateStr === selectedVal;
+    const dow = DAY_NAMES[date.getDay()];
+    const hasFerry = routeDays ? routeDays.has(dow) : true;
+    const disabled = isPast || (routeDays && !hasFerry);
+
+    let cls = 'cal-day';
+    if(disabled) cls += ' cal-disabled';
+    if(isToday) cls += ' cal-today';
+    if(isSelected) cls += ' cal-selected';
+
+    const dot = (routeDays && hasFerry && !disabled) ? '<span class="cal-dot"></span>' : '';
+
+    html += `<div class="${cls}" data-date="${dateStr}">${d}${dot}</div>`;
+  }
+
+  html += '</div>';
+  dd.innerHTML = html;
+
+  dd.querySelectorAll('.cal-nav').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const dir = parseInt(btn.dataset.dir);
+      calViewDate.setMonth(calViewDate.getMonth() + dir);
+      renderCalendar();
+    });
+  });
+
+  dd.querySelectorAll('.cal-day:not(.cal-disabled)').forEach(cell => {
+    cell.addEventListener('click', e => {
+      e.stopPropagation();
+      $('inputDate').value = cell.dataset.date;
+      updateDateLabel();
+      closeCalendar();
+    });
+  });
+}
+
+function updateDateLabel() {
+  const val = $('inputDate').value;
+  if(!val) { $('datePickerLabel').textContent = 'Select date'; return; }
+  $('datePickerLabel').textContent = formatDate(val);
+}
+
 // ===== INIT =====
 function init() {
   // Set today's date
@@ -837,6 +960,8 @@ function init() {
   const mm = String(today.getMonth()+1).padStart(2,'0');
   const dd = String(today.getDate()).padStart(2,'0');
   $('inputDate').value = `${yyyy}-${mm}-${dd}`;
+  calViewDate = new Date(today);
+  updateDateLabel();
 
   populateIslands();
   applyLang();
@@ -848,20 +973,32 @@ function init() {
   });
   document.addEventListener('click', () => {
     $('langDropdown').classList.remove('open');
+    if(calIsOpen()) closeCalendar();
   });
   document.querySelectorAll('.lang-opt').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
       currentLang = btn.dataset.lang;
       applyLang();
+      updateDateLabel();
       $('langDropdown').classList.remove('open');
       if(currentResults.length > 0) renderResults();
     });
   });
 
-  // From/To change
-  $('selFrom').addEventListener('change', updateSearchBtn);
-  $('selTo').addEventListener('change', updateSearchBtn);
+  // Calendar
+  $('datePickerBtn').addEventListener('click', toggleCalendar);
+  $('calendarDropdown').addEventListener('click', e => e.stopPropagation());
+
+  // From/To change — also re-render calendar if open
+  $('selFrom').addEventListener('change', () => {
+    updateSearchBtn();
+    if(calIsOpen()) renderCalendar();
+  });
+  $('selTo').addEventListener('change', () => {
+    updateSearchBtn();
+    if(calIsOpen()) renderCalendar();
+  });
 
   // Swap button
   $('swapBtn').addEventListener('click', () => {
@@ -871,6 +1008,7 @@ function init() {
     const btn = $('swapBtn');
     btn.classList.toggle('swap-rotated');
     updateSearchBtn();
+    if(calIsOpen()) renderCalendar();
   });
 
   // Search button

@@ -467,6 +467,18 @@ tailwind.config = {
     </div>
   </div>
 </div>
+<!-- ===== SCREEN 4: LINES ===== -->
+<div id="screenLines" class="screen">
+  <div class="gradient-bg px-6 pt-6 pb-10 relative" style="margin-top:-56px;padding-top:calc(56px + 24px)">
+    <p class="text-white/70 text-xs uppercase tracking-widest mb-2">Cabo Verde</p>
+    <h2 class="font-serif-italic text-white" style="font-size:32px;line-height:1.2">Ferry Lines</h2>
+    <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 480 24" preserveAspectRatio="none" style="height:24px">
+      <path d="M0,24 C120,0 360,0 480,24 L480,24 L0,24 Z" fill="#faf8ff"/>
+    </svg>
+  </div>
+  <div class="content-wrap px-5 sm:px-0 -mt-4 space-y-4 pb-6" id="linesContainer"></div>
+</div>
+
 <!-- ===== BOTTOM NAV ===== -->
 <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full bg-white border-t border-outline-variant z-50 shadow-lg" style="max-width:720px">
   <div class="flex items-center justify-around h-16">
@@ -602,7 +614,7 @@ function applyLang() {
 }
 // ===== NAVIGATION =====
 function showScreen(name, direction) {
-  const screens = { home:'screenHome', results:'screenResults', detail:'screenDetail' };
+  const screens = { home:'screenHome', results:'screenResults', detail:'screenDetail', lines:'screenLines' };
   const dir = direction || 'right';
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active','slide-in-right','slide-in-left'));
   const target = $(screens[name]);
@@ -611,7 +623,8 @@ function showScreen(name, direction) {
   // Update nav tabs
   document.querySelectorAll('.nav-tab').forEach(tab => {
     const isActive = (name === 'home' && tab.dataset.screen === 'home') ||
-                     ((name === 'results' || name === 'detail') && tab.dataset.screen === 'search');
+                     ((name === 'results' || name === 'detail') && tab.dataset.screen === 'search') ||
+                     (name === 'lines' && tab.dataset.screen === 'lines');
     tab.classList.toggle('active', isActive);
     const icon = tab.querySelector('.material-symbols-outlined');
     const label = tab.querySelector('[data-i18n]');
@@ -871,6 +884,44 @@ function copyDetails() {
   });
 }
 
+// ===== LINES =====
+function renderLines() {
+  const lines = {};
+  SCHEDULES.forEach(s => {
+    const key = s.line;
+    if(!lines[key]) lines[key] = { vessel: s.vessel, operator: s.operator, routes: new Set(), days: new Set() };
+    lines[key].routes.add(`${ISLANDS[s.from]} → ${ISLANDS[s.to]}`);
+    s.days.forEach(d => lines[key].days.add(d));
+  });
+
+  const container = $('linesContainer');
+  container.innerHTML = Object.entries(lines).map(([name, info]) => {
+    const dayOrder = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const dayDots = dayOrder.map(d =>
+      `<span class="inline-flex items-center justify-center rounded-full text-[10px] font-semibold" style="width:28px;height:28px;${info.days.has(d)?'background:#326fe5;color:#fff':'background:#f3f2fe;color:#c5c6d0'}">${d.slice(0,2)}</span>`
+    ).join('');
+
+    const routes = [...info.routes].map(r =>
+      `<div class="flex items-center gap-2 text-sm text-on-surface">
+        <span class="material-symbols-outlined text-secondary-container" style="font-size:16px">arrow_forward</span>
+        ${r}
+      </div>`
+    ).join('');
+
+    return `<div class="bg-white rounded-[22px] shadow-sm border border-outline-variant/30 p-5">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <h3 class="font-semibold text-on-surface text-base">${name}</h3>
+          <p class="text-xs text-outline mt-0.5">${info.vessel} · ${info.operator}</p>
+        </div>
+        <span class="material-symbols-outlined text-secondary-container" style="font-size:24px">directions_boat</span>
+      </div>
+      <div class="space-y-1.5 mb-4">${routes}</div>
+      <div class="flex gap-1">${dayDots}</div>
+    </div>`;
+  }).join('');
+}
+
 // ===== CALENDAR =====
 const DAY_NAMES = {0:'Sun',1:'Mon',2:'Tue',3:'Wed',4:'Thu',5:'Fri',6:'Sat'};
 let calViewDate = new Date();
@@ -1108,8 +1159,18 @@ function init() {
       if(tab.dataset.screen === 'home') {
         screenHistory = ['home'];
         showScreen('home', 'left');
-      } else if(tab.dataset.screen === 'search' && currentResults.length > 0) {
-        showScreen('results', currentScreen === 'home' ? 'right' : 'left');
+      } else if(tab.dataset.screen === 'search') {
+        if(currentResults.length > 0) {
+          showScreen('results', currentScreen === 'home' ? 'right' : 'left');
+        } else {
+          screenHistory = ['home'];
+          showScreen('home', currentScreen === 'home' ? 'right' : 'left');
+          setTimeout(() => { $('selFrom').focus(); }, 300);
+        }
+      } else if(tab.dataset.screen === 'lines') {
+        renderLines();
+        screenHistory = ['home','lines'];
+        showScreen('lines', currentScreen === 'home' ? 'right' : 'left');
       }
     });
   });

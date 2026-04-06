@@ -271,7 +271,7 @@ tailwind.config = {
   </div>
   <!-- Recent -->
   <div class="mt-6 px-5 sm:px-0 content-wrap">
-    <h3 data-i18n="recent" class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3"></h3>
+    <h3 data-i18n="recent" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-5 mb-3"></h3>
     <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
       <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="SV" data-to="SA">São Vicente → Santo Antão</button>
       <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="ST" data-to="FG">Santiago → Fogo</button>
@@ -280,49 +280,54 @@ tailwind.config = {
   </div>
 
   <!-- Popular Routes -->
-  <div class="mt-6 px-5 sm:px-0">
-    <h3 data-i18n="popular" class="text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-3"></h3>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 content-wrap">
-      <button class="popular-card bg-white rounded-[18px] border border-outline-variant/40 p-4 text-left flex items-center gap-4 hover:shadow-md transition-shadow" data-from="SV" data-to="SA">
-        <div class="flex-shrink-0 w-11 h-11 rounded-full bg-secondary-container/10 flex items-center justify-center">
-          <span class="material-symbols-outlined text-secondary-container" style="font-size:22px">directions_boat</span>
+  <div class="mt-6">
+    <h3 data-i18n="popular" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-5 mb-3"></h3>
+    <div class="space-y-3">
+
+      <button class="popular-card w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" data-from="SV" data-to="SA" style="max-width:calc(100% - 40px)">
+        <div class="relative h-40">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAfDzf7k4TcYB8iX9POt7HuvlMaweBpD6iv-HIqWto9fiu-5vxE2tM8ipSQ2QaGqCxV-HDgO2JtESwEZFBsc6STozYPMHnasx1oIGcixxoP_0Rjk2wmIX6h5BuBgBZ1PtlaA-INvNiLBsMese3sqS1NFwRkWKFEvGP4CP9XWro5H3ZrqvKR0fOos99OtTFcFuGfSTU0isZtCMXCNx3Is399ZFN8-5yhq_50qmE6-YQGmdBsMa6ajC9-j4sfUhJ9VTrifpE1-gMEQ" alt="Mindelo to Porto Novo" class="w-full h-full object-cover">
+          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 text-xs font-bold text-secondary">From €14</span>
         </div>
-        <div class="flex-1 min-w-0">
-          <p class="font-semibold text-sm text-on-surface">Mindelo → Porto Novo</p>
-          <p class="text-xs text-outline mt-0.5">60 min · 2 operators · From €14</p>
+        <div class="bg-white p-4">
+          <p class="font-serif-italic text-primary-container" style="font-size:18px">Mindelo → Porto Novo</p>
+          <p class="text-xs text-slate-400 mt-1">60 min · 2 operators · From €14</p>
         </div>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size:20px">chevron_right</span>
       </button>
-      <button class="popular-card bg-white rounded-[18px] border border-outline-variant/40 p-4 text-left flex items-center gap-4 hover:shadow-md transition-shadow" data-from="ST" data-to="FG">
-        <div class="flex-shrink-0 w-11 h-11 rounded-full bg-secondary-container/10 flex items-center justify-center">
-          <span class="material-symbols-outlined text-secondary-container" style="font-size:22px">directions_boat</span>
+
+      <button class="popular-card w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" data-from="ST" data-to="FG" style="max-width:calc(100% - 40px)">
+        <div class="relative h-40">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAlqFGj_tf0A5wlbFsYCB83M4lxw1cv7DPt-ROuVUKMPGydyOzCNjFuR36Zw7A5snzmJLFI3w8-Ovq1MefzSI4aKVwFBLwjnNZxZfZlEimYmA4j4C_JLv28Ml2dLJ99kDd3GsjfF_WuU9wyx1hf-rSNpoha9c1GJohCUn1rtJCEjlYsshMONq_pktBDCtSlhdlEwR3sIHV6YgqYdkNPYwiUy2WJkzMTfygCAefwh4dgpH0BLX-9OnJtHOiE4r0z5URjsL1yvMI5g" alt="Praia to São Filipe" class="w-full h-full object-cover">
+          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 text-xs font-bold text-secondary">From €40</span>
         </div>
-        <div class="flex-1 min-w-0">
-          <p class="font-semibold text-sm text-on-surface">Praia → São Filipe</p>
-          <p class="text-xs text-outline mt-0.5">4h · CV Interilhas · From €40</p>
+        <div class="bg-white p-4">
+          <p class="font-serif-italic text-primary-container" style="font-size:18px">Praia → São Filipe</p>
+          <p class="text-xs text-slate-400 mt-1">4h · CV Interilhas · From €40</p>
         </div>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size:20px">chevron_right</span>
       </button>
-      <button class="popular-card bg-white rounded-[18px] border border-outline-variant/40 p-4 text-left flex items-center gap-4 hover:shadow-md transition-shadow" data-from="SV" data-to="SN">
-        <div class="flex-shrink-0 w-11 h-11 rounded-full bg-secondary-container/10 flex items-center justify-center">
-          <span class="material-symbols-outlined text-secondary-container" style="font-size:22px">directions_boat</span>
+
+      <button class="popular-card w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" data-from="SV" data-to="ST" style="max-width:calc(100% - 40px)">
+        <div class="relative h-40">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAlqFGj_tf0A5wlbFsYCB83M4lxw1cv7DPt-ROuVUKMPGydyOzCNjFuR36Zw7A5snzmJLFI3w8-Ovq1MefzSI4aKVwFBLwjnNZxZfZlEimYmA4j4C_JLv28Ml2dLJ99kDd3GsjfF_WuU9wyx1hf-rSNpoha9c1GJohCUn1rtJCEjlYsshMONq_pktBDCtSlhdlEwR3sIHV6YgqYdkNPYwiUy2WJkzMTfygCAefwh4dgpH0BLX-9OnJtHOiE4r0z5URjsL1yvMI5g" alt="Mindelo to Santiago" class="w-full h-full object-cover">
+          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 text-xs font-bold text-secondary">From €55</span>
         </div>
-        <div class="flex-1 min-w-0">
-          <p class="font-semibold text-sm text-on-surface">Mindelo → Ribeira Brava</p>
-          <p class="text-xs text-outline mt-0.5">3h · CV Interilhas · From €26</p>
+        <div class="bg-white p-4">
+          <p class="font-serif-italic text-primary-container" style="font-size:18px">Mindelo → Santiago</p>
+          <p class="text-xs text-slate-400 mt-1">19h · CV Interilhas · From €55</p>
         </div>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size:20px">chevron_right</span>
       </button>
-      <button class="popular-card bg-white rounded-[18px] border border-outline-variant/40 p-4 text-left flex items-center gap-4 hover:shadow-md transition-shadow" data-from="ST" data-to="MA">
-        <div class="flex-shrink-0 w-11 h-11 rounded-full bg-secondary-container/10 flex items-center justify-center">
-          <span class="material-symbols-outlined text-secondary-container" style="font-size:22px">directions_boat</span>
+
+      <button class="popular-card w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" data-from="ST" data-to="MA" style="max-width:calc(100% - 40px)">
+        <div class="relative h-40">
+          <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAfDzf7k4TcYB8iX9POt7HuvlMaweBpD6iv-HIqWto9fiu-5vxE2tM8ipSQ2QaGqCxV-HDgO2JtESwEZFBsc6STozYPMHnasx1oIGcixxoP_0Rjk2wmIX6h5BuBgBZ1PtlaA-INvNiLBsMese3sqS1NFwRkWKFEvGP4CP9XWro5H3ZrqvKR0fOos99OtTFcFuGfSTU0isZtCMXCNx3Is399ZFN8-5yhq_50qmE6-YQGmdBsMa6ajC9-j4sfUhJ9VTrifpE1-gMEQ" alt="Praia to Vila do Maio" class="w-full h-full object-cover">
+          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 text-xs font-bold text-secondary">From €21</span>
         </div>
-        <div class="flex-1 min-w-0">
-          <p class="font-semibold text-sm text-on-surface">Praia → Vila do Maio</p>
-          <p class="text-xs text-outline mt-0.5">2h · CV Interilhas · From €21</p>
+        <div class="bg-white p-4">
+          <p class="font-serif-italic text-primary-container" style="font-size:18px">Praia → Vila do Maio</p>
+          <p class="text-xs text-slate-400 mt-1">2h · CV Interilhas · From €21</p>
         </div>
-        <span class="material-symbols-outlined text-outline-variant" style="font-size:20px">chevron_right</span>
       </button>
+
     </div>
   </div>
   <!-- Stats Bar -->
@@ -333,16 +338,16 @@ tailwind.config = {
         <p data-i18n="islands" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
       </div>
       <div>
-        <p class="font-serif-italic text-secondary-container text-2xl">4</p>
+        <p class="font-serif-italic text-secondary-container text-2xl">5</p>
         <p data-i18n="ferries" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
       </div>
       <div>
-        <p class="font-serif-italic text-secondary-container text-2xl">3</p>
-        <p data-i18n="weekly" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
+        <p class="font-serif-italic text-secondary-container text-2xl">4</p>
+        <p data-i18n="lines" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
       </div>
       <div>
         <p class="font-serif-italic text-secondary-container text-2xl">28+</p>
-        <p data-i18n="lines" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
+        <p data-i18n="weekly" class="text-[10px] uppercase tracking-wider text-outline font-semibold"></p>
       </div>
     </div>
   </div>

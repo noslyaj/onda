@@ -130,7 +130,11 @@ tailwind.config = {
 </script>
 <style>
   * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-  html { background: #e8eaf2; }
+  html {
+    background-color: #e8edf5;
+    background-image: radial-gradient(circle, #c5cdd9 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
   body { font-family: 'Inter', sans-serif; background: #faf8ff; margin: 0 auto; overflow-x: hidden; max-width: 480px; position: relative; min-height: 100vh; }
   @media (min-width: 520px) {
     body { box-shadow: 0 0 60px rgba(15, 37, 87, 0.15), 0 0 0 1px rgba(15, 37, 87, 0.05); }

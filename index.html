@@ -217,9 +217,12 @@ tailwind.config = {
     </div>
     <div class="mb-4">
       <label data-i18n="from" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-1.5"></label>
-      <select id="selFrom" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent focus:border-secondary-container">
-        <option value="" data-i18n-attr="select_dep"></option>
-      </select>
+      <div class="relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" style="font-size:20px">location_on</span>
+        <select id="selFrom" class="w-full bg-surface-container-low rounded-xl pl-10 pr-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent focus:border-secondary-container">
+          <option value="" data-i18n-attr="select_dep"></option>
+        </select>
+      </div>
     </div>
 
     <div class="flex justify-center -my-2 relative z-10">
@@ -230,9 +233,12 @@ tailwind.config = {
 
     <div class="mb-4 mt-2">
       <label data-i18n="to" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-1.5"></label>
-      <select id="selTo" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent focus:border-secondary-container">
-        <option value="" data-i18n-attr="select_dest"></option>
-      </select>
+      <div class="relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none" style="font-size:20px">anchor</span>
+        <select id="selTo" class="w-full bg-surface-container-low rounded-xl pl-10 pr-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent focus:border-secondary-container">
+          <option value="" data-i18n-attr="select_dest"></option>
+        </select>
+      </div>
       <p id="toHint" style="display:none" class="text-[10px] text-slate-400 px-1 mt-1"></p>
     </div>
 

@@ -135,9 +135,10 @@ tailwind.config = {
     background-image: radial-gradient(circle, #c5cdd9 1px, transparent 1px);
     background-size: 24px 24px;
   }
-  body { font-family: 'Inter', sans-serif; background: #faf8ff; margin: 0 auto; overflow-x: hidden; max-width: 480px; position: relative; min-height: 100vh; }
+  body { font-family: 'Inter', sans-serif; margin: 0; min-height: 100vh; display: flex; justify-content: center; align-items: flex-start; }
+  .app-frame { max-width: 480px; width: 100%; min-height: 100vh; background: #faf8ff; position: relative; overflow-x: hidden; }
   @media (min-width: 520px) {
-    body { box-shadow: 0 0 60px rgba(15, 37, 87, 0.15), 0 0 0 1px rgba(15, 37, 87, 0.05); }
+    .app-frame { box-shadow: 0 0 60px rgba(15, 37, 87, 0.15), 0 0 0 1px rgba(15, 37, 87, 0.05); }
   }
   .app-container { max-width: 480px; margin: 0 auto; }
   .font-serif-italic { font-family: 'Noto Serif', serif; font-style: italic; }
@@ -177,6 +178,8 @@ tailwind.config = {
     <p class="font-serif-italic text-[#0f2557] mt-2" style="font-size:20px">Ilha a ilha.</p>
   </div>
 </div>
+
+<div class="app-frame">
 <!-- ===== HEADER (shared) ===== -->
 <header class="gradient-bg sticky top-0 z-50 shadow-lg" style="height:56px">
   <div class="flex items-center justify-between h-full px-4 sm:px-6 content-wrap">
@@ -1636,6 +1639,7 @@ function init() {
 
 document.addEventListener('DOMContentLoaded', init);
 </script>
+</div>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

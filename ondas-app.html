@@ -1082,10 +1082,14 @@ const ALERT_BIN_URL = 'https://api.jsonbin.io/v3/b/69d69ee4856a6821891119dd/late
 
 async function fetchAlert() {
   try {
-    const res = await fetch(ALERT_BIN_URL);
+    const res = await fetch(ALERT_BIN_URL, {
+      headers: {
+        'X-Access-Key': '$2a$10$r2lAfYIpEpu9z9DhQM34PeNmQSxXIyuwO8L7i7JMQSzdocpiZz5Ku',
+        'X-Bin-Meta': 'false'
+      }
+    });
     if(!res.ok) return;
-    const data = await res.json();
-    const alert = data.record;
+    const alert = await res.json();
     if(!alert.active) return;
     if(sessionStorage.getItem('alertDismissed_' + alert.updated) === '1') return;
 

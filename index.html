@@ -211,25 +211,12 @@ tailwind.config = {
   </div>
 </header>
 
+<div id="alertContainer" class="sticky top-[56px] z-40"></div>
+
 <!-- ===== SCREEN 1: HOME ===== -->
-<div id="screenHome" class="screen active" style="padding-top:56px">
-  <!-- Service Alert -->
-  <div id="serviceAlert" class="bg-red-600 text-white px-4 py-3 flex items-start gap-3 relative">
-    <span class="material-symbols-outlined flex-shrink-0 mt-0.5" style="font-size:18px">warning</span>
-    <div class="flex-1">
-      <p class="text-[13px] font-bold leading-tight">Service disruption — Linha Redonda &amp; Triangular</p>
-      <p class="text-[12px] text-white/80 mt-0.5 leading-relaxed">
-        Voyages suspended from 7 April due to adverse sea conditions (INMG bulletin 20260406).
-        Barlavento and Sotavento lines operating normally.
-        <a href="https://www.cvinterilhas.cv" target="_blank" rel="noopener" class="underline text-white font-semibold">cvinterilhas.cv ↗</a>
-      </p>
-    </div>
-    <button onclick="dismissAlert()" class="flex-shrink-0 text-white/70 hover:text-white transition-colors p-1" aria-label="Dismiss">
-      <span class="material-symbols-outlined" style="font-size:18px">close</span>
-    </button>
-  </div>
+<div id="screenHome" class="screen active">
   <!-- Hero -->
-  <div class="gradient-bg relative" style="height:224px">
+  <div class="gradient-bg relative" style="height:280px;margin-top:-56px;padding-top:56px">
     <div class="flex flex-col items-center justify-center h-full px-6 text-center">
       <p data-i18n="hero_sub" class="text-white/70 text-xs uppercase tracking-widest mb-3"></p>
       <h1 class="font-serif-italic text-white" style="font-size:44px;line-height:1.1">Ilha a ilha.</h1>
@@ -407,24 +394,9 @@ tailwind.config = {
 </div>
 
 <!-- ===== SCREEN 2: RESULTS ===== -->
-<div id="screenResults" class="screen" style="padding-top:56px">
-  <!-- Service Alert (results) -->
-  <div id="serviceAlertResults" class="bg-red-600 text-white px-4 py-3 flex items-start gap-3 relative">
-    <span class="material-symbols-outlined flex-shrink-0 mt-0.5" style="font-size:18px">warning</span>
-    <div class="flex-1">
-      <p class="text-[13px] font-bold leading-tight">Service disruption — Linha Redonda &amp; Triangular</p>
-      <p class="text-[12px] text-white/80 mt-0.5 leading-relaxed">
-        Voyages suspended from 7 April due to adverse sea conditions (INMG bulletin 20260406).
-        Barlavento and Sotavento lines operating normally.
-        <a href="https://www.cvinterilhas.cv" target="_blank" rel="noopener" class="underline text-white font-semibold">cvinterilhas.cv ↗</a>
-      </p>
-    </div>
-    <button onclick="dismissAlert()" class="flex-shrink-0 text-white/70 hover:text-white transition-colors p-1" aria-label="Dismiss">
-      <span class="material-symbols-outlined" style="font-size:18px">close</span>
-    </button>
-  </div>
+<div id="screenResults" class="screen">
   <!-- Search summary ribbon -->
-  <div class="bg-primary-container px-4 sm:px-6 py-3 flex items-center justify-between">
+  <div class="bg-primary-container px-4 sm:px-6 py-3 flex items-center justify-between" style="margin-top:-56px;padding-top:calc(56px + 12px)">
     <div>
       <p id="ribbonRoute" class="text-white font-semibold text-sm"></p>
       <p id="ribbonMeta" class="text-white/70 text-xs mt-0.5"></p>
@@ -1106,10 +1078,46 @@ function parseDurationMinutes(dur) {
   return 999;
 }
 
-function dismissAlert() {
-  const a = $('serviceAlert'); if(a) a.style.display = 'none';
-  const b = $('serviceAlertResults'); if(b) b.style.display = 'none';
-  sessionStorage.setItem('alertDismissed', '1');
+const ALERT_BIN_URL = 'https://api.jsonbin.io/v3/b/69d69ee4856a6821891119dd/latest';
+
+async function fetchAlert() {
+  try {
+    const res = await fetch(ALERT_BIN_URL);
+    if(!res.ok) return;
+    const data = await res.json();
+    const alert = data.record;
+    if(!alert.active) return;
+    if(sessionStorage.getItem('alertDismissed_' + alert.updated) === '1') return;
+
+    const lang = (currentLang || 'EN').toLowerCase();
+    const title = alert['title_' + lang] || alert.title;
+    const message = alert['message_' + lang] || alert.message;
+
+    $('alertContainer').innerHTML = `
+      <div id="serviceAlert" class="bg-red-600 text-white px-4 py-3 flex items-start gap-3">
+        <span class="material-symbols-outlined flex-shrink-0 mt-0.5" style="font-size:18px">warning</span>
+        <div class="flex-1">
+          <p class="text-[13px] font-bold leading-tight">${title}</p>
+          <p class="text-[12px] text-white/80 mt-0.5 leading-relaxed">
+            ${message}
+            <a href="${alert.sourceUrl}" target="_blank" rel="noopener" class="underline text-white font-semibold ml-1">${alert.sourceLabel} ↗</a>
+          </p>
+        </div>
+        <button onclick="dismissAlert('${alert.updated}')" class="flex-shrink-0 text-white/70 hover:text-white transition-colors p-1" aria-label="Dismiss">
+          <span class="material-symbols-outlined" style="font-size:18px">close</span>
+        </button>
+      </div>`;
+
+    window._activeAlert = alert;
+  } catch(e) {
+    // Fail silently — never break the app if JSONBin is unavailable
+  }
+}
+
+function dismissAlert(updated) {
+  const el = $('serviceAlert');
+  if(el) el.style.display = 'none';
+  if(updated) sessionStorage.setItem('alertDismissed_' + updated, '1');
 }
 
 function updatePageTitle(from, to) {
@@ -1235,20 +1243,21 @@ function attachCardHandlers(container) {
   });
 }
 
-const SUSPENDED_ROUTES = [
-  'SV-SN','SN-SV','SV-SL','SL-SV','SV-BV','BV-SV','SV-ST','ST-SV',
-  'SN-SL','SL-SN','SN-BV','BV-SN','SN-ST','ST-SN','SL-BV','BV-SL',
-  'SL-ST','ST-SL','BV-ST','ST-BV'
-];
-
 function renderResults() {
   const sorted = sortResults();
   const container = $('resultsContainer');
   const empty = $('emptyState');
 
-  // Suspended route check
+  // Suspended route check — uses dynamic alert data
+  const activeAlert = window._activeAlert;
+  const suspendedRoutes = (activeAlert && activeAlert.active && Array.isArray(activeAlert.affectedRoutes))
+    ? activeAlert.affectedRoutes
+    : [];
   const routeKey = searchState.from + '-' + searchState.to;
-  if(SUSPENDED_ROUTES.includes(routeKey)) {
+  if(suspendedRoutes.includes(routeKey)) {
+    const lang = (currentLang || 'EN').toLowerCase();
+    const title = activeAlert['title_' + lang] || activeAlert.title;
+    const message = activeAlert['message_' + lang] || activeAlert.message;
     container.classList.remove('hidden');
     empty.classList.add('hidden');
     $('returnSection').style.display = 'none';
@@ -1257,14 +1266,10 @@ function renderResults() {
       <div class="bg-red-50 border border-red-200 rounded-xl p-5 flex items-start gap-3">
         <span class="material-symbols-outlined text-red-500 flex-shrink-0" style="font-size:22px">sailing</span>
         <div>
-          <p class="text-[14px] font-bold text-red-700">This route is currently suspended</p>
-          <p class="text-[12px] text-red-600 mt-1 leading-relaxed">
-            CV Interilhas has suspended the Linha Redonda and Triangular from 7 April
-            due to adverse sea conditions. Operations will resume when safe navigation
-            conditions are restored.
-          </p>
-          <a href="https://www.cvinterilhas.cv" target="_blank" rel="noopener" class="inline-flex items-center gap-1 mt-3 text-[12px] font-bold text-red-700 underline">
-            Check cvinterilhas.cv for updates
+          <p class="text-[14px] font-bold text-red-700">${title}</p>
+          <p class="text-[12px] text-red-600 mt-1 leading-relaxed">${message}</p>
+          <a href="${activeAlert.sourceUrl}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 mt-3 text-[12px] font-bold text-red-700 underline">
+            ${activeAlert.sourceLabel} ↗
             <span class="material-symbols-outlined" style="font-size:14px">north_east</span>
           </a>
         </div>
@@ -1542,11 +1547,8 @@ function updateDateLabel(isReturn) {
 
 // ===== INIT =====
 function init() {
-  // Service alert persistence
-  if(sessionStorage.getItem('alertDismissed') === '1') {
-    const a = $('serviceAlert'); if(a) a.style.display = 'none';
-    const b = $('serviceAlertResults'); if(b) b.style.display = 'none';
-  }
+  // Fetch dynamic service alert (async, fails silently)
+  fetchAlert();
   // Set today's date
   const today = new Date();
   const yyyy = today.getFullYear();

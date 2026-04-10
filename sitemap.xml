@@ -12,4 +12,22 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://ondas.cv"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ondas.cv"/>
   </url>
+  <url>
+    <loc>https://ondas.cv/guide</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ondas.cv/cv-interilhas</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://ondas.cv/routes/sao-vicente-santo-antao</loc>
+    <lastmod>2026-04-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

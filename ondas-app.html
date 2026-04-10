@@ -390,10 +390,12 @@ tailwind.config = {
   </div>
 
   <!-- Footer -->
-  <footer class="mt-8 mb-4 flex justify-center items-center gap-6 px-5">
+  <footer class="mt-8 mb-4 flex flex-wrap justify-center items-center gap-3 px-5">
     <button onclick="screenHistory.push('about');showScreen('about','right')" data-i18n="about" class="text-[11px] text-slate-400 font-medium hover:text-slate-600 transition-colors">About</button>
     <span class="text-slate-200 text-[11px]">·</span>
-    <button onclick="screenHistory.push('contact');showScreen('contact','right')" data-i18n="contact" class="text-[11px] text-slate-400 font-medium hover:text-slate-600 transition-colors">Contact</button>
+    <button onclick="screenHistory.push('contact');showScreen('contact','right')" class="text-[11px] text-slate-400 font-medium hover:text-slate-600 transition-colors">Contact</button>
+    <span class="text-slate-200 text-[11px]">·</span>
+    <a href="/guide" class="text-[11px] text-slate-400 font-medium hover:text-slate-600 transition-colors">Ferry Guide</a>
     <span class="text-slate-200 text-[11px]">·</span>
     <span class="text-[11px] text-slate-300">© 2026 Ondas</span>
   </footer>

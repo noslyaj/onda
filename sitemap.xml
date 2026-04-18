@@ -2,66 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://ondas.cv</loc>
+    <loc>https://www.ondas.cv</loc>
     <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ondas.cv"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://ondas.cv"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://ondas.cv"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://ondas.cv"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ondas.cv"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.ondas.cv"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv"/>
   </url>
   <url>
-    <loc>https://ondas.cv/guide</loc>
+    <loc>https://www.ondas.cv/guide</loc>
     <lastmod>2026-04-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://ondas.cv/cv-interilhas</loc>
+    <loc>https://www.ondas.cv/cv-interilhas</loc>
     <lastmod>2026-04-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ondas.cv/routes/sao-vicente-santo-antao</loc>
+    <loc>https://www.ondas.cv/routes/sao-vicente-santo-antao</loc>
     <lastmod>2026-04-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ondas.cv/routes/mindelo-praia</loc>
+    <loc>https://www.ondas.cv/routes/mindelo-praia</loc>
     <lastmod>2026-04-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ondas.cv/routes/praia-fogo</loc>
+    <loc>https://www.ondas.cv/routes/praia-fogo</loc>
     <lastmod>2026-04-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ondas.cv/routes/fogo-brava</loc>
+    <loc>https://www.ondas.cv/routes/fogo-brava</loc>
     <lastmod>2026-04-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ondas.cv/routes/praia-maio</loc>
+    <loc>https://www.ondas.cv/routes/praia-maio</loc>
     <lastmod>2026-04-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ondas.cv/routes/porto-novo-mindelo</loc>
+    <loc>https://www.ondas.cv/routes/porto-novo-mindelo</loc>
     <lastmod>2026-04-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://ondas.cv/faq</loc>
+    <loc>https://www.ondas.cv/faq</loc>
     <lastmod>2026-04-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

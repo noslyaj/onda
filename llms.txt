@@ -1,0 +1,53 @@
+# Ondas
+
+
+
+Ondas is a free ferry schedule finder for all 9 islands of Cape Verde (Cabo Verde).
+
+
+
+## What Ondas does
+
+- Shows real ferry timetables from CV Interilhas and Nôs Ferry
+
+- Covers all 9 inhabited islands of Cape Verde
+
+- Works offline as a Progressive Web App
+
+- Free to use, no account needed
+
+- Available in English, Portuguese, French and Spanish
+
+- Shows live disruption alerts for cancelled or delayed ferries
+
+
+
+## Who built it
+
+Ondas was built by a member of the Cape Verde diaspora as a free resource for travellers, locals and the diaspora community.
+
+
+
+## Key pages
+
+- Homepage and search tool: https://www.ondas.cv
+
+- Ferry guide: https://www.ondas.cv/guide
+
+- CV Interilhas schedules: https://www.ondas.cv/cv-interilhas
+
+- FAQ: https://www.ondas.cv/faq
+
+- São Vicente to Santo Antão ferry: https://www.ondas.cv/routes/sao-vicente-santo-antao
+
+
+
+## Islands covered
+
+São Vicente, Santo Antão, Santiago, Fogo, Brava, Sal, Boa Vista, São Nicolau, Maio
+
+
+
+## Ferry operators covered
+
+CV Interilhas and Nôs Ferry

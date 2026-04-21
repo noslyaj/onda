@@ -1058,13 +1058,14 @@ function updateToDropdown() {
   const fromVal = $('selFrom').value;
   const available = getAvailableDestinations(fromVal);
   const currentTo = $('selTo').value;
+  const keepTo = currentTo && available.includes(currentTo);
 
   $('selTo').innerHTML = '';
   const placeholder = document.createElement('option');
   placeholder.value = '';
   placeholder.textContent = t('select_dest');
   placeholder.disabled = true;
-  if(!currentTo || !available.includes(currentTo)) placeholder.selected = true;
+  if(!keepTo) placeholder.selected = true;
   $('selTo').appendChild(placeholder);
 
   Object.entries(ISLANDS).forEach(([code, name]) => {
@@ -1078,11 +1079,11 @@ function updateToDropdown() {
     } else {
       opt.textContent = name;
     }
-    if(code === currentTo && available.includes(code)) opt.selected = true;
+    if(code === currentTo && keepTo) opt.selected = true;
     $('selTo').appendChild(opt);
   });
 
-  if(!available.includes(currentTo)) $('selTo').value = '';
+  if(!keepTo) $('selTo').value = '';
 
   // Hint
   const hint = $('toHint');
@@ -1104,15 +1105,34 @@ function updateToDropdown() {
 function updateFromDropdown() {
   const toVal = $('selTo').value;
   const available = getAvailableOrigins(toVal);
-  Array.from($('selFrom').options).forEach(opt => {
-    if(!opt.value) return;
-    const isUnavailable = opt.value === toVal || (toVal && !available.includes(opt.value));
-    opt.disabled = isUnavailable;
-    opt.style.color = isUnavailable ? '#c1c8d4' : '';
-    opt.textContent = ISLANDS[opt.value]
-      ? (isUnavailable && opt.value !== toVal ? ISLANDS[opt.value] + ' ' + t('no_direct') : ISLANDS[opt.value])
-      : opt.textContent;
+  const currentFrom = $('selFrom').value;
+  const keepFrom = currentFrom && currentFrom !== toVal && (!toVal || available.includes(currentFrom));
+
+  $('selFrom').innerHTML = '';
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = t('select_dep');
+  placeholder.disabled = true;
+  if(!keepFrom) placeholder.selected = true;
+  $('selFrom').appendChild(placeholder);
+
+  Object.entries(ISLANDS).forEach(([code, name]) => {
+    if(code === toVal) return;
+    const opt = document.createElement('option');
+    opt.value = code;
+    const isUnavailable = toVal && !available.includes(code);
+    if(isUnavailable) {
+      opt.disabled = true;
+      opt.style.color = '#c1c8d4';
+      opt.textContent = name + ' ' + t('no_direct');
+    } else {
+      opt.textContent = name;
+    }
+    if(code === currentFrom && keepFrom) opt.selected = true;
+    $('selFrom').appendChild(opt);
   });
+
+  if(!keepFrom) $('selFrom').value = '';
   updateSearchBtn();
 }
 

@@ -1,0 +1,164 @@
+{
+  "_meta": {
+    "source": "Inferred from the six-line structure in lines.json plus general knowledge of Atlânticoline's network. No PDF scraped yet.",
+    "compiled_at": "2026-04-23",
+    "verified_against": null,
+    "notes": "Routes are directional (one row per direction) because Atlânticoline PDFs list one-way departures and per-direction schedules diverge. id format: '{from}__{to}' with a double underscore so slugs containing single hyphens stay unambiguous. Verified routes are the year-round Blue/Green/White legs plus the Orange pair. All Yellow Line extensions and the Pink Line are tentative pending PDF verification."
+  },
+  "data": [
+    {
+      "id": "horta__madalena",
+      "from_port_id": "horta",
+      "to_port_id": "madalena",
+      "data_status": "verified",
+      "notes": "Blue and Green Lines, year-round."
+    },
+    {
+      "id": "madalena__horta",
+      "from_port_id": "madalena",
+      "to_port_id": "horta",
+      "data_status": "verified",
+      "notes": "Blue and Green Lines, year-round."
+    },
+    {
+      "id": "horta__velas",
+      "from_port_id": "horta",
+      "to_port_id": "velas",
+      "data_status": "verified",
+      "notes": "Green Line, year-round."
+    },
+    {
+      "id": "velas__horta",
+      "from_port_id": "velas",
+      "to_port_id": "horta",
+      "data_status": "verified",
+      "notes": "Green Line, year-round."
+    },
+    {
+      "id": "madalena__velas",
+      "from_port_id": "madalena",
+      "to_port_id": "velas",
+      "data_status": "verified",
+      "notes": "Green Line, year-round."
+    },
+    {
+      "id": "velas__madalena",
+      "from_port_id": "velas",
+      "to_port_id": "madalena",
+      "data_status": "verified",
+      "notes": "Green Line, year-round."
+    },
+    {
+      "id": "santa-cruz-das-flores__vila-do-corvo",
+      "from_port_id": "santa-cruz-das-flores",
+      "to_port_id": "vila-do-corvo",
+      "data_status": "verified",
+      "notes": "White Line, year-round."
+    },
+    {
+      "id": "vila-do-corvo__santa-cruz-das-flores",
+      "from_port_id": "vila-do-corvo",
+      "to_port_id": "santa-cruz-das-flores",
+      "data_status": "verified",
+      "notes": "White Line, year-round."
+    },
+    {
+      "id": "sao-roque__velas",
+      "from_port_id": "sao-roque",
+      "to_port_id": "velas",
+      "data_status": "verified",
+      "notes": "Orange Line, summer."
+    },
+    {
+      "id": "velas__sao-roque",
+      "from_port_id": "velas",
+      "to_port_id": "sao-roque",
+      "data_status": "verified",
+      "notes": "Orange Line, summer."
+    },
+    {
+      "id": "sao-roque__calheta",
+      "from_port_id": "sao-roque",
+      "to_port_id": "calheta",
+      "data_status": "tentative",
+      "notes": "Yellow Line extension to Calheta. Verify against summer PDF."
+    },
+    {
+      "id": "calheta__sao-roque",
+      "from_port_id": "calheta",
+      "to_port_id": "sao-roque",
+      "data_status": "tentative",
+      "notes": "Yellow Line extension to Calheta. Verify against summer PDF."
+    },
+    {
+      "id": "velas__calheta",
+      "from_port_id": "velas",
+      "to_port_id": "calheta",
+      "data_status": "tentative",
+      "notes": "Yellow Line intra-São-Jorge hop. Verify against summer PDF."
+    },
+    {
+      "id": "calheta__velas",
+      "from_port_id": "calheta",
+      "to_port_id": "velas",
+      "data_status": "tentative",
+      "notes": "Yellow Line intra-São-Jorge hop. Verify against summer PDF."
+    },
+    {
+      "id": "velas__praia-da-graciosa",
+      "from_port_id": "velas",
+      "to_port_id": "praia-da-graciosa",
+      "data_status": "tentative",
+      "notes": "Yellow Line summer extension to Graciosa. Known-uncertain."
+    },
+    {
+      "id": "praia-da-graciosa__velas",
+      "from_port_id": "praia-da-graciosa",
+      "to_port_id": "velas",
+      "data_status": "tentative",
+      "notes": "Yellow Line summer extension to Graciosa. Known-uncertain."
+    },
+    {
+      "id": "praia-da-graciosa__praia-da-vitoria",
+      "from_port_id": "praia-da-graciosa",
+      "to_port_id": "praia-da-vitoria",
+      "data_status": "tentative",
+      "notes": "Yellow Line summer extension between Graciosa and Terceira. Known-uncertain."
+    },
+    {
+      "id": "praia-da-vitoria__praia-da-graciosa",
+      "from_port_id": "praia-da-vitoria",
+      "to_port_id": "praia-da-graciosa",
+      "data_status": "tentative",
+      "notes": "Yellow Line summer extension between Graciosa and Terceira. Known-uncertain."
+    },
+    {
+      "id": "praia-da-vitoria__sao-roque",
+      "from_port_id": "praia-da-vitoria",
+      "to_port_id": "sao-roque",
+      "data_status": "tentative",
+      "notes": "Yellow Line summer Terceira↔Pico leg. Known-uncertain."
+    },
+    {
+      "id": "sao-roque__praia-da-vitoria",
+      "from_port_id": "sao-roque",
+      "to_port_id": "praia-da-vitoria",
+      "data_status": "tentative",
+      "notes": "Yellow Line summer Terceira↔Pico leg. Known-uncertain."
+    },
+    {
+      "id": "horta__santa-cruz-das-flores",
+      "from_port_id": "horta",
+      "to_port_id": "santa-cruz-das-flores",
+      "data_status": "tentative",
+      "notes": "Pink Line western↔central summer connection. Occasional sailings, weather-dependent."
+    },
+    {
+      "id": "santa-cruz-das-flores__horta",
+      "from_port_id": "santa-cruz-das-flores",
+      "to_port_id": "horta",
+      "data_status": "tentative",
+      "notes": "Pink Line western↔central summer connection. Occasional sailings, weather-dependent."
+    }
+  ]
+}

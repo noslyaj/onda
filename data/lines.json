@@ -1,0 +1,88 @@
+{
+  "_meta": {
+    "source": "Atlânticoline line naming and seasonality from public communications. No PDF scraped yet.",
+    "compiled_at": "2026-04-23",
+    "verified_against": null,
+    "notes": "Six named lines: Blue/Green/White year-round, Yellow/Orange/Pink summer. The Pink Line's existence and routing are the least certain — seeded as tentative. The Yellow Line exists (verified) but its extensions to Graciosa and Terceira are tentative and live in line_routes.json."
+  },
+  "data": [
+    {
+      "id": "blue",
+      "operator_id": "atlanticoline",
+      "name_en": "Blue Line",
+      "name_pt": "Linha Azul",
+      "color_hex": "#1d4ed8",
+      "season": "year_round",
+      "frequency": "daily",
+      "description_en": "Daily year-round crossing between Horta (Faial) and Madalena (Pico). The backbone of central-group inter-island travel.",
+      "description_pt": "Travessia diária ao longo do ano entre a Horta (Faial) e a Madalena (Pico). A espinha dorsal das viagens entre ilhas do grupo central.",
+      "data_status": "verified",
+      "notes": null
+    },
+    {
+      "id": "green",
+      "operator_id": "atlanticoline",
+      "name_en": "Green Line",
+      "name_pt": "Linha Verde",
+      "color_hex": "#15803d",
+      "season": "year_round",
+      "frequency": "frequent",
+      "description_en": "Year-round triangle connecting Horta, Madalena and Velas (São Jorge). Frequency varies by season.",
+      "description_pt": "Triângulo ao longo do ano ligando Horta, Madalena e Velas (São Jorge). A frequência varia conforme a estação.",
+      "data_status": "verified",
+      "notes": null
+    },
+    {
+      "id": "white",
+      "operator_id": "atlanticoline",
+      "name_en": "White Line",
+      "name_pt": "Linha Branca",
+      "color_hex": "#e5e7eb",
+      "season": "year_round",
+      "frequency": "daily",
+      "description_en": "Short daily crossing between Santa Cruz das Flores and Vila do Corvo, the only ferry in the western group.",
+      "description_pt": "Travessia curta diária entre Santa Cruz das Flores e Vila do Corvo, o único ferry no grupo ocidental.",
+      "data_status": "verified",
+      "notes": null
+    },
+    {
+      "id": "yellow",
+      "operator_id": "atlanticoline",
+      "name_en": "Yellow Line",
+      "name_pt": "Linha Amarela",
+      "color_hex": "#ca8a04",
+      "season": "summer",
+      "frequency": "frequent",
+      "description_en": "Summer central-group circuit linking São Roque, Velas and Calheta, with seasonal extensions to Graciosa and Praia da Vitória.",
+      "description_pt": "Circuito de verão no grupo central, ligando São Roque, Velas e Calheta, com extensões sazonais à Graciosa e à Praia da Vitória.",
+      "data_status": "verified",
+      "notes": "Line exists and operates every summer. Exact stop set and frequencies vary year to year; extensions to Graciosa/Terceira are marked tentative at the line_routes level."
+    },
+    {
+      "id": "orange",
+      "operator_id": "atlanticoline",
+      "name_en": "Orange Line",
+      "name_pt": "Linha Laranja",
+      "color_hex": "#ea580c",
+      "season": "summer",
+      "frequency": "frequent",
+      "description_en": "Summer-only short crossing between São Roque (Pico) and Velas (São Jorge).",
+      "description_pt": "Travessia curta apenas no verão entre São Roque (Pico) e Velas (São Jorge).",
+      "data_status": "verified",
+      "notes": null
+    },
+    {
+      "id": "pink",
+      "operator_id": "atlanticoline",
+      "name_en": "Pink Line",
+      "name_pt": "Linha Rosa",
+      "color_hex": "#db2777",
+      "season": "summer",
+      "frequency": "occasional",
+      "description_en": "Occasional summer connection between the western group (Flores) and the central group (Horta). Sailings are sparse and subject to weather.",
+      "description_pt": "Ligação ocasional de verão entre o grupo ocidental (Flores) e o grupo central (Horta). As travessias são raras e sujeitas às condições do mar.",
+      "data_status": "tentative",
+      "notes": "Existence and routing inferred from Atlânticoline seasonal communications. Verify against the next published summer PDF before launch. Any UI rendering this line must surface the uncertainty."
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "_meta": {
+    "source": "General geographic knowledge of the Azores archipelago. No Atlânticoline-specific data.",
+    "compiled_at": "2026-04-23",
+    "verified_against": null,
+    "notes": "Islands are geographic facts. has_ferry_service reflects Atlânticoline's network: São Miguel and Santa Maria (eastern group) have no inter-island ferry. All other islands are served."
+  },
+  "data": [
+    {
+      "id": "santa-maria",
+      "name_en": "Santa Maria",
+      "name_pt": "Santa Maria",
+      "group": "eastern",
+      "has_ferry_service": false,
+      "no_ferry_note_en": "No ferry service. Santa Maria is reached only by air.",
+      "no_ferry_note_pt": "Sem serviço de ferry. Santa Maria é alcançada apenas por via aérea.",
+      "data_status": "verified",
+      "notes": null
+    },
+    {
+      "id": "sao-miguel",
+      "name_en": "São Miguel",
+      "name_pt": "São Miguel",
+      "group": "eastern",
+      "has_ferry_service": false,
+      "no_ferry_note_en": "No ferry service. São Miguel is reached only by air.",
+      "no_ferry_note_pt": "Sem serviço de ferry. São Miguel é alcançado apenas por via aérea.",
+      "data_status": "verified",
+      "notes": null
+    },
+    {
+      "id": "terceira",
+      "name_en": "Terceira",
+      "name_pt": "Terceira",
+      "group": "central",
+      "has_ferry_service": true,
+      "no_ferry_note_en": null,
+      "no_ferry_note_pt": null,
+      "data_status": "verified",
+      "notes": "Atlânticoline uses Praia da Vitória; Angra do Heroísmo has no inter-island ferry service."
+    },
+    {
+      "id": "graciosa",
+      "name_en": "Graciosa",
+      "name_pt": "Graciosa",
+      "group": "central",
+      "has_ferry_service": true,
+      "no_ferry_note_en": null,
+      "no_ferry_note_pt": null,
+      "data_status": "verified",
+      "notes": null
+    },
+    {
+      "id": "sao-jorge",
+      "name_en": "São Jorge",
+      "name_pt": "São Jorge",
+      "group": "central",
+      "has_ferry_service": true,
+      "no_ferry_note_en": null,
+      "no_ferry_note_pt": null,
+      "data_status": "verified",
+      "notes": "Two ports: Velas (primary, Green triangle) and Calheta (east end)."
+    },
+    {
+      "id": "pico",
+      "name_en": "Pico",
+      "name_pt": "Pico",
+      "group": "central",
+      "has_ferry_service": true,
+      "no_ferry_note_en": null,
+      "no_ferry_note_pt": null,
+      "data_status": "verified",
+      "notes": "Two ports: Madalena (west, across from Horta) and São Roque (north)."
+    },
+    {
+      "id": "faial",
+      "name_en": "Faial",
+      "name_pt": "Faial",
+      "group": "central",
+      "has_ferry_service": true,
+      "no_ferry_note_en": null,
+      "no_ferry_note_pt": null,
+      "data_status": "verified",
+      "notes": null
+    },
+    {
+      "id": "flores",
+      "name_en": "Flores",
+      "name_pt": "Flores",
+      "group": "western",
+      "has_ferry_service": true,
+      "no_ferry_note_en": null,
+      "no_ferry_note_pt": null,
+      "data_status": "verified",
+      "notes": null
+    },
+    {
+      "id": "corvo",
+      "name_en": "Corvo",
+      "name_pt": "Corvo",
+      "group": "western",
+      "has_ferry_service": true,
+      "no_ferry_note_en": null,
+      "no_ferry_note_pt": null,
+      "data_status": "verified",
+      "notes": null
+    }
+  ]
+}

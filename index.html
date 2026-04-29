@@ -952,6 +952,10 @@ let selectedTrip = null;
 let tripType = 'one-way';
 let currency = localStorage.getItem('ondas-currency') || 'EUR';
 
+function trackEvent(name, props) {
+  if(typeof plausible !== 'undefined') plausible(name, {props});
+}
+
 function formatPrice(s) {
   return currency === 'CVE' ? s.priceCVE.toLocaleString() + ' CVE' : '€' + s.priceEUR;
 }
@@ -960,6 +964,7 @@ function toggleCurrency() {
   currency = currency === 'EUR' ? 'CVE' : 'EUR';
   localStorage.setItem('ondas-currency', currency);
   $('currencyBtn').textContent = currency;
+  trackEvent('Currency Toggle', {currency});
   if(currentResults.length > 0) renderResults();
   if(selectedTrip && currentScreen === 'detail') showDetail();
 }
@@ -1274,6 +1279,7 @@ function doSearch(from, to) {
   searchState.tripType = tripType;
   searchState.returnDate = tripType === 'return' ? $('returnDate').value : null;
   updatePageTitle(searchState.from, searchState.to);
+  trackEvent('Search', {from:ISLANDS[searchState.from]||searchState.from, to:ISLANDS[searchState.to]||searchState.to, trip_type:tripType});
 
   const dayName = searchState.date ? getDayName(searchState.date) : null;
   currentResults = SCHEDULES.filter(s =>
@@ -1508,6 +1514,9 @@ function showDetail() {
   // Book button
   $('bookLink').href = s.bookUrl;
   $('bookText').textContent = `${t('book_btn')} ${s.operator}`;
+  $('bookLink').onclick = function() {
+    trackEvent('Book Click', {operator:s.operator, route:s.from+'-'+s.to, vessel:s.vessel, price:currency==='CVE'?s.priceCVE+' CVE':'€'+s.priceEUR});
+  };
 
   // Call
   $('callBtn').href = `tel:${s.phone}`;
@@ -1727,6 +1736,7 @@ function init() {
     btn.addEventListener('click', e => {
       e.stopPropagation();
       currentLang = btn.dataset.lang;
+      trackEvent('Language Switch', {language:currentLang});
       applyLang();
       updateDateLabel(false);
       updateDateLabel(true);

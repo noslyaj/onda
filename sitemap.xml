@@ -96,4 +96,14 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/cv-interilhas-pt"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv/cv-interilhas"/>
   </url>
+  <url>
+    <loc>https://www.ondas.cv/cv-interilhas-fr</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv/cv-interilhas"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/cv-interilhas-pt"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/cv-interilhas-fr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv/cv-interilhas"/>
+  </url>
 </urlset>

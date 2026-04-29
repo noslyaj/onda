@@ -81,4 +81,10 @@
     <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/pt/cv-interilhas"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv/cv-interilhas"/>
   </url>
+  <url>
+    <loc>https://www.ondas.cv/routes/mindelo-porto-novo</loc>
+    <lastmod>2026-04-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

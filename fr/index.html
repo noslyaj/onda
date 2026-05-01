@@ -302,12 +302,12 @@ tailwind.config = {
   </div>
 
   <!-- Value proposition -->
-  <p class="description mx-5 sm:mx-auto sm:max-w-lg mt-5 text-center text-[13px] text-on-surface-variant leading-relaxed font-medium">The easiest Cape Verde ferry schedule search. Find departure times across all 9 islands in seconds. Free web app, no download needed, works offline.</p>
+  <p class="description mx-5 sm:mx-auto sm:max-w-lg mt-5 text-center text-[13px] text-on-surface-variant leading-relaxed font-medium">Le moyen le plus simple de trouver les horaires de ferry au Cap-Vert. Trouvez les horaires de départ entre les 9 îles en quelques secondes. Application web gratuite, sans téléchargement, fonctionne hors ligne.</p>
 
   <!-- SEO content section -->
   <div class="mx-5 sm:mx-auto sm:max-w-lg mt-6">
-    <h2 class="font-serif-italic text-primary-container text-xl mb-2">Cape Verde Ferry Schedule</h2>
-    <p class="text-[13px] text-on-surface-variant leading-relaxed">Ondas shows real ferry departure times for all 9 islands of Cape Verde. Search any route between São Vicente, Santo Antão, Santiago, Fogo, Brava, Maio, Sal, Boa Vista and São Nicolau. Timetables come directly from CV Interilhas and Nôs Ferry, the two operators running inter-island services.</p>
+    <h2 class="font-serif-italic text-primary-container text-xl mb-2">Horaires de ferry Cap-Vert</h2>
+    <p class="text-[13px] text-on-surface-variant leading-relaxed">Ondas affiche les horaires de départ réels pour les 9 îles du Cap-Vert. Recherchez n'importe quelle route entre São Vicente, Santo Antão, Santiago, Fogo, Brava, Maio, Sal, Boa Vista et São Nicolau. Les horaires proviennent directement de CV Interilhas et Nôs Ferry, les deux opérateurs assurant les liaisons inter-îles.</p>
   </div>
 
   <!-- Sea conditions widget -->
@@ -402,7 +402,7 @@ tailwind.config = {
   </div>
 
   <!-- Trust signal -->
-  <p class="text-center text-[11px] text-slate-400 px-5 mt-6">Schedules sourced from official CV Interilhas and Nôs Ferry documents. Updated seasonally.</p>
+  <p class="text-center text-[11px] text-slate-400 px-5 mt-6">Horaires issus des documents officiels de CV Interilhas et Nôs Ferry. Mis à jour chaque saison.</p>
 
   <!-- Warning -->
   <div class="mx-5 sm:mx-auto mt-4 mb-6 bg-tertiary-fixed/20 rounded-xl p-3 flex gap-2 items-start content-wrap">
@@ -665,7 +665,7 @@ tailwind.config = {
 
     <p class="description text-[15px] text-on-surface leading-relaxed font-medium">Ondas is the easiest way to find ferry schedules between the islands of Cape Verde. Search any route across all 9 islands, compare departure times from CV Interilhas and Nôs Ferry, and plan your island hopping trip in seconds. Free, no account needed, works offline.</p>
 
-    <p class="description text-[14px] text-on-surface leading-relaxed">Ondas is a free web app that works in any browser on any phone. No download needed and no app store required. Just open ondas.cv and search.</p>
+    <p class="description text-[14px] text-on-surface leading-relaxed">Ondas est une application web gratuite qui fonctionne dans n'importe quel navigateur sur n'importe quel téléphone. Aucun téléchargement nécessaire. Ouvrez simplement ondas.cv et recherchez.</p>
 
     <div class="space-y-3 text-[14px] text-on-surface leading-relaxed">
       <p>Ondas was created by a member of the Cabo Verde diaspora as a way to give something back to the country.</p>
@@ -1000,7 +1000,7 @@ function applyLang() {
   for(let i=1;i<=8;i++){
     const opt=document.createElement('option');
     opt.value=i;
-    opt.textContent=`${i} ${i===1?'Adult':'Adults'}`;
+    opt.textContent=`${i} ${i===1?'Adulte':'Adultes'}`;
     selPax.appendChild(opt);
   }
   if(curVal) selPax.value = curVal;

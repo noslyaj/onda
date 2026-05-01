@@ -24,7 +24,7 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Fontainhas village in the mountains of Santo Antão, Cape Verde ferry schedule search">
-<meta property="og:locale" content="en_GB">
+<meta property="og:locale" content="fr_FR">
 <meta property="og:locale:alternate" content="pt_CV">
 <meta property="og:locale:alternate" content="fr_FR">
 <meta property="og:locale:alternate" content="es_ES">
@@ -39,7 +39,7 @@
 
 <!-- Geo targeting -->
 <meta name="geo.region" content="CV">
-<meta name="geo.country" content="Cabo Verde">
+<meta name="geo.country" content="CV">
 <meta name="language" content="English, Portuguese, French, Spanish">
 
 <!-- Mobile -->
@@ -582,7 +582,7 @@ tailwind.config = {
 
   <!-- Book CTA -->
   <div class="mx-5 sm:mx-auto sm:max-w-lg mt-4">
-    <a id="bookLink" target="_blank" rel="noopener" class="gradient-btn w-full rounded-xl py-3.5 text-white font-semibold text-sm shadow-lg flex items-center justify-center gap-2">
+    <a id="bookLink" target="_blank" rel="noopener noreferrer" class="gradient-btn w-full rounded-xl py-3.5 text-white font-semibold text-sm shadow-lg flex items-center justify-center gap-2">
       <span id="bookText"></span>
       <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:18px">open_in_new</span>
     </a>
@@ -694,14 +694,14 @@ tailwind.config = {
         <div class="bg-surface-container-low rounded-xl p-4">
           <p class="text-[14px] font-semibold text-on-surface">CV Interilhas</p>
           <p class="text-[12px] text-outline mt-0.5">Barlavento · Redonda · Sotavento lines</p>
-          <a href="https://cvinterilhas.cv/home" target="_blank" rel="noopener" class="text-[12px] text-secondary mt-1 inline-flex items-center gap-1">
+          <a href="https://cvinterilhas.cv/home" target="_blank" rel="noopener noreferrer" class="text-[12px] text-secondary mt-1 inline-flex items-center gap-1">
             cvinterilhas.cv <span class="material-symbols-outlined" aria-hidden="true" style="font-size:12px">north_east</span>
           </a>
         </div>
         <div class="bg-surface-container-low rounded-xl p-4">
           <p class="text-[14px] font-semibold text-on-surface">Nôs Ferry</p>
           <p class="text-[12px] text-outline mt-0.5">São Vicente · Santo Antão daily service</p>
-          <a href="https://nosferry.cv" target="_blank" rel="noopener" class="text-[12px] text-secondary mt-1 inline-flex items-center gap-1">
+          <a href="https://nosferry.cv" target="_blank" rel="noopener noreferrer" class="text-[12px] text-secondary mt-1 inline-flex items-center gap-1">
             nosferry.cv <span class="material-symbols-outlined" aria-hidden="true" style="font-size:12px">north_east</span>
           </a>
         </div>
@@ -1221,7 +1221,8 @@ async function fetchAlert() {
   try {
     const res = await fetch(ALERT_BIN_URL, {
       headers: {
-        'X-Access-Key': '$2a$10$r2lAfYIpEpu9z9DhQM34PeNmQSxXIyuwO8L7i7JMQSzdocpiZz5Ku',
+        // Replace JSONBIN_READ_KEY with your read-only access key from jsonbin.io
+        'X-Access-Key': 'JSONBIN_READ_KEY',
         'X-Bin-Meta': 'false'
       }
     });
@@ -1241,7 +1242,7 @@ async function fetchAlert() {
           <p class="text-[13px] font-bold leading-tight">${title}</p>
           <p class="text-[12px] text-white/80 mt-0.5 leading-relaxed">
             ${message}
-            <a href="${alert.sourceUrl}" target="_blank" rel="noopener" class="underline text-white font-semibold ml-1">${alert.sourceLabel} ↗</a>
+            <a href="${alert.sourceUrl}" target="_blank" rel="noopener noreferrer" class="underline text-white font-semibold ml-1">${alert.sourceLabel} ↗</a>
           </p>
         </div>
         <button onclick="dismissAlert('${alert.updated}')" class="flex-shrink-0 text-white/70 hover:text-white transition-colors p-1" aria-label="Dismiss">
@@ -1411,7 +1412,7 @@ function renderResults() {
         <div>
           <p class="text-[14px] font-bold text-red-700">${title}</p>
           <p class="text-[12px] text-red-600 mt-1 leading-relaxed">${message}</p>
-          <a href="${activeAlert.sourceUrl}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 mt-3 text-[12px] font-bold text-red-700 underline">
+          <a href="${activeAlert.sourceUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 mt-3 text-[12px] font-bold text-red-700 underline">
             ${activeAlert.sourceLabel} ↗
             <span class="material-symbols-outlined" aria-hidden="true" style="font-size:14px">north_east</span>
           </a>

@@ -1,24 +1,24 @@
 <!-- © 2026 Ondas – ondas.cv. Unauthorized copying or redistribution prohibited. -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 
 <!-- Primary SEO -->
-<title>Cape Verde Ferry Schedule — Search All 9 Islands Free | Ondas</title>
-<meta name="description" content="Search real Cape Verde ferry timetables in seconds. All 9 islands, both operators, works offline. Free, no account needed. English, Portuguese, French and Spanish.">
+<title>Horaires de ferry Cap-Vert — Toutes les 9 îles gratuitement | Ondas</title>
+<meta name="description" content="Recherchez les horaires de ferry entre les îles du Cap-Vert. Les 9 îles, les deux opérateurs, fonctionne hors ligne. Gratuit, sans compte.">
 <meta name="keywords" content="cabo verde ferry, cape verde ferry, ferry schedule cabo verde, CV Interilhas, Nôs Ferry, São Vicente Santo Antão ferry, Santiago Fogo ferry, island hopping cape verde, ferries cabo verde, horários ferry cabo verde, traversée cap vert, ferry isla cabo verde">
 <meta name="robots" content="index, follow">
 <meta name="google-site-verification" content="7N6uOMn5rXMHhJuwIWL8GvZuL3q5E7_UFJafEyc4BUU">
 <meta name="author" content="Ondas">
 <meta name="copyright" content="© 2026 Ondas. All rights reserved.">
-<link rel="canonical" href="https://www.ondas.cv">
+<link rel="canonical" href="https://www.ondas.cv/fr">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://www.ondas.cv">
-<meta property="og:title" content="Ondas – Cabo Verde Ferry Schedules">
-<meta property="og:description" content="Real ferry schedules across all 9 Cabo Verde islands. CV Interilhas and Nôs Ferry departure times, prices and booking links.">
+<meta property="og:url" content="https://www.ondas.cv/fr">
+<meta property="og:title" content="Horaires de ferry Cap-Vert — Toutes les 9 îles | Ondas">
+<meta property="og:description" content="Recherchez les horaires de ferry entre les îles du Cap-Vert. Les 9 îles, les deux opérateurs. Gratuit.">
 <meta property="og:image" content="https://www.ondas.cv/Santo_Antao.jpeg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
@@ -941,10 +941,7 @@ const STRINGS = {
 };
 
 // ===== STATE =====
-let currentLang = localStorage.getItem('ondas-lang') || (() => {
-  const bl = (navigator.language || '').slice(0,2).toUpperCase();
-  return ['EN','PT','FR','ES'].includes(bl) ? bl : 'EN';
-})();
+let currentLang = 'FR';
 let currentScreen = 'home';
 let screenHistory = ['home'];
 let currentResults = [];
@@ -1268,7 +1265,7 @@ function updatePageTitle(from, to) {
   if(from && to) {
     document.title = `${ISLANDS[from]||from} → ${ISLANDS[to]||to} Ferry | Ondas – Cabo Verde`;
   } else {
-    document.title = 'Ondas – Cabo Verde Ferry Schedules | Ilha a ilha';
+    document.title = 'Horaires de ferry Cap-Vert | Ondas';
   }
 }
 

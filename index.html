@@ -201,18 +201,17 @@ tailwind.config = {
     <div class="flex items-center gap-1">
       <button id="installBtn" onclick="triggerInstall()" style="display:none;width:44px;height:44px" class="flex items-center justify-center rounded-full hover:bg-white/10 transition-colors" aria-label="Install app">
         <span class="material-symbols-outlined text-white/90" aria-hidden="true" style="font-size:22px">download</span>
-      </a>
-      <button onclick="toggleCurrency()" id="currencyBtn" class="px-2 py-1 text-white/90 hover:bg-white/10 rounded-lg transition-colors text-[11px] font-bold tracking-wider">EUR</a>
+      </button>
+      <button onclick="toggleCurrency()" id="currencyBtn" class="px-2 py-1 text-white/90 hover:bg-white/10 rounded-lg transition-colors text-[11px] font-bold tracking-wider">EUR</button>
       <div class="relative">
       <button id="langBtn" class="flex items-center justify-center" style="width:44px;height:44px" aria-label="Language">
         <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:24px">language</span>
-      </a>
-      <div id="langDropdown" class="lang-dropdown bg-white rounded-xl shadow-xl overflow-hidden" style="min-width:160px">
-        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="KEA">🇨🇻 Kriolu</button>
-        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="PT">🇵🇹 Português</button>
-        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="EN">🇬🇧 English</button>
-        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="FR">🇫🇷 Français</button>
-        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="DE">🇩🇪 Deutsch</button>
+      </button>
+      <div id="langDropdown" class="lang-dropdown bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden" style="min-width:160px">
+        <button class="lang-opt flex items-center justify-between w-full px-4 py-3 hover:bg-surface-container-low text-[14px] font-medium text-[#0f2557]" data-lang="KEA">Kriolu</button>
+        <button class="lang-opt flex items-center justify-between w-full px-4 py-3 hover:bg-surface-container-low text-[14px] font-medium text-[#0f2557]" data-lang="PT">Português</button>
+        <button class="lang-opt flex items-center justify-between w-full px-4 py-3 hover:bg-surface-container-low text-[14px] font-medium text-[#0f2557]" data-lang="EN">English</button>
+        <button class="lang-opt flex items-center justify-between w-full px-4 py-3 hover:bg-surface-container-low text-[14px] font-medium text-[#0f2557]" data-lang="FR">Français</button>
       </div>
       </div>
     </div>
@@ -978,7 +977,7 @@ const STRINGS = {
 // ===== STATE =====
 let currentLang = localStorage.getItem('ondas-lang') || (() => {
   const bl = (navigator.language || '').slice(0,2).toUpperCase();
-  return ['EN','PT','FR','DE','KEA'].includes(bl) ? bl : 'EN';
+  return ['EN','PT','FR','KEA'].includes(bl) ? bl : 'EN';
 })();
 let currentScreen = 'home';
 let screenHistory = ['home'];
@@ -1023,6 +1022,19 @@ function adjustPax(type, delta) {
   else if(type === 'infants') { numInfants = Math.max(0, Math.min(numAdults, numInfants + delta)); $('infantsCount').textContent = numInfants; }
   updatePassengerSummary();
 }
+function updateLangCheckmark() {
+  document.querySelectorAll('.lang-opt').forEach(btn => {
+    const isActive = btn.dataset.lang === currentLang;
+    const existing = btn.querySelector('.lang-check');
+    if(existing) existing.remove();
+    if(isActive) {
+      const dot = document.createElement('span');
+      dot.className = 'lang-check w-2 h-2 rounded-full bg-secondary-container flex-shrink-0';
+      btn.appendChild(dot);
+    }
+  });
+}
+
 function updatePassengerSummary() {
   const parts = [];
   parts.push(numAdults + ' ' + (numAdults === 1 ? t('adult') : t('adults')));
@@ -1821,10 +1833,12 @@ function init() {
       applyLang();
       updateDateLabel(false);
       updateDateLabel(true);
+      updateLangCheckmark();
       $('langDropdown').classList.remove('open');
       if(currentResults.length > 0) renderResults();
     });
   });
+  updateLangCheckmark();
 
   // Outbound calendar
   $('datePickerBtn').addEventListener('click', e => {

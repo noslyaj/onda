@@ -6,6 +6,11 @@
       "has": [{ "type": "host", "value": "ondas.cv" }],
       "destination": "https://www.ondas.cv/$1",
       "permanent": true
+    },
+    {
+      "source": "/cv-interilhas-pt",
+      "destination": "/pt/cv-interilhas",
+      "permanent": true
     }
   ],
   "headers": [

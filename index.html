@@ -19,7 +19,7 @@
 <meta property="og:url" content="https://www.ondas.cv">
 <meta property="og:title" content="Ondas – Cabo Verde Ferry Schedules">
 <meta property="og:description" content="Real ferry schedules across all 9 Cabo Verde islands. CV Interilhas and Nôs Ferry departure times, prices and booking links.">
-<meta property="og:image" content="https://www.ondas.cv/Santo_Antao.webp">
+<meta property="og:image" content="https://www.ondas.cv/og-image.webp">
 <meta property="og:image:type" content="image/webp">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -34,7 +34,7 @@
 <meta name="twitter:url" content="https://www.ondas.cv">
 <meta name="twitter:title" content="Ondas – Cabo Verde Ferry Schedules">
 <meta name="twitter:description" content="Real ferry schedules across all 9 Cabo Verde islands. CV Interilhas and Nôs Ferry departure times, prices and booking links.">
-<meta name="twitter:image" content="https://www.ondas.cv/Santo_Antao.webp">
+<meta name="twitter:image" content="https://www.ondas.cv/og-image.webp">
 
 <!-- Geo targeting -->
 <meta name="geo.region" content="CV">
@@ -200,18 +200,18 @@ tailwind.config = {
     <div class="flex items-center gap-1">
       <button id="installBtn" onclick="triggerInstall()" style="display:none;width:44px;height:44px" class="flex items-center justify-center rounded-full hover:bg-white/10 transition-colors" aria-label="Install app">
         <span class="material-symbols-outlined text-white/90" aria-hidden="true" style="font-size:22px">download</span>
-      </button>
-      <button onclick="toggleCurrency()" id="currencyBtn" class="px-2 py-1 text-white/90 hover:bg-white/10 rounded-lg transition-colors text-[11px] font-bold tracking-wider">EUR</button>
+      </a>
+      <button onclick="toggleCurrency()" id="currencyBtn" class="px-2 py-1 text-white/90 hover:bg-white/10 rounded-lg transition-colors text-[11px] font-bold tracking-wider">EUR</a>
       <div class="relative">
       <button id="langBtn" class="flex items-center justify-center" style="width:44px;height:44px" aria-label="Language">
         <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:24px">language</span>
-      </button>
+      </a>
       <div id="langDropdown" class="lang-dropdown bg-white rounded-xl shadow-xl overflow-hidden" style="min-width:160px">
-        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="KEA">🇨🇻 Kriolu</button>
-        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="PT">🇵🇹 Português</button>
-        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="EN">🇬🇧 English</button>
-        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="FR">🇫🇷 Français</button>
-        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="DE">🇩🇪 Deutsch</button>
+        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="KEA">🇨🇻 Kriolu</a>
+        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="PT">🇵🇹 Português</a>
+        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="EN">🇬🇧 English</a>
+        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="FR">🇫🇷 Français</a>
+        <button class="lang-opt flex items-center gap-3 w-full px-4 py-3 hover:bg-surface-container-low text-sm font-medium text-on-surface" data-lang="DE">🇩🇪 Deutsch</a>
       </div>
       </div>
     </div>
@@ -226,7 +226,8 @@ tailwind.config = {
   <div class="gradient-bg relative" style="height:280px;margin-top:-56px;padding-top:56px">
     <div class="flex flex-col items-center justify-center h-full px-6 text-center">
       <p data-i18n="hero_sub" class="text-white/70 text-xs uppercase tracking-widest mb-3"></p>
-      <h1 class="font-serif-italic text-white" style="font-size:44px;line-height:1.1">Ilha a ilha.</h1>
+      <h1 class="text-white font-bold" style="font-size:28px;line-height:1.2">Cape Verde Ferry Schedule — All 9 Islands</h1>
+      <p class="font-serif-italic text-white/80 mt-2" style="font-size:20px">Ilha a ilha.</p>
     </div>
     <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 480 32" preserveAspectRatio="none" style="height:32px">
       <path d="M0,32 C120,0 360,0 480,32 L480,32 L0,32 Z" fill="#faf8ff"/>
@@ -237,7 +238,7 @@ tailwind.config = {
   <div class="bg-white rounded-[22px] mx-5 sm:mx-auto sm:max-w-lg -mt-10 relative z-10 shadow-xl p-6 sm:p-8">
     <div class="flex gap-2 mb-4">
       <button id="toggleOneWay" onclick="setTripType('one-way')" data-i18n="one_way"
-        class="flex-1 py-2 rounded-xl text-[13px] font-bold transition-all bg-[#0f2557] text-white">One way</button>
+        class="flex-1 py-2 rounded-xl text-[13px] font-bold transition-all bg-[#0f2557] text-white">One way</a>
       <button id="toggleReturn" onclick="setTripType('return')" data-i18n="return_trip"
         class="flex-1 py-2 rounded-xl text-[13px] font-bold transition-all bg-surface-container-low text-slate-400">Return</button>
     </div>
@@ -254,7 +255,7 @@ tailwind.config = {
     <div class="flex justify-center -my-2 relative z-10">
       <button id="swapBtn" class="swap-rotate flex items-center justify-center bg-secondary-container rounded-full shadow-md" style="width:40px;height:40px">
         <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:20px">swap_vert</span>
-      </button>
+      </a>
     </div>
 
     <div class="mb-4 mt-2">
@@ -274,7 +275,7 @@ tailwind.config = {
         <button id="datePickerBtn" type="button" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent text-left flex items-center justify-between">
           <span id="datePickerLabel">Select date</span>
           <span class="material-symbols-outlined text-outline" aria-hidden="true" style="font-size:18px">calendar_today</span>
-        </button>
+        </a>
         <input type="hidden" id="inputDate">
         <div id="calendarDropdown" class="hidden absolute left-0 right-0 top-full mt-1 bg-white rounded-[18px] shadow-xl border border-outline-variant/40 z-50 p-4" style="min-width:280px"></div>
       </div>
@@ -288,31 +289,31 @@ tailwind.config = {
           <div class="flex items-center justify-between">
             <div><p class="text-[14px] font-semibold text-primary-container" data-i18n="adult">Adult</p><p class="text-[11px] text-outline">12+</p></div>
             <div class="flex items-center gap-3">
-              <button onclick="adjustPax('adults',-1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">−</button>
+              <button onclick="adjustPax('adults',-1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">−</a>
               <span id="adultsCount" class="text-[16px] font-bold text-primary-container w-4 text-center">1</span>
-              <button onclick="adjustPax('adults',1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">+</button>
+              <button onclick="adjustPax('adults',1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">+</a>
             </div>
           </div>
           <div class="flex items-center justify-between">
             <div><p class="text-[14px] font-semibold text-primary-container" data-i18n="child">Child</p><p class="text-[11px] text-outline" data-i18n="children_age">Ages 3-11</p></div>
             <div class="flex items-center gap-3">
-              <button onclick="adjustPax('children',-1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">−</button>
+              <button onclick="adjustPax('children',-1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">−</a>
               <span id="childrenCount" class="text-[16px] font-bold text-primary-container w-4 text-center">0</span>
-              <button onclick="adjustPax('children',1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">+</button>
+              <button onclick="adjustPax('children',1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">+</a>
             </div>
           </div>
           <div class="flex items-center justify-between">
             <div><p class="text-[14px] font-semibold text-primary-container" data-i18n="infant">Infant</p><p class="text-[11px] text-outline" data-i18n="infant_age">Under 3 — free</p></div>
             <div class="flex items-center gap-3">
-              <button onclick="adjustPax('infants',-1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">−</button>
+              <button onclick="adjustPax('infants',-1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">−</a>
               <span id="infantsCount" class="text-[16px] font-bold text-primary-container w-4 text-center">0</span>
-              <button onclick="adjustPax('infants',1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">+</button>
+              <button onclick="adjustPax('infants',1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">+</a>
             </div>
           </div>
           <div class="bg-tertiary-fixed/20 rounded-xl px-3 py-2">
             <p class="text-[11px] text-on-tertiary-fixed-variant leading-relaxed">Children 3-11 pay 50% of adult fare. Infants under 3 travel free.</p>
           </div>
-          <button onclick="closePassengerPicker()" class="gradient-btn w-full py-2.5 rounded-xl text-white font-bold text-[13px]">Done</button>
+          <button onclick="closePassengerPicker()" class="gradient-btn w-full py-2.5 rounded-xl text-white font-bold text-[13px]">Done</a>
         </div>
       </div>
     </div>
@@ -324,15 +325,14 @@ tailwind.config = {
           <button id="returnDatePickerBtn" type="button" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent text-left flex items-center justify-between">
             <span id="returnDatePickerLabel">Select date</span>
             <span class="material-symbols-outlined text-outline" aria-hidden="true" style="font-size:18px">calendar_today</span>
-          </button>
+          </a>
           <input type="hidden" id="returnDate">
           <div id="returnCalendarDropdown" class="hidden absolute left-0 right-0 top-full mt-1 bg-white rounded-[18px] shadow-xl border border-outline-variant/40 z-50 p-4" style="min-width:280px"></div>
         </div>
       </div>
     </div>
 
-    <button id="searchBtn" data-i18n="search_btn" class="gradient-btn w-full rounded-xl py-3.5 text-white font-semibold text-sm shadow-lg opacity-50 pointer-events-none flex items-center justify-center gap-2" disabled>
-    </button>
+    <button id="searchBtn" data-i18n="search_btn" class="gradient-btn w-full rounded-xl py-3.5 text-white font-semibold text-sm shadow-lg opacity-50 pointer-events-none flex items-center justify-center gap-2" disabled>Search ferries</a>
   </div>
 
   <!-- Value proposition -->
@@ -357,8 +357,8 @@ tailwind.config = {
   <div class="mt-6 px-5 sm:px-0 content-wrap">
     <h3 data-i18n="recent" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-5 mb-3"></h3>
     <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="SV" data-to="SA">São Vicente → Santo Antão</button>
-      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="ST" data-to="FG">Santiago → Fogo</button>
+      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="SV" data-to="SA">São Vicente → Santo Antão</a>
+      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="ST" data-to="FG">Santiago → Fogo</a>
     </div>
   </div>
 
@@ -367,7 +367,7 @@ tailwind.config = {
     <h3 data-i18n="popular" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-5 mb-3"></h3>
     <div class="space-y-3">
 
-      <button class="popular-card w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" data-from="SV" data-to="SA" style="max-width:calc(100% - 40px)">
+      <a href="/routes/sao-vicente-santo-antao" class="popular-card block w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" style="max-width:calc(100% - 40px)">
         <div class="relative h-40">
           <img src="/Santo_Antao.webp" width="1386" height="924" alt="Fontainhas village in the mountains of Santo Antão, Cabo Verde" class="w-full h-full object-cover">
           <span class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 text-xs font-bold text-secondary">From €14</span>
@@ -376,9 +376,9 @@ tailwind.config = {
           <p class="font-serif-italic text-primary-container" style="font-size:18px">São Vicente → Santo Antão</p>
           <p class="text-xs text-slate-400 mt-1">60 min · 2 operators · From €14</p>
         </div>
-      </button>
+      </a>
 
-      <button class="popular-card w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" data-from="ST" data-to="FG" style="max-width:calc(100% - 40px)">
+      <a href="/routes/praia-fogo" class="popular-card block w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" style="max-width:calc(100% - 40px)">
         <div class="relative h-40">
           <img src="/Fogo.webp" width="1470" height="981" alt="Pico do Fogo volcano and lava fields, Fogo island, Cabo Verde" class="w-full h-full object-cover" style="object-position: center top">
           <span class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 text-xs font-bold text-secondary">From €40</span>
@@ -387,9 +387,9 @@ tailwind.config = {
           <p class="font-serif-italic text-primary-container" style="font-size:18px">Santiago → Fogo</p>
           <p class="text-xs text-slate-400 mt-1">4h · CV Interilhas · From €40</p>
         </div>
-      </button>
+      </a>
 
-      <button class="popular-card w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" data-from="FG" data-to="BR" style="max-width:calc(100% - 40px)">
+      <a href="/routes/fogo-brava" class="popular-card block w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" style="max-width:calc(100% - 40px)">
         <div class="relative h-40">
           <img src="/Brava.webp" width="1620" height="590" alt="Fajã de Água bay and village, Brava island, Cabo Verde" class="w-full h-full object-cover">
           <span class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 text-xs font-bold text-secondary">From €14</span>
@@ -398,9 +398,9 @@ tailwind.config = {
           <p class="font-serif-italic text-primary-container" style="font-size:18px">Fogo → Brava</p>
           <p class="text-xs text-slate-400 mt-1">1h · CV Interilhas · From €14</p>
         </div>
-      </button>
+      </a>
 
-      <button class="popular-card w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" data-from="ST" data-to="MA" style="max-width:calc(100% - 40px)">
+      <a href="/routes/praia-maio" class="popular-card block w-full rounded-xl overflow-hidden shadow-md border border-slate-100 mx-5 text-left active:scale-[0.98] transition-all" style="max-width:calc(100% - 40px)">
         <div class="relative h-40">
           <img src="/Maio.webp" width="1542" height="580" alt="Aerial view of Vila do Maio and turquoise ocean, Maio island, Cabo Verde" class="w-full h-full object-cover">
           <span class="absolute top-3 left-3 bg-white/95 backdrop-blur rounded-full px-3 py-1 text-xs font-bold text-secondary">From €21</span>
@@ -409,7 +409,7 @@ tailwind.config = {
           <p class="font-serif-italic text-primary-container" style="font-size:18px">Santiago → Maio</p>
           <p class="text-xs text-slate-400 mt-1">2h · CV Interilhas · From €21</p>
         </div>
-      </button>
+      </a>
 
     </div>
   </div>
@@ -468,16 +468,16 @@ tailwind.config = {
     </div>
     <button id="editSearch" class="flex items-center justify-center" style="width:44px;height:44px">
       <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:20px">edit</span>
-    </button>
+    </a>
   </div>
 
   <!-- Sort bar -->
   <div class="sticky bg-white border-b border-outline-variant px-5 sm:px-6 py-3 flex items-center gap-3 z-40" style="top:56px">
     <span data-i18n="sort_by" class="text-xs text-outline font-medium"></span>
     <div class="flex gap-1.5">
-      <button class="sort-pill active-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="time" data-i18n="sort_time"></button>
-      <button class="sort-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="price" data-i18n="sort_price"></button>
-      <button class="sort-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="duration" data-i18n="sort_dur"></button>
+      <button class="sort-pill active-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="time" data-i18n="sort_time"></a>
+      <button class="sort-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="price" data-i18n="sort_price"></a>
+      <button class="sort-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="duration" data-i18n="sort_dur"></a>
     </div>
   </div>
 
@@ -509,7 +509,7 @@ tailwind.config = {
     <p class="text-5xl mb-4">🌊</p>
     <p data-i18n="no_results" class="text-lg font-semibold text-on-surface mb-2"></p>
     <p data-i18n="no_results_sub" class="text-sm text-outline mb-6 leading-relaxed"></p>
-    <button id="newSearchBtn" data-i18n="new_search" class="gradient-btn rounded-xl px-6 py-3 text-white font-semibold text-sm"></button>
+    <button id="newSearchBtn" data-i18n="new_search" class="gradient-btn rounded-xl px-6 py-3 text-white font-semibold text-sm"></a>
   </div>
 
   <!-- Warning -->
@@ -524,11 +524,11 @@ tailwind.config = {
   <div class="gradient-bg flex items-center justify-between px-4 sm:px-6" style="height:56px;margin-top:-56px;padding-top:56px;height:calc(56px + 56px)">
     <button id="backBtn" class="flex items-center justify-center" style="width:44px;height:44px">
       <span class="material-symbols-outlined text-white" aria-hidden="true">arrow_back</span>
-    </button>
+    </a>
     <span class="font-serif-italic text-white" style="font-size:22px">ondas</span>
     <button id="shareBtn" class="flex items-center justify-center" style="width:44px;height:44px">
       <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:22px">share</span>
-    </button>
+    </a>
   </div>
 
   <!-- Operator banner -->
@@ -632,7 +632,7 @@ tailwind.config = {
     <button id="copyBtn" class="flex-1 bg-surface-container-low rounded-xl py-3 text-center text-sm font-semibold text-secondary flex items-center justify-center gap-2" style="min-height:44px">
       <span class="material-symbols-outlined" aria-hidden="true" style="font-size:18px">content_copy</span>
       <span id="copyText" data-i18n="copy"></span>
-    </button>
+    </a>
   </div>
 
   <!-- Warning -->
@@ -686,7 +686,7 @@ tailwind.config = {
   <div class="gradient-bg px-6 pt-6 pb-10 relative" style="margin-top:-56px;padding-top:calc(56px + 24px)">
     <button onclick="screenHistory.pop();showScreen(screenHistory[screenHistory.length-1]||'home','left')" class="absolute left-4 top-[68px] flex items-center justify-center" style="width:44px;height:44px">
       <span class="material-symbols-outlined text-white" aria-hidden="true">arrow_back</span>
-    </button>
+    </a>
     <div class="text-center">
       <p class="text-white/70 text-xs uppercase tracking-widest mb-2">ondas.cv</p>
       <h2 class="font-serif-italic text-white" style="font-size:32px;line-height:1.2" data-i18n="about">About</h2>
@@ -766,7 +766,7 @@ tailwind.config = {
   <div class="gradient-bg px-6 pt-6 pb-10 relative" style="margin-top:-56px;padding-top:calc(56px + 24px)">
     <button onclick="screenHistory.pop();showScreen(screenHistory[screenHistory.length-1]||'home','left')" class="absolute left-4 top-[68px] flex items-center justify-center" style="width:44px;height:44px">
       <span class="material-symbols-outlined text-white" aria-hidden="true">arrow_back</span>
-    </button>
+    </a>
     <div class="text-center">
       <p class="text-white/70 text-xs uppercase tracking-widest mb-2">ondas.cv</p>
       <h2 class="font-serif-italic text-white" style="font-size:32px;line-height:1.2" data-i18n="contact">Contact</h2>
@@ -811,15 +811,15 @@ tailwind.config = {
     <button class="nav-tab flex flex-col items-center justify-center gap-0.5 active" data-screen="home" style="min-width:64px;min-height:44px">
       <span class="material-symbols-outlined" aria-hidden="true" style="font-size:22px">home</span>
       <span data-i18n="nav_home" class="text-[10px] font-medium"></span>
-    </button>
+    </a>
     <button class="nav-tab flex flex-col items-center justify-center gap-0.5" data-screen="search" style="min-width:64px;min-height:44px">
       <span class="material-symbols-outlined" aria-hidden="true" style="font-size:22px">search</span>
       <span data-i18n="nav_search" class="text-[10px] font-medium"></span>
-    </button>
+    </a>
     <button class="nav-tab flex flex-col items-center justify-center gap-0.5" data-screen="lines" style="min-width:64px;min-height:44px">
       <span class="material-symbols-outlined" aria-hidden="true" style="font-size:22px">directions_boat</span>
       <span data-i18n="nav_lines" class="text-[10px] font-medium"></span>
-    </button>
+    </a>
   </div>
 </nav>
 
@@ -1301,7 +1301,7 @@ async function fetchAlert() {
         </div>
         <button onclick="dismissAlert('${alert.updated}')" class="flex-shrink-0 text-white/70 hover:text-white transition-colors p-1" aria-label="Dismiss">
           <span class="material-symbols-outlined" aria-hidden="true" style="font-size:18px">close</span>
-        </button>
+        </a>
       </div>`;
 
     window._activeAlert = alert;
@@ -1434,7 +1434,7 @@ function buildCard(s) {
         Select →
       </span>
     </div>
-  </button>`;
+  </a>`;
 }
 
 function attachCardHandlers(container) {
@@ -1699,11 +1699,11 @@ function renderCal(dropdownId, btnId, viewDate, isReturn) {
   let html = `<div class="flex items-center justify-between mb-3">
     <button type="button" class="cal-nav flex items-center justify-center" style="width:32px;height:32px" data-dir="-1">
       <span class="material-symbols-outlined text-on-surface-variant" aria-hidden="true" style="font-size:18px">chevron_left</span>
-    </button>
+    </a>
     <span class="text-sm font-semibold text-on-surface">${monthNames[month]} ${year}</span>
     <button type="button" class="cal-nav flex items-center justify-center" style="width:32px;height:32px" data-dir="1">
       <span class="material-symbols-outlined text-on-surface-variant" aria-hidden="true" style="font-size:18px">chevron_right</span>
-    </button>
+    </a>
   </div><div class="cal-grid">`;
 
   dayHeaders.forEach(d => { html += `<div class="cal-header">${d}</div>`; });

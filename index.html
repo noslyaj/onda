@@ -279,42 +279,10 @@ tailwind.config = {
         <input type="hidden" id="inputDate">
         <div id="calendarDropdown" class="hidden absolute left-0 right-0 top-full mt-1 bg-white rounded-[18px] shadow-xl border border-outline-variant/40 z-50 p-4" style="min-width:280px"></div>
       </div>
-      <div class="flex-1 relative">
+      <div class="flex-1">
         <label data-i18n="passengers" class="block text-xs font-semibold text-on-surface-variant uppercase tracking-wide mb-1.5"></label>
-        <div class="bg-surface-container-low rounded-xl px-4 py-3 border border-transparent cursor-pointer flex items-center gap-2" id="passengerPickerBtn" onclick="togglePassengerPicker()">
-          <span class="material-symbols-outlined text-outline" aria-hidden="true" style="font-size:18px">person</span>
-          <span id="passengerSummary" class="text-sm font-medium text-on-surface">1 Adult</span>
-        </div>
-        <div id="passengerPicker" style="display:none" class="absolute z-50 bg-white rounded-[18px] shadow-xl border border-outline-variant/40 p-4 space-y-4 right-0 top-full mt-1" style="min-width:260px" onclick="event.stopPropagation()">
-          <div class="flex items-center justify-between">
-            <div><p class="text-[14px] font-semibold text-primary-container" data-i18n="adult">Adult</p><p class="text-[11px] text-outline">12+</p></div>
-            <div class="flex items-center gap-3">
-              <button onclick="adjustPax('adults',-1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">−</a>
-              <span id="adultsCount" class="text-[16px] font-bold text-primary-container w-4 text-center">1</span>
-              <button onclick="adjustPax('adults',1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">+</a>
-            </div>
-          </div>
-          <div class="flex items-center justify-between">
-            <div><p class="text-[14px] font-semibold text-primary-container" data-i18n="child">Child</p><p class="text-[11px] text-outline" data-i18n="children_age">Ages 3-11</p></div>
-            <div class="flex items-center gap-3">
-              <button onclick="adjustPax('children',-1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">−</a>
-              <span id="childrenCount" class="text-[16px] font-bold text-primary-container w-4 text-center">0</span>
-              <button onclick="adjustPax('children',1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">+</a>
-            </div>
-          </div>
-          <div class="flex items-center justify-between">
-            <div><p class="text-[14px] font-semibold text-primary-container" data-i18n="infant">Infant</p><p class="text-[11px] text-outline" data-i18n="infant_age">Under 3 — free</p></div>
-            <div class="flex items-center gap-3">
-              <button onclick="adjustPax('infants',-1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">−</a>
-              <span id="infantsCount" class="text-[16px] font-bold text-primary-container w-4 text-center">0</span>
-              <button onclick="adjustPax('infants',1)" class="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-primary-container font-bold text-[16px]">+</a>
-            </div>
-          </div>
-          <div class="bg-tertiary-fixed/20 rounded-xl px-3 py-2">
-            <p class="text-[11px] text-on-tertiary-fixed-variant leading-relaxed">Children 3-11 pay 50% of adult fare. Infants under 3 travel free.</p>
-          </div>
-          <button onclick="closePassengerPicker()" class="gradient-btn w-full py-2.5 rounded-xl text-white font-bold text-[13px]">Done</a>
-        </div>
+        <select id="selPax" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent focus:border-secondary-container">
+        </select>
       </div>
     </div>
 
@@ -1003,25 +971,8 @@ function toggleCurrency() {
   if(currentResults.length > 0) renderResults();
   if(selectedTrip && currentScreen === 'detail') showDetail();
 }
-let numAdults = 1;
-let numChildren = 0;
-let numInfants = 0;
 let searchState = { from: '', to: '', date: '', pax: 1, tripType: 'one-way', returnDate: null };
 
-function togglePassengerPicker() {
-  const p = $('passengerPicker');
-  if(p) p.style.display = p.style.display === 'none' ? 'block' : 'none';
-}
-function closePassengerPicker() {
-  const p = $('passengerPicker');
-  if(p) p.style.display = 'none';
-}
-function adjustPax(type, delta) {
-  if(type === 'adults') { numAdults = Math.max(1, Math.min(8, numAdults + delta)); $('adultsCount').textContent = numAdults; }
-  else if(type === 'children') { numChildren = Math.max(0, Math.min(8, numChildren + delta)); $('childrenCount').textContent = numChildren; }
-  else if(type === 'infants') { numInfants = Math.max(0, Math.min(numAdults, numInfants + delta)); $('infantsCount').textContent = numInfants; }
-  updatePassengerSummary();
-}
 function updateLangCheckmark() {
   document.querySelectorAll('.lang-opt').forEach(btn => {
     const isActive = btn.dataset.lang === currentLang;
@@ -1033,15 +984,6 @@ function updateLangCheckmark() {
       btn.appendChild(dot);
     }
   });
-}
-
-function updatePassengerSummary() {
-  const parts = [];
-  parts.push(numAdults + ' ' + (numAdults === 1 ? t('adult') : t('adults')));
-  if(numChildren > 0) parts.push(numChildren + ' ' + (numChildren === 1 ? t('child') : t('children')));
-  if(numInfants > 0) parts.push(numInfants + ' ' + (numInfants === 1 ? t('infant') : t('infants')));
-  const el = $('passengerSummary');
-  if(el) el.textContent = parts.join(' · ');
 }
 
 function setTripType(type) {
@@ -1069,8 +1011,19 @@ function applyLang() {
   document.querySelectorAll('.sort-pill').forEach(p => {
     if(p.dataset.i18n) p.textContent = t(p.dataset.i18n);
   });
-  // Passenger summary
-  updatePassengerSummary();
+  // Pax options
+  const selPax = $('selPax');
+  if(selPax) {
+    const curVal = selPax.value;
+    selPax.innerHTML = '';
+    for(let i=1;i<=8;i++){
+      const opt=document.createElement('option');
+      opt.value=i;
+      opt.textContent=`${i} ${i===1?t('adult'):t('adults')}`;
+      selPax.appendChild(opt);
+    }
+    if(curVal) selPax.value = curVal;
+  }
   // Rebuild filtered dropdowns with new language labels
   if($('selFrom').value) { updateToDropdown(); } else { resetToDropdown(); }
   if($('selTo').value) { updateFromDropdown(); } else { resetFromDropdown(); }
@@ -1341,10 +1294,7 @@ function doSearch(from, to) {
   searchState.from = from || $('selFrom').value;
   searchState.to = to || $('selTo').value;
   searchState.date = $('inputDate').value;
-  searchState.pax = numAdults + numChildren;
-  searchState.adults = numAdults;
-  searchState.children = numChildren;
-  searchState.infants = numInfants;
+  searchState.pax = parseInt($('selPax').value) || 1;
   searchState.tripType = tripType;
   searchState.returnDate = tripType === 'return' ? $('returnDate').value : null;
   updatePageTitle(searchState.from, searchState.to);
@@ -1361,10 +1311,7 @@ function doSearch(from, to) {
   const datePart = searchState.tripType === 'return' && searchState.returnDate
     ? `${formatDate(searchState.date)} → ${formatDate(searchState.returnDate)}`
     : formatDate(searchState.date);
-  let paxStr = numAdults + ' ' + (numAdults===1?t('adult'):t('adults'));
-  if(numChildren>0) paxStr += ' · ' + numChildren + ' ' + (numChildren===1?t('child'):t('children'));
-  if(numInfants>0) paxStr += ' · ' + numInfants + ' ' + (numInfants===1?t('infant'):t('infants'));
-  $('ribbonMeta').textContent = `${datePart} · ${paxStr}`;
+  $('ribbonMeta').textContent = `${datePart} · ${searchState.pax} ${searchState.pax===1?t('adult'):t('adults')}`;
 
   currentSort = 'time';
   document.querySelectorAll('.sort-pill').forEach(p => {
@@ -1821,7 +1768,6 @@ function init() {
   });
   document.addEventListener('click', () => {
     $('langDropdown').classList.remove('open');
-    closePassengerPicker();
     closeCal('calendarDropdown', 'datePickerBtn');
     closeCal('returnCalendarDropdown', 'returnDatePickerBtn');
   });

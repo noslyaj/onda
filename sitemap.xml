@@ -1,214 +1,112 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
   <url>
-    <loc>https://www.ondas.cv</loc>
-    <lastmod>2026-04-29</lastmod>
+    <loc>https://www.ondas.cv/</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/pt"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/fr"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv/"/>
   </url>
+
   <url>
     <loc>https://www.ondas.cv/guide</loc>
-    <lastmod>2026-04-29</lastmod>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.ondas.cv/cv-interilhas</loc>
-    <lastmod>2026-04-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/routes/sao-vicente-santo-antao</loc>
-    <lastmod>2026-04-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/routes/mindelo-praia</loc>
-    <lastmod>2026-04-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/routes/praia-fogo</loc>
-    <lastmod>2026-04-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/routes/fogo-brava</loc>
-    <lastmod>2026-04-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/routes/praia-maio</loc>
-    <lastmod>2026-04-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/routes/porto-novo-mindelo</loc>
-    <lastmod>2026-04-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
+
   <url>
     <loc>https://www.ondas.cv/faq</loc>
-    <lastmod>2026-04-29</lastmod>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
   <url>
-    <loc>https://www.ondas.cv/routes/santiago-fogo</loc>
-    <lastmod>2026-04-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/pt/cv-interilhas</loc>
-    <lastmod>2026-04-29</lastmod>
+    <loc>https://www.ondas.cv/cv-interilhas</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv/cv-interilhas"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/pt/cv-interilhas"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv/cv-interilhas"/>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/routes/mindelo-porto-novo</loc>
-    <lastmod>2026-04-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-  <url>
-    <loc>https://www.ondas.cv/cv-interilhas-fr</loc>
-    <lastmod>2026-04-29</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv/cv-interilhas"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/pt/cv-interilhas"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/cv-interilhas-pt"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/cv-interilhas-fr"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv/cv-interilhas"/>
   </url>
+
   <url>
-    <loc>https://www.ondas.cv/fr</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/fr"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv"/>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/fr/cv-interilhas</loc>
-    <lastmod>2026-05-01</lastmod>
+    <loc>https://www.ondas.cv/cv-interilhas-pt</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv/cv-interilhas"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/fr/cv-interilhas"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/cv-interilhas-pt"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/cv-interilhas-fr"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv/cv-interilhas"/>
   </url>
+
   <url>
-    <loc>https://www.ondas.cv/fr/guide</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv/guide"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/fr/guide"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv/guide"/>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/de</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/fr"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://www.ondas.cv/de"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv"/>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/de/cv-interilhas</loc>
-    <lastmod>2026-05-01</lastmod>
+    <loc>https://www.ondas.cv/cv-interilhas-fr</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv/cv-interilhas"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://www.ondas.cv/de/cv-interilhas"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/cv-interilhas-pt"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/cv-interilhas-fr"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv/cv-interilhas"/>
   </url>
+
   <url>
-    <loc>https://www.ondas.cv/de/guide</loc>
-    <lastmod>2026-05-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv/guide"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://www.ondas.cv/de/guide"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv/guide"/>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/pt</loc>
-    <lastmod>2026-05-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.ondas.cv"/>
-    <xhtml:link rel="alternate" hreflang="pt" href="https://www.ondas.cv/pt"/>
-    <xhtml:link rel="alternate" hreflang="fr" href="https://www.ondas.cv/fr"/>
-    <xhtml:link rel="alternate" hreflang="de" href="https://www.ondas.cv/de"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ondas.cv"/>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/pt/cv-interilhas</loc>
-    <lastmod>2026-05-02</lastmod>
+    <loc>https://www.ondas.cv/routes/sao-vicente-santo-antao</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
   <url>
-    <loc>https://www.ondas.cv/pt/guide</loc>
-    <lastmod>2026-05-02</lastmod>
+    <loc>https://www.ondas.cv/routes/porto-novo-mindelo</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
   <url>
-    <loc>https://www.ondas.cv/routes/praia-sao-nicolau</loc>
-    <lastmod>2026-05-03</lastmod>
+    <loc>https://www.ondas.cv/routes/mindelo-porto-novo</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
   <url>
-    <loc>https://www.ondas.cv/routes/sal-boavista</loc>
-    <lastmod>2026-05-03</lastmod>
+    <loc>https://www.ondas.cv/routes/mindelo-praia</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
   <url>
-    <loc>https://www.ondas.cv/routes</loc>
-    <lastmod>2026-05-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.ondas.cv/routes/praia-brava</loc>
-    <lastmod>2026-05-05</lastmod>
+    <loc>https://www.ondas.cv/routes/praia-fogo</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
   <url>
-    <loc>https://www.ondas.cv/routes/brava-fogo</loc>
-    <lastmod>2026-05-05</lastmod>
+    <loc>https://www.ondas.cv/routes/praia-maio</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
   <url>
-    <loc>https://www.ondas.cv/routes/sao-vicente-sao-nicolau</loc>
-    <lastmod>2026-05-05</lastmod>
+    <loc>https://www.ondas.cv/routes/fogo-brava</loc>
+    <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
 </urlset>

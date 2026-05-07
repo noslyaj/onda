@@ -11,6 +11,11 @@
       "source": "/cv-interilhas-pt",
       "destination": "/pt/cv-interilhas",
       "permanent": true
+    },
+    {
+      "source": "/cv-interilhas-fr",
+      "destination": "/fr/cv-interilhas",
+      "permanent": true
     }
   ],
   "headers": [

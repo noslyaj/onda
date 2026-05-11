@@ -1259,8 +1259,9 @@ async function fetchAlert() {
     const title = alert['title_' + lang] || alert.title;
     const message = alert['message_' + lang] || alert.message;
 
+    const bgColor = alert.type === 'info' ? '#059669' : '#dc2626';
     $('alertContainer').innerHTML = `
-      <div id="serviceAlert" class="bg-red-600 text-white px-4 py-3 flex items-start gap-3">
+      <div id="serviceAlert" class="text-white px-4 py-3 flex items-start gap-3" style="background:${bgColor}">
         <span class="material-symbols-outlined flex-shrink-0 mt-0.5" aria-hidden="true" style="font-size:18px">warning</span>
         <div class="flex-1">
           <p class="text-[13px] font-bold leading-tight">${title}</p>

@@ -1781,15 +1781,23 @@ function init() {
 
   // Swap button
   $('swapBtn').addEventListener('click', () => {
-    const tmp = $('selFrom').value;
-    $('selFrom').value = $('selTo').value;
-    $('selTo').value = tmp;
-    const btn = $('swapBtn');
-    btn.classList.toggle('swap-rotated');
-    if($('selFrom').value) { updateToDropdown(); } else { resetToDropdown(); }
-    if($('selTo').value) { updateFromDropdown(); } else { resetFromDropdown(); }
-    if(calIsOpen('calendarDropdown')) renderCal('calendarDropdown','datePickerBtn',calViewDate,false);
-    if(calIsOpen('returnCalendarDropdown')) renderCal('returnCalendarDropdown','returnDatePickerBtn',retCalViewDate,true);
+    const fromVal = $('selFrom').value;
+    const toVal = $('selTo').value;
+
+    $('swapBtn').classList.toggle('swap-rotated');
+
+    if(!fromVal && !toVal) return;
+
+    $('selFrom').value = toVal;
+    if(toVal) { updateToDropdown(); } else { resetToDropdown(); }
+
+    setTimeout(() => {
+      $('selTo').value = fromVal;
+      if(fromVal) { updateFromDropdown(); } else { resetFromDropdown(); }
+      updateSearchBtn();
+      if(calIsOpen('calendarDropdown')) renderCal('calendarDropdown','datePickerBtn',calViewDate,false);
+      if(calIsOpen('returnCalendarDropdown')) renderCal('returnCalendarDropdown','returnDatePickerBtn',retCalViewDate,true);
+    }, 50);
   });
 
   // Search button

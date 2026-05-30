@@ -192,10 +192,10 @@ tailwind.config = {
 <!-- ===== HEADER (shared) ===== -->
 <header class="gradient-bg sticky top-0 z-50 shadow-lg" style="height:56px">
   <div class="flex items-center justify-between h-full px-4 sm:px-6 content-wrap">
-    <div class="flex items-center gap-2">
+    <button onclick="screenHistory=['home'];showScreen('home','left')" class="flex items-center gap-2 bg-transparent border-none cursor-pointer" style="padding:0" aria-label="Home">
       <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:24px">waves</span>
       <span class="font-serif-italic text-white" style="font-size:22px">ondas</span>
-    </div>
+    </button>
     <div class="flex items-center gap-1">
       <button id="installBtn" onclick="triggerInstall()" style="display:none;width:44px;height:44px" class="flex items-center justify-center rounded-full hover:bg-white/10 transition-colors" aria-label="Install app">
         <span class="material-symbols-outlined text-white/90" aria-hidden="true" style="font-size:22px">download</span>
@@ -430,8 +430,8 @@ tailwind.config = {
 <div id="screenResults" class="screen">
   <!-- Search summary ribbon -->
   <div class="bg-primary-container px-4 sm:px-6 py-3 flex items-center gap-3" style="margin-top:-56px;padding-top:calc(56px + 12px)">
-    <button id="editSearch" class="flex-shrink-0 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors" style="width:44px;height:44px" aria-label="Back to search">
-      <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:22px">arrow_back</span>
+    <button id="editSearch" class="flex-shrink-0 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors" style="width:40px;height:40px" aria-label="Back to search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
     </button>
     <div class="flex-1 min-w-0">
       <p id="ribbonRoute" class="text-white font-semibold text-sm truncate"></p>

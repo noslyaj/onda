@@ -1439,7 +1439,7 @@ function buildCard(s) {
   } else if(isRescheduled) {
     badgeHtml = '<span class="absolute top-0 left-0 text-[10px] font-bold px-3 py-1.5 rounded-br-xl rounded-tl-[22px] bg-amber-500 text-white">ALTERADO</span>';
   } else if(isExtra) {
-    badgeHtml = '<span class="absolute top-0 left-0 text-[10px] font-bold px-3 py-1.5 rounded-br-xl rounded-tl-[22px] border border-amber-300" style="background:#fef9e7;color:#92710c">EXTRA</span>';
+    badgeHtml = '';
   } else if(s.badge) {
     badgeHtml = `<span class="absolute top-0 left-0 text-[10px] font-bold px-3 py-1.5 rounded-br-xl rounded-tl-[22px]" style="background:${s.badgeType==='gold'?'#fcbb2f':'#ffdea7'};color:#5e4200">${s.badge}</span>`;
   }
@@ -1459,6 +1459,7 @@ function buildCard(s) {
     ${badgeHtml}
     <div class="flex items-start justify-between mb-3">
       <div>
+        ${isExtra ? '<span class="inline-block text-[9px] font-bold px-2 py-0.5 rounded-full border border-amber-300 mb-1" style="background:#fef9e7;color:#92710c">EXTRA</span>' : ''}
         <h3 class="font-bold text-[17px] text-[#0f2557] leading-tight">${s.vessel}</h3>
         <p class="text-[10px] uppercase tracking-wider text-slate-400 mt-0.5">${s.vessel} · ${s.operator}</p>
       </div>

@@ -239,7 +239,7 @@ tailwind.config = {
   <div class="bg-white rounded-[22px] mx-5 sm:mx-auto sm:max-w-lg -mt-10 relative z-10 shadow-xl p-6 sm:p-8">
     <div class="flex gap-2 mb-4">
       <button id="toggleOneWay" onclick="setTripType('one-way')" data-i18n="one_way"
-        class="flex-1 py-2 rounded-xl text-[13px] font-bold transition-all bg-[#0f2557] text-white">One way</a>
+        class="flex-1 py-2 rounded-xl text-[13px] font-bold transition-all bg-[#0f2557] text-white">One way</button>
       <button id="toggleReturn" onclick="setTripType('return')" data-i18n="return_trip"
         class="flex-1 py-2 rounded-xl text-[13px] font-bold transition-all bg-surface-container-low text-slate-400">Return</button>
     </div>
@@ -256,7 +256,7 @@ tailwind.config = {
     <div class="flex justify-center -my-2 relative z-10">
       <button id="swapBtn" class="swap-rotate flex items-center justify-center bg-secondary-container rounded-full shadow-md" style="width:40px;height:40px">
         <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:20px">swap_vert</span>
-      </a>
+      </button>
     </div>
 
     <div class="mb-4 mt-2">
@@ -276,7 +276,7 @@ tailwind.config = {
         <button id="datePickerBtn" type="button" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent text-left flex items-center justify-between">
           <span id="datePickerLabel">Select date</span>
           <span class="material-symbols-outlined text-outline" aria-hidden="true" style="font-size:18px">calendar_today</span>
-        </a>
+        </button>
         <input type="hidden" id="inputDate">
         <div id="calendarDropdown" class="hidden absolute left-0 right-0 top-full mt-1 bg-white rounded-[18px] shadow-xl border border-outline-variant/40 z-50 p-4" style="min-width:280px"></div>
       </div>
@@ -294,14 +294,14 @@ tailwind.config = {
           <button id="returnDatePickerBtn" type="button" class="w-full bg-surface-container-low rounded-xl px-4 py-3 text-sm font-medium text-on-surface outline-none border border-transparent text-left flex items-center justify-between">
             <span id="returnDatePickerLabel">Select date</span>
             <span class="material-symbols-outlined text-outline" aria-hidden="true" style="font-size:18px">calendar_today</span>
-          </a>
+          </button>
           <input type="hidden" id="returnDate">
           <div id="returnCalendarDropdown" class="hidden absolute left-0 right-0 top-full mt-1 bg-white rounded-[18px] shadow-xl border border-outline-variant/40 z-50 p-4" style="min-width:280px"></div>
         </div>
       </div>
     </div>
 
-    <button id="searchBtn" data-i18n="search_btn" class="gradient-btn w-full rounded-xl py-3.5 text-white font-semibold text-sm shadow-lg opacity-50 pointer-events-none flex items-center justify-center gap-2" disabled>Search ferries</a>
+    <button id="searchBtn" data-i18n="search_btn" class="gradient-btn w-full rounded-xl py-3.5 text-white font-semibold text-sm shadow-lg opacity-50 pointer-events-none flex items-center justify-center gap-2" disabled>Search ferries</button>
   </div>
 
   <!-- SEO content (hidden from users, indexable by search engines) -->
@@ -324,8 +324,8 @@ tailwind.config = {
   <div class="mt-6 px-5 sm:px-0 content-wrap">
     <h3 data-i18n="recent" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-5 mb-3"></h3>
     <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="SV" data-to="SA">São Vicente → Santo Antão</a>
-      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="ST" data-to="FG">Santiago → Fogo</a>
+      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="SV" data-to="SA">São Vicente → Santo Antão</button>
+      <button class="recent-chip flex-shrink-0 bg-surface-container-low rounded-full px-4 py-2.5 text-xs font-medium text-on-surface whitespace-nowrap border border-outline-variant" data-from="ST" data-to="FG">Santiago → Fogo</button>
     </div>
   </div>
 
@@ -435,16 +435,16 @@ tailwind.config = {
     </div>
     <button id="editSearch" class="flex items-center justify-center" style="width:44px;height:44px">
       <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:20px">edit</span>
-    </a>
+    </button>
   </div>
 
   <!-- Sort bar -->
   <div class="sticky bg-white border-b border-outline-variant px-5 sm:px-6 py-3 flex items-center gap-3 z-40" style="top:56px">
     <span data-i18n="sort_by" class="text-xs text-outline font-medium"></span>
     <div class="flex gap-1.5">
-      <button class="sort-pill active-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="time" data-i18n="sort_time"></a>
-      <button class="sort-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="price" data-i18n="sort_price"></a>
-      <button class="sort-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="duration" data-i18n="sort_dur"></a>
+      <button class="sort-pill active-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="time" data-i18n="sort_time"></button>
+      <button class="sort-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="price" data-i18n="sort_price"></button>
+      <button class="sort-pill rounded-full px-3.5 py-1.5 text-xs font-semibold" data-sort="duration" data-i18n="sort_dur"></button>
     </div>
   </div>
 
@@ -476,7 +476,7 @@ tailwind.config = {
     <p class="text-5xl mb-4">🌊</p>
     <p data-i18n="no_results" class="text-lg font-semibold text-on-surface mb-2"></p>
     <p data-i18n="no_results_sub" class="text-sm text-outline mb-6 leading-relaxed"></p>
-    <button id="newSearchBtn" data-i18n="new_search" class="gradient-btn rounded-xl px-6 py-3 text-white font-semibold text-sm"></a>
+    <button id="newSearchBtn" data-i18n="new_search" class="gradient-btn rounded-xl px-6 py-3 text-white font-semibold text-sm"></button>
   </div>
 
   <!-- Warning -->
@@ -491,11 +491,11 @@ tailwind.config = {
   <div class="gradient-bg flex items-center justify-between px-4 sm:px-6" style="height:56px;margin-top:-56px;padding-top:56px;height:calc(56px + 56px)">
     <button id="backBtn" class="flex items-center justify-center" style="width:44px;height:44px">
       <span class="material-symbols-outlined text-white" aria-hidden="true">arrow_back</span>
-    </a>
+    </button>
     <span class="font-serif-italic text-white" style="font-size:22px">ondas</span>
     <button id="shareBtn" class="flex items-center justify-center" style="width:44px;height:44px">
       <span class="material-symbols-outlined text-white" aria-hidden="true" style="font-size:22px">share</span>
-    </a>
+    </button>
   </div>
 
   <!-- Operator banner -->
@@ -599,7 +599,7 @@ tailwind.config = {
     <button id="copyBtn" class="flex-1 bg-surface-container-low rounded-xl py-3 text-center text-sm font-semibold text-secondary flex items-center justify-center gap-2" style="min-height:44px">
       <span class="material-symbols-outlined" aria-hidden="true" style="font-size:18px">content_copy</span>
       <span id="copyText" data-i18n="copy"></span>
-    </a>
+    </button>
   </div>
 
   <!-- Warning -->
@@ -653,7 +653,7 @@ tailwind.config = {
   <div class="gradient-bg px-6 pt-6 pb-10 relative" style="margin-top:-56px;padding-top:calc(56px + 24px)">
     <button onclick="screenHistory.pop();showScreen(screenHistory[screenHistory.length-1]||'home','left')" class="absolute left-4 top-[68px] flex items-center justify-center" style="width:44px;height:44px">
       <span class="material-symbols-outlined text-white" aria-hidden="true">arrow_back</span>
-    </a>
+    </button>
     <div class="text-center">
       <p class="text-white/70 text-xs uppercase tracking-widest mb-2">ondas.cv</p>
       <h2 class="font-serif-italic text-white" style="font-size:32px;line-height:1.2" data-i18n="about">About</h2>
@@ -733,7 +733,7 @@ tailwind.config = {
   <div class="gradient-bg px-6 pt-6 pb-10 relative" style="margin-top:-56px;padding-top:calc(56px + 24px)">
     <button onclick="screenHistory.pop();showScreen(screenHistory[screenHistory.length-1]||'home','left')" class="absolute left-4 top-[68px] flex items-center justify-center" style="width:44px;height:44px">
       <span class="material-symbols-outlined text-white" aria-hidden="true">arrow_back</span>
-    </a>
+    </button>
     <div class="text-center">
       <p class="text-white/70 text-xs uppercase tracking-widest mb-2">ondas.cv</p>
       <h2 class="font-serif-italic text-white" style="font-size:32px;line-height:1.2" data-i18n="contact">Contact</h2>
@@ -778,15 +778,15 @@ tailwind.config = {
     <button class="nav-tab flex flex-col items-center justify-center gap-0.5 active" data-screen="home" style="min-width:64px;min-height:44px">
       <span class="material-symbols-outlined" aria-hidden="true" style="font-size:22px">home</span>
       <span data-i18n="nav_home" class="text-[10px] font-medium"></span>
-    </a>
+    </button>
     <button class="nav-tab flex flex-col items-center justify-center gap-0.5" data-screen="search" style="min-width:64px;min-height:44px">
       <span class="material-symbols-outlined" aria-hidden="true" style="font-size:22px">search</span>
       <span data-i18n="nav_search" class="text-[10px] font-medium"></span>
-    </a>
+    </button>
     <button class="nav-tab flex flex-col items-center justify-center gap-0.5" data-screen="lines" style="min-width:64px;min-height:44px">
       <span class="material-symbols-outlined" aria-hidden="true" style="font-size:22px">directions_boat</span>
       <span data-i18n="nav_lines" class="text-[10px] font-medium"></span>
-    </a>
+    </button>
   </div>
 </nav>
 
@@ -1273,7 +1273,7 @@ async function fetchAlert() {
         </div>
         <button onclick="dismissAlert('${alert.updated}')" class="flex-shrink-0 text-white/70 hover:text-white transition-colors p-1" aria-label="Dismiss">
           <span class="material-symbols-outlined" aria-hidden="true" style="font-size:18px">close</span>
-        </a>
+        </button>
       </div>`;
 
     window._activeAlert = alert;
@@ -1466,7 +1466,7 @@ function buildCard(s) {
       </div>
       ${selectBtn}
     </div>
-  </a>`;
+  </button>`;
 }
 
 function attachCardHandlers(container) {
@@ -1732,11 +1732,11 @@ function renderCal(dropdownId, btnId, viewDate, isReturn) {
   let html = `<div class="flex items-center justify-between mb-3">
     <button type="button" class="cal-nav flex items-center justify-center" style="width:32px;height:32px" data-dir="-1">
       <span class="material-symbols-outlined text-on-surface-variant" aria-hidden="true" style="font-size:18px">chevron_left</span>
-    </a>
+    </button>
     <span class="text-sm font-semibold text-on-surface">${monthNames[month]} ${year}</span>
     <button type="button" class="cal-nav flex items-center justify-center" style="width:32px;height:32px" data-dir="1">
       <span class="material-symbols-outlined text-on-surface-variant" aria-hidden="true" style="font-size:18px">chevron_right</span>
-    </a>
+    </button>
   </div><div class="cal-grid">`;
 
   dayHeaders.forEach(d => { html += `<div class="cal-header">${d}</div>`; });

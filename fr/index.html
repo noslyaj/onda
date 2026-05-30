@@ -1216,9 +1216,6 @@ function updateSearchBtn() {
 
 function formatDate(dateStr) {
   const d = new Date(dateStr + 'T00:00:00');
-  if(currentLang === 'EN') {
-    return `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}/${d.getFullYear()}`;
-  }
   return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
 }
 

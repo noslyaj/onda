@@ -986,7 +986,7 @@ function setTripType(type) {
 }
 
 const $ = id => document.getElementById(id);
-const t = key => STRINGS[currentLang][key] || key;
+const t = key => (STRINGS[currentLang] || STRINGS.EN)[key] || key;
 
 // ===== i18n =====
 function applyLang() {

@@ -61,6 +61,13 @@
   </url>
 
   <url>
+    <loc>https://www.ondas.cv/routes/sao-vicente-sao-nicolau</loc>
+    <lastmod>2026-06-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://www.ondas.cv/routes/sao-vicente-santo-antao</loc>
     <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>

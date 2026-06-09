@@ -1683,36 +1683,45 @@ function copyDetails() {
 function renderLines() {
   const lines = {};
   SCHEDULES.forEach(s => {
-    const key = s.line;
-    if(!lines[key]) lines[key] = { vessel: s.vessel, operator: s.operator, routes: new Set(), days: new Set() };
-    lines[key].routes.add(`${ISLANDS[s.from]} → ${ISLANDS[s.to]}`);
-    s.days.forEach(d => lines[key].days.add(d));
+    const key = s.operator + ' — ' + s.line;
+    if(!lines[key]) lines[key] = { vessel: s.vessel, operator: s.operator, line: s.line, routes: {} };
+    const routeKey = ISLANDS[s.from] + ' → ' + ISLANDS[s.to];
+    if(!lines[key].routes[routeKey]) lines[key].routes[routeKey] = { from: s.from, to: s.to, days: new Set() };
+    s.days.forEach(d => lines[key].routes[routeKey].days.add(d));
   });
+
+  const dayOrder = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const isCircuit = name => name.includes('Redonda') || name.includes('Sotavento');
 
   const container = $('linesContainer');
   container.innerHTML = Object.entries(lines).map(([name, info]) => {
-    const dayOrder = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-    const dayDots = dayOrder.map(d =>
-      `<span class="inline-flex items-center justify-center rounded-full text-[10px] font-semibold" style="width:28px;height:28px;${info.days.has(d)?'background:#326fe5;color:#fff':'background:#f3f2fe;color:#c5c6d0'}">${d.slice(0,2)}</span>`
-    ).join('');
+    const routes = Object.entries(info.routes).map(([routeName, route]) => {
+      const dots = dayOrder.map(d =>
+        `<span class="inline-flex items-center justify-center rounded-full text-[9px] font-semibold" style="width:22px;height:22px;${route.days.has(d)?'background:#326fe5;color:#fff':'background:#f3f2fe;color:#c5c6d0'}">${d.slice(0,2)}</span>`
+      ).join('');
+      return `<div class="flex items-center justify-between gap-2 py-1.5 border-b border-outline-variant/20 last:border-0">
+        <div class="flex items-center gap-2 text-sm text-on-surface min-w-0">
+          <span class="material-symbols-outlined text-secondary-container flex-shrink-0" aria-hidden="true" style="font-size:16px">arrow_forward</span>
+          <span class="truncate">${routeName}</span>
+        </div>
+        <div class="flex gap-0.5 flex-shrink-0">${dots}</div>
+      </div>`;
+    }).join('');
 
-    const routes = [...info.routes].map(r =>
-      `<div class="flex items-center gap-2 text-sm text-on-surface">
-        <span class="material-symbols-outlined text-secondary-container" aria-hidden="true" style="font-size:16px">arrow_forward</span>
-        ${r}
-      </div>`
-    ).join('');
+    const circuitNote = isCircuit(name)
+      ? '<p class="text-[10px] text-slate-400 mt-2 leading-relaxed">Days vary by rotation — check the live schedule for exact sailings.</p>'
+      : '';
 
     return `<div class="bg-white rounded-[22px] shadow-sm border border-outline-variant/30 p-5">
       <div class="flex items-start justify-between mb-3">
         <div>
-          <h3 class="font-semibold text-on-surface text-base">${name}</h3>
+          <h3 class="font-semibold text-on-surface text-base">${info.line}</h3>
           <p class="text-xs text-outline mt-0.5">${info.vessel} · ${info.operator}</p>
         </div>
         <span class="material-symbols-outlined text-secondary-container" aria-hidden="true" style="font-size:24px">directions_boat</span>
       </div>
-      <div class="space-y-1.5 mb-4">${routes}</div>
-      <div class="flex gap-1">${dayDots}</div>
+      <div class="space-y-0">${routes}</div>
+      ${circuitNote}
     </div>`;
   }).join('');
 }

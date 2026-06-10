@@ -213,6 +213,8 @@ tailwind.config = {
         <button class="lang-opt flex items-center justify-between w-full px-4 py-3 hover:bg-surface-container-low text-[14px] font-medium text-[#0f2557]" data-lang="PT">Português</button>
         <button class="lang-opt flex items-center justify-between w-full px-4 py-3 hover:bg-surface-container-low text-[14px] font-medium text-[#0f2557]" data-lang="EN">English</button>
         <button class="lang-opt flex items-center justify-between w-full px-4 py-3 hover:bg-surface-container-low text-[14px] font-medium text-[#0f2557]" data-lang="FR">Français</button>
+        <button class="lang-opt flex items-center justify-between w-full px-4 py-3 hover:bg-surface-container-low text-[14px] font-medium text-[#0f2557]" data-lang="DE">Deutsch</button>
+        <button class="lang-opt flex items-center justify-between w-full px-4 py-3 hover:bg-surface-container-low text-[14px] font-medium text-[#0f2557]" data-lang="ES">Español</button>
       </div>
       </div>
     </div>
@@ -1898,7 +1900,12 @@ function init() {
   document.querySelectorAll('.lang-opt').forEach(btn => {
     btn.addEventListener('click', e => {
       e.stopPropagation();
-      currentLang = btn.dataset.lang;
+      const lang = btn.dataset.lang;
+      if(lang !== currentLang && !STRINGS[lang]) {
+        const pages = {DE:'/de/',ES:'/es/',PT:'/pt/',FR:'/fr/',EN:'/'};
+        if(pages[lang]) { window.location.href = pages[lang]; return; }
+      }
+      currentLang = lang;
       trackEvent('Language Switch', {language:currentLang});
       applyLang();
       updateDateLabel(false);

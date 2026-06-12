@@ -1777,6 +1777,13 @@ function renderCal(dropdownId, btnId, viewDate, isReturn) {
   dayHeaders.forEach(d => { html += `<div class="cal-header">${d}</div>`; });
   for(let i = 0; i < startDow; i++) html += '<div></div>';
 
+  const routeExtras = (() => {
+    const from = $('selFrom').value, to = $('selTo').value;
+    if(!from || !to) return [];
+    const f = isReturn ? to : from, t = isReturn ? from : to;
+    return window._disruptions.filter(d => d.type === 'extra' && d.extra && d.affects && d.affects.from === f && d.affects.to === t);
+  })();
+
   for(let d = 1; d <= lastDay.getDate(); d++) {
     const date = new Date(year, month, d);
     const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
@@ -1785,13 +1792,14 @@ function renderCal(dropdownId, btnId, viewDate, isReturn) {
     const isSelected = dateStr === selectedVal;
     const dow = DAY_NAMES[date.getDay()];
     const hasFerry = routeDays ? routeDays.has(dow) : true;
-    const disabled = isPast || (routeDays && !hasFerry);
+    const hasExtra = !hasFerry && routeExtras.some(d => dateStr >= d.validFrom && dateStr <= d.validUntil);
+    const disabled = isPast || (routeDays && !hasFerry && !hasExtra);
 
     let cls = 'cal-day';
     if(disabled) cls += ' cal-disabled';
     if(isToday) cls += ' cal-today';
     if(isSelected) cls += ' cal-selected';
-    const dot = (routeDays && hasFerry && !disabled) ? '<span class="cal-dot"></span>' : '';
+    const dot = (routeDays && (hasFerry || hasExtra) && !disabled) ? '<span class="cal-dot"></span>' : '';
     html += `<div class="${cls}" data-date="${dateStr}">${d}${dot}</div>`;
   }
 

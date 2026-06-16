@@ -117,6 +117,13 @@
   </url>
 
   <url>
+    <loc>https://www.ondas.cv/routes/fogo-praia</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://www.ondas.cv/routes/praia-maio</loc>
     <lastmod>2026-05-06</lastmod>
     <changefreq>monthly</changefreq>

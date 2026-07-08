@@ -2056,5 +2056,63 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+<!-- Language suggestion banner (client-side only; no redirect, no head changes) -->
+<script>
+(function(){
+  var PAGES = {en:'/', pt:'/pt/', fr:'/fr/', de:'/de/', es:'/es/'};
+  var TEXTS = {
+    en:{msg:'View Ondas in English?', view:'View', dismiss:'Dismiss'},
+    pt:{msg:'Ver o Ondas em portugu\u00eas?', view:'Ver', dismiss:'Dispensar'},
+    fr:{msg:'Voir Ondas en fran\u00e7ais ?', view:'Voir', dismiss:'Fermer'},
+    de:{msg:'Ondas auf Deutsch ansehen?', view:'Ansehen', dismiss:'Schlie\u00dfen'},
+    es:{msg:'\u00bfVer Ondas en espa\u00f1ol?', view:'Ver', dismiss:'Cerrar'}
+  };
+  var KEY = 'ondas_lang_pref_dismissed';
+  function init(){
+    try {
+      var pageLang = (document.documentElement.lang || 'en').slice(0,2).toLowerCase();
+      var base = (navigator.language || '').slice(0,2).toLowerCase();
+      if(!PAGES[base] || base === pageLang) return;
+      if(localStorage.getItem(KEY)) return;
+      var t = TEXTS[base];
+      var bar = document.createElement('div');
+      bar.id = 'langSuggestBanner';
+      bar.setAttribute('role','dialog');
+      bar.setAttribute('aria-label', t.msg);
+      bar.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:72px;z-index:49;max-width:464px;width:calc(100% - 16px);background:#0f2557;color:#f4ead5;border-radius:12px;box-shadow:0 4px 16px rgba(15,37,87,.35);padding:10px 12px;display:flex;align-items:center;gap:10px;font-size:13px;line-height:1.4';
+      var msg = document.createElement('span');
+      msg.style.cssText = 'flex:1';
+      msg.textContent = t.msg;
+      var view = document.createElement('button');
+      view.type = 'button';
+      view.textContent = t.view;
+      view.style.cssText = 'background:#d85a30;color:#fff;font-weight:700;font-size:13px;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;min-height:36px';
+      var close = document.createElement('button');
+      close.type = 'button';
+      close.setAttribute('aria-label', t.dismiss);
+      close.textContent = '\u00d7';
+      close.style.cssText = 'background:transparent;color:#f4ead5;border:0;font-size:20px;line-height:1;cursor:pointer;padding:6px 8px;min-width:36px;min-height:36px';
+      function onKey(e){ if(e.key === 'Escape') dismiss(); }
+      function dismiss(){
+        try { localStorage.setItem(KEY,'1'); } catch(e){}
+        bar.remove();
+        document.removeEventListener('keydown', onKey);
+      }
+      view.addEventListener('click', function(){
+        try { localStorage.setItem(KEY,'1'); } catch(e){}
+        if(typeof trackEvent === 'function') trackEvent('Lang Suggest Accept', {language: base});
+        window.location.href = PAGES[base];
+      });
+      close.addEventListener('click', dismiss);
+      document.addEventListener('keydown', onKey);
+      bar.appendChild(msg); bar.appendChild(view); bar.appendChild(close);
+      document.body.appendChild(bar);
+    } catch(e){}
+  }
+  if(document.readyState === 'complete') setTimeout(init, 0);
+  else window.addEventListener('load', function(){ setTimeout(init, 0); });
+})();
+</script>
 </body>
 </html>

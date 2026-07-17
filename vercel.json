@@ -8,6 +8,11 @@
       "permanent": true
     },
     {
+      "source": "/ondas-app",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/cv-interilhas-pt",
       "destination": "/pt/cv-interilhas",
       "permanent": true

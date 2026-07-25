@@ -1383,6 +1383,20 @@ function doSearch(from, to) {
   renderResults();
   screenHistory.push('results');
   showScreen('results', 'right');
+
+  // History: mirror the search into the URL (shareable). Deep links and
+  // popstate re-renders must not add entries; repeat searches replace so
+  // back is always one step to Home.
+  try {
+    const q = new URLSearchParams();
+    q.set('from', searchState.from);
+    q.set('to', searchState.to);
+    if(searchState.date) q.set('date', searchState.date);
+    const url = window.location.pathname + '?' + q.toString();
+    if(window._noPush) { history.replaceState({ondasSearch:true}, '', url); window._noPush = false; }
+    else if(history.state && history.state.ondasSearch) { history.replaceState({ondasSearch:true}, '', url); }
+    else { history.pushState({ondasSearch:true}, '', url); }
+  } catch(e) {}
 }
 
 function sortResults() {
@@ -1835,6 +1849,44 @@ function updateDateLabel(isReturn) {
   $(labelId).textContent = formatDate(val);
 }
 
+function handleURLParams() {
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get('from');
+  const to = params.get('to');
+  const date = params.get('date');
+  if(from || to) {
+    if(from && $('selFrom')) { $('selFrom').value = from; updateToDropdown(); }
+    if(to && $('selTo')) { $('selTo').value = to; updateFromDropdown(); }
+    if(date && $('inputDate')) { $('inputDate').value = date; updateDateLabel(false); }
+    updateSearchBtn();
+    if(from && to && !$('searchBtn').disabled) { window._noPush = true; doSearch(from, to); }
+  }
+}
+
+function handleHashNavigation() {
+  const hash = window.location.hash;
+  if(hash === '#about') { screenHistory.push('about'); showScreen('about','right'); }
+  if(hash === '#contact') { screenHistory.push('contact'); showScreen('contact','right'); }
+}
+
+window.addEventListener('popstate', function() {
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get('from');
+  const to = params.get('to');
+  if(from && to) {
+    if($('selFrom')) { $('selFrom').value = from; updateToDropdown(); }
+    if($('selTo')) { $('selTo').value = to; updateFromDropdown(); }
+    const date = params.get('date');
+    if(date && $('inputDate')) { $('inputDate').value = date; updateDateLabel(false); }
+    updateSearchBtn();
+    window._noPush = true;
+    doSearch(from, to);
+  } else {
+    screenHistory = ['home'];
+    showScreen('home', 'left');
+  }
+});
+
 // ===== INIT =====
 function init() {
   // Fetch dynamic service alert and disruptions (async, fail silently)
@@ -2019,6 +2071,8 @@ function init() {
 
   // Init nav tab styles
   showScreen('home', 'right');
+  handleURLParams();
+  handleHashNavigation();
 }
 
 document.addEventListener('DOMContentLoaded', init);

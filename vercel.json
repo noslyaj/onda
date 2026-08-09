@@ -13,6 +13,31 @@
       "permanent": true
     },
     {
+      "source": "/baia-das-gatas-2026",
+      "destination": "/baia-das-gatas",
+      "permanent": true
+    },
+    {
+      "source": "/pt/baia-das-gatas-2026",
+      "destination": "/pt/baia-das-gatas",
+      "permanent": true
+    },
+    {
+      "source": "/fr/baia-das-gatas-2026",
+      "destination": "/fr/baia-das-gatas",
+      "permanent": true
+    },
+    {
+      "source": "/de/baia-das-gatas-2026",
+      "destination": "/de/baia-das-gatas",
+      "permanent": true
+    },
+    {
+      "source": "/es/baia-das-gatas-2026",
+      "destination": "/es/baia-das-gatas",
+      "permanent": true
+    },
+    {
       "source": "/cv-interilhas-pt",
       "destination": "/pt/cv-interilhas",
       "permanent": true

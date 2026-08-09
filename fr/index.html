@@ -1131,36 +1131,37 @@ function updateToDropdown() {
 }
 
 function updateFromDropdown() {
-  const toVal = $('selTo').value;
-  const available = getAvailableOrigins(toVal);
+  // FROM always lists all nine ports. TO is derived from FROM — never the
+  // other way round; filtering FROM by TO is what caused the cross-filter
+  // deadlock (e.g. Maio→Santiago locking out a Brava→Fogo re-search).
   const currentFrom = $('selFrom').value;
-  const keepFrom = currentFrom && currentFrom !== toVal && (!toVal || available.includes(currentFrom));
-
-  $('selFrom').innerHTML = '';
+  const sel = $('selFrom');
+  sel.innerHTML = '';
   const placeholder = document.createElement('option');
   placeholder.value = '';
   placeholder.textContent = t('select_dep');
   placeholder.disabled = true;
-  if(!keepFrom) placeholder.selected = true;
-  $('selFrom').appendChild(placeholder);
-
+  if(!currentFrom) placeholder.selected = true;
+  sel.appendChild(placeholder);
   Object.entries(ISLANDS).forEach(([code, name]) => {
-    if(code === toVal) return;
     const opt = document.createElement('option');
     opt.value = code;
-    const isUnavailable = toVal && !available.includes(code);
-    if(isUnavailable) {
-      opt.disabled = true;
-      opt.style.color = '#c1c8d4';
-      opt.textContent = name + ' ' + t('no_direct');
-    } else {
-      opt.textContent = name;
-    }
-    if(code === currentFrom && keepFrom) opt.selected = true;
-    $('selFrom').appendChild(opt);
+    opt.textContent = name;
+    if(code === currentFrom) opt.selected = true;
+    sel.appendChild(opt);
   });
+  updateSearchBtn();
+}
 
-  if(!keepFrom) $('selFrom').value = '';
+function enforcePairInvariant() {
+  // INVARIANT: the selected pair is always either incomplete (TO empty) or a
+  // real SCHEDULES correspondence. Any mutation path (dropdowns, swap, URL
+  // params, popstate) must end by passing through this guard.
+  const from = $('selFrom').value;
+  const to = $('selTo').value;
+  if(from && to && (from === to || !getAvailableDestinations(from).includes(to))) {
+    $('selTo').value = '';
+  }
   updateSearchBtn();
 }
 
@@ -1858,8 +1859,8 @@ function handleURLParams() {
     if(from && $('selFrom')) { $('selFrom').value = from; updateToDropdown(); }
     if(to && $('selTo')) { $('selTo').value = to; updateFromDropdown(); }
     if(date && $('inputDate')) { $('inputDate').value = date; updateDateLabel(false); }
-    updateSearchBtn();
-    if(from && to && !$('searchBtn').disabled) { window._noPush = true; doSearch(from, to); }
+    enforcePairInvariant();
+    if(from && to && $('selTo').value === to && !$('searchBtn').disabled) { window._noPush = true; doSearch(from, to); }
   }
 }
 
@@ -1878,9 +1879,14 @@ window.addEventListener('popstate', function() {
     if($('selTo')) { $('selTo').value = to; updateFromDropdown(); }
     const date = params.get('date');
     if(date && $('inputDate')) { $('inputDate').value = date; updateDateLabel(false); }
-    updateSearchBtn();
-    window._noPush = true;
-    doSearch(from, to);
+    enforcePairInvariant();
+    if($('selTo').value === to) {
+      window._noPush = true;
+      doSearch(from, to);
+    } else {
+      screenHistory = ['home'];
+      showScreen('home', 'left');
+    }
   } else {
     screenHistory = ['home'];
     showScreen('home', 'left');
@@ -1972,16 +1978,14 @@ function init() {
 
     if(!fromVal && !toVal) return;
 
-    $('selFrom').value = toVal;
-    if(toVal) { updateToDropdown(); } else { resetToDropdown(); }
-
-    setTimeout(() => {
-      $('selTo').value = fromVal;
-      if(fromVal) { updateFromDropdown(); } else { resetFromDropdown(); }
-      updateSearchBtn();
-      if(calIsOpen('calendarDropdown')) renderCal('calendarDropdown','datePickerBtn',calViewDate,false);
-      if(calIsOpen('returnCalendarDropdown')) renderCal('returnCalendarDropdown','returnDatePickerBtn',retCalViewDate,true);
-    }, 50);
+    $('selFrom').value = toVal || '';
+    updateFromDropdown();
+    if($('selFrom').value) { updateToDropdown(); } else { resetToDropdown(); }
+    if(fromVal) $('selTo').value = fromVal;
+    // Reversed pair not served → keep the new FROM, clear TO (guard).
+    enforcePairInvariant();
+    if(calIsOpen('calendarDropdown')) renderCal('calendarDropdown','datePickerBtn',calViewDate,false);
+    if(calIsOpen('returnCalendarDropdown')) renderCal('returnCalendarDropdown','returnDatePickerBtn',retCalViewDate,true);
   });
 
   // Search button

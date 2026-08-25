@@ -524,6 +524,10 @@ tailwind.config = {
       <span id="detailReliability" class="text-xs font-semibold px-3 py-1 rounded-full mt-1"></span>
     </div>
   </div>
+
+  <!-- Disruption note -->
+  <section id="tripDisruptionNote" class="mx-5 sm:mx-auto sm:max-w-lg mt-3" style="display:none"></section>
+
   <!-- 2x2 metadata grid -->
   <div class="grid grid-cols-2 gap-3 mx-5 sm:mx-auto sm:max-w-lg mt-4">
     <div class="bg-white rounded-xl p-3 shadow-sm border border-outline-variant/30">
@@ -1614,6 +1618,22 @@ function showDetail() {
   if(s.reliabilityType === 'high') { rb.className = 'text-xs font-semibold px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-700'; }
   else if(s.reliabilityType === 'medium') { rb.className = 'text-xs font-semibold px-3 py-1 rounded-full bg-amber-400/10 text-amber-700'; }
   else { rb.className = 'text-xs font-semibold px-3 py-1 rounded-full bg-red-500/10 text-red-700'; }
+
+  // Disruption note
+  const d = s._disruption;
+  const disruptionNoteEl = $('tripDisruptionNote');
+  if(d && disruptionNoteEl) {
+    const isCancelled = d.type === 'cancelled';
+    const isRescheduled = d.type === 'rescheduled';
+    const isExtra = d.type === 'extra';
+    const badgeLabel = isCancelled ? t('badge_cancelled') : isRescheduled ? t('badge_rescheduled') : isExtra ? t('badge_extra') : '';
+    const icon = isCancelled ? 'cancel' : isRescheduled ? 'schedule' : isExtra ? 'add_circle' : 'info';
+    const bg = isCancelled ? '#fef2f2' : '#fffbeb';
+    const fg = isCancelled ? '#991b1b' : '#92400e';
+    const border = isCancelled ? '#fecaca' : '#fde68a';
+    disruptionNoteEl.innerHTML = `<div class="rounded-[18px] p-[14px] border" style="background:${bg};border-color:${border}"><div class="flex items-center gap-2 mb-1"><span class="material-symbols-outlined" aria-hidden="true" style="font-size:16px;color:${fg}">${icon}</span>${badgeLabel ? `<span class="text-[10px] font-bold uppercase tracking-wider" style="color:${fg}">${badgeLabel}</span>` : ''}</div><p class="text-[12px] leading-relaxed" style="color:${fg}">${disruptionMsg(d)}</p></div>`;
+    disruptionNoteEl.style.display = 'block';
+  } else if(disruptionNoteEl) { disruptionNoteEl.style.display = 'none'; }
 
   // Price
   const totalPrice = currency === 'CVE'

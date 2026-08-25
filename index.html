@@ -1424,7 +1424,9 @@ function updateSortPillStyles() {
 // ===== RENDER RESULTS =====
 function disruptionMsg(d) {
   const lang = (currentLang || 'EN').toLowerCase();
-  return (d.message && (d.message[lang] || d.message.en)) || '';
+  if(!d.message) return '';
+  if(lang === 'kea') return d.message.kea || d.message.pt || d.message.en || '';
+  return d.message[lang] || d.message.en || '';
 }
 
 function buildCard(s) {

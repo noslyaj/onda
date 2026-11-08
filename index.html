@@ -882,14 +882,16 @@ function renderSeaWidget() {
 
 const SCHEDULES = [
   // Nôs Ferry Barlavento (SV↔SA) — uniform daily schedule, 07:00 start.
-  // Verified 14 Oct 2026 from the operator's own booking engine (date-specific time
-  // dropdowns for Thu 15 Oct and Sun 18 Oct, both directions). No Facebook announcement
-  // was published for this alternation.
+  // Source: operator flyer "HORÁRIO ATUALIZADO / Segunda á Domingo", valid
+  // 11 Oct – 24 Nov 2026: SV→SA 07:00 and 14:00, SA→SV 09:00 and 16:00, identical
+  // every day of the week. Confirmed 14 Oct 2026 against nosferry.com's booking engine
+  // (Thu 15 Oct and Sun 18 Oct, both directions).
   // History: uniform daily 07:00 start ran 13 Jul – 26 Aug 2026; replaced 27 Aug – 10 Oct
   // by an 08:00 start with a separate Sunday split (ids 29–32, now removed); reverted to
-  // uniform 07:00 start from ~11 Oct 2026.
-  // Nôs and CV Interilhas alternate in opposition on this corridor — when one starts at
-  // 07:00 the other starts at 08:00. See the CVI block (ids 5–12) for the matching window.
+  // uniform 07:00 start on 11 Oct 2026.
+  // Nôs and CV Interilhas alternate in opposition on this corridor. CVI's matching
+  // 08:00-start window (ids 5–12) is also 11 Oct – 24 Nov 2026. BOTH operators are
+  // expected to change again on 25 Nov 2026 — re-check both before that date.
   // ── NÔS FERRY — MAR D'CANAL (SV ↔ SA) — 14 Apr–28 May 2026 ─
   // SV→SA daily
   {id:1,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'07:00',arr:'08:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},

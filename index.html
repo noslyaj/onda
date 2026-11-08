@@ -974,7 +974,13 @@ function trackEvent(name, props) {
 }
 
 function formatPrice(s) {
+  if(s.priceCVE == null || s.priceEUR == null) return null;
   return currency === 'CVE' ? s.priceCVE.toLocaleString() + ' CVE' : '€' + s.priceEUR;
+}
+
+function formatTotalPrice(s, pax) {
+  if(s.priceCVE == null || s.priceEUR == null) return null;
+  return currency === 'CVE' ? (s.priceCVE * pax).toLocaleString() + ' CVE' : '€' + (s.priceEUR * pax);
 }
 
 function formatResidentPrice(s) {
@@ -1092,9 +1098,33 @@ function populateIslands() {
   });
 }
 
+function getExtraRoutePairs() {
+  // Pairs introduced solely by a currently-valid `extra` disruption, so the
+  // FROM/TO dropdowns can surface a route that doesn't exist in SCHEDULES
+  // (e.g. a one-off CV Interilhas repositioning sailing). Never touches
+  // SCHEDULES itself. Fails closed: any error or missing data yields [].
+  try {
+    if(!window._disruptions || !window._disruptions.length) return [];
+    const today = new Date();
+    const todayStr = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+    const pairs = [];
+    window._disruptions.forEach(dis => {
+      if(dis.type !== 'extra' || !dis.affects) return;
+      const from = dis.affects.from, to = dis.affects.to;
+      if(!from || !to || from === to) return;
+      if(!dis.validFrom || !dis.validUntil) return;
+      if(todayStr < dis.validFrom || todayStr > dis.validUntil) return;
+      pairs.push({from, to});
+    });
+    return pairs;
+  } catch(e) { return []; }
+}
+
 function getAvailableDestinations(fromCode) {
   if(!fromCode) return Object.keys(ISLANDS);
-  return [...new Set(SCHEDULES.filter(s => s.from === fromCode).map(s => s.to))];
+  const scheduled = SCHEDULES.filter(s => s.from === fromCode).map(s => s.to);
+  const extra = getExtraRoutePairs().filter(p => p.from === fromCode).map(p => p.to);
+  return [...new Set(scheduled.concat(extra))];
 }
 
 function getAvailableOrigins(toCode) {
@@ -1358,9 +1388,9 @@ function renderDisruptionsNotice() {
 }
 
 function getActiveDisruptions(from, to, dateStr) {
-  if(!dateStr || !window._disruptions.length) return [];
+  if(!dateStr || !window._disruptions.length || from === to) return [];
   return window._disruptions.filter(d =>
-    d.affects && d.affects.from === from && d.affects.to === to &&
+    d.affects && d.affects.from === from && d.affects.to === to && d.affects.from !== d.affects.to &&
     dateStr >= d.validFrom && dateStr <= d.validUntil
   );
 }
@@ -1522,7 +1552,7 @@ function buildCard(s) {
   const cardPointer = isCancelled ? 'pointer-events-none' : '';
 
   const depTime = isRescheduled ? `<span class="line-through text-slate-400 text-[14px]">${s.dep}</span> <span class="text-[18px] font-bold text-[#0f2557]">${d.rescheduled.newDep}</span>` : `<span class="text-[18px] font-bold text-[#0f2557]">${isCancelled ? '<span class="line-through">' + s.dep + '</span>' : s.dep}</span>`;
-  const arrTime = isRescheduled ? `<span class="line-through text-slate-400 text-[14px]">${s.arr}</span> <span class="text-[18px] font-bold text-[#0f2557]">${d.rescheduled.newArr}</span>` : `<span class="text-[18px] font-bold text-[#0f2557]">${isCancelled ? '<span class="line-through">' + s.arr + '</span>' : s.arr}</span>`;
+  const arrTime = isRescheduled ? `<span class="line-through text-slate-400 text-[14px]">${s.arr}</span> <span class="text-[18px] font-bold text-[#0f2557]">${d.rescheduled.newArr}</span>` : `<span class="text-[18px] font-bold text-[#0f2557]">${isCancelled ? '<span class="line-through">' + (s.arr || '—') + '</span>' : (s.arr || '—')}</span>`;
 
   const disruptionNote = (isRescheduled || isRestriction || isExtra) && d ? `<div class="mt-3 px-3 py-2 rounded-lg text-[11px] leading-relaxed bg-amber-50 text-amber-800 border border-amber-200"><span class="material-symbols-outlined align-middle mr-1" aria-hidden="true" style="font-size:14px">${isRescheduled ? 'schedule' : isExtra ? 'add_circle' : 'info'}</span>${disruptionMsg(d)}</div>` : '';
 
@@ -1537,7 +1567,7 @@ function buildCard(s) {
         <p class="text-[10px] uppercase tracking-wider text-slate-400 mt-0.5">${s.vessel} · ${s.operator}</p>
       </div>
       <div class="text-right flex-shrink-0 pt-1">
-        <div class="text-[26px] font-bold text-[#0f2557] leading-none">${formatPrice(s)}</div>
+        <div class="text-[26px] font-bold text-[#0f2557] leading-none">${formatPrice(s) || '—'}</div>
         <div class="text-[10px] text-slate-400 mt-0.5">${t('per_person')}</div>
         ${formatResidentPrice(s) ? `<div class="text-[10px] text-emerald-600 mt-0.5">${t('residents')} ${formatResidentPrice(s)}</div>` : ''}
       </div>
@@ -1553,7 +1583,7 @@ function buildCard(s) {
           ${depTime}
           <span class="text-[13px] text-slate-500">${s.depCity}</span>
         </div>
-        <span class="text-[11px] text-slate-400 ml-0.5">${s.duration} crossing</span>
+        ${s.duration ? `<span class="text-[11px] text-slate-400 ml-0.5">${s.duration} crossing</span>` : ''}
         <div class="flex items-baseline gap-2">
           ${arrTime}
           <span class="text-[13px] text-slate-500">${s.arrCity}</span>
@@ -1664,10 +1694,10 @@ function showDetail() {
   $('detailDepTime').textContent = s.dep;
   $('detailDepCity').textContent = s.depCity;
   $('detailDepPort').textContent = s.depPort;
-  $('detailArrTime').textContent = s.arr;
+  $('detailArrTime').textContent = s.arr || '—';
   $('detailArrCity').textContent = s.arrCity;
   $('detailArrPort').textContent = s.arrPort;
-  $('detailDuration').textContent = s.duration;
+  $('detailDuration').textContent = s.duration || '—';
   $('detailDate').textContent = formatDate(searchState.date);
   $('detailLine').textContent = s.line;
   $('detailOperator').textContent = s.operator;
@@ -1696,12 +1726,10 @@ function showDetail() {
   } else if(disruptionNoteEl) { disruptionNoteEl.style.display = 'none'; }
 
   // Price
-  const totalPrice = currency === 'CVE'
-    ? (s.priceCVE * searchState.pax).toLocaleString() + ' CVE'
-    : '€' + (s.priceEUR * searchState.pax);
-  $('detailPrice').textContent = totalPrice;
+  const totalPrice = formatTotalPrice(s, searchState.pax);
+  $('detailPrice').textContent = totalPrice || '—';
   const unitPrice = formatPrice(s);
-  $('detailPriceSub').textContent = searchState.pax > 1 ? `${unitPrice} × ${searchState.pax} ${t('per_person')}` : t('per_person');
+  $('detailPriceSub').textContent = unitPrice ? (searchState.pax > 1 ? `${unitPrice} × ${searchState.pax} ${t('per_person')}` : t('per_person')) : '';
   // Resident fare note
   const fareNote = $('detailFareNote');
   const resPrice = formatResidentPrice(s);
@@ -1948,6 +1976,22 @@ function handleURLParams() {
   }
 }
 
+function refreshRouteAvailability() {
+  // Disruption-only route pairs (see getExtraRoutePairs) are invisible to the
+  // dropdowns until window._disruptions has loaded, which happens after
+  // fetchDisruptions() resolves — asynchronously, after populateIslands()
+  // and handleURLParams() have already run once, synchronously, in init().
+  // Re-run the bits that depend on route availability once that data is in,
+  // so a bin-only pair becomes selectable without a page reload.
+  if($('selFrom') && $('selFrom').value) { updateToDropdown(); }
+  const params = new URLSearchParams(window.location.search);
+  const from = params.get('from');
+  const to = params.get('to');
+  if(from && to && $('selFrom') && $('selFrom').value === from && $('selTo').value !== to) {
+    handleURLParams();
+  }
+}
+
 function handleHashNavigation() {
   const hash = window.location.hash;
   if(hash === '#about') { screenHistory.push('about'); showScreen('about','right'); }
@@ -2123,7 +2167,7 @@ function buildSailingPDF() {
 function init() {
   // Fetch dynamic service alert and disruptions (async, fail silently)
   fetchAlert();
-  fetchDisruptions().then(() => renderDisruptionsNotice());
+  fetchDisruptions().then(() => { renderDisruptionsNotice(); refreshRouteAvailability(); });
   fetchSeaConditions().then(() => renderSeaWidget());
   // Set today's date
   const today = new Date();

@@ -882,24 +882,23 @@ function renderSeaWidget() {
 }
 
 const SCHEDULES = [
-  // Nôs Ferry Barlavento (SV↔SA) — uniform daily schedule, 07:00 start.
-  // Source: operator flyer "HORÁRIO ATUALIZADO / Segunda á Domingo", valid
-  // 11 Oct – 24 Nov 2026: SV→SA 07:00 and 14:00, SA→SV 09:00 and 16:00, identical
-  // every day of the week. Confirmed 14 Oct 2026 against nosferry.com's booking engine
-  // (Thu 15 Oct and Sun 18 Oct, both directions).
-  // History: uniform daily 07:00 start ran 13 Jul – 26 Aug 2026; replaced 27 Aug – 10 Oct
-  // by an 08:00 start with a separate Sunday split (ids 29–32, now removed); reverted to
-  // uniform 07:00 start on 11 Oct 2026.
-  // Nôs and CV Interilhas alternate in opposition on this corridor. CVI's matching
-  // 08:00-start window (ids 5–12) is also 11 Oct – 24 Nov 2026. BOTH operators are
-  // expected to change again on 25 Nov 2026 — re-check both before that date.
+  // Nôs Ferry Barlavento (SV<->SA) - Mar d'Canal. 08:00 start with a separate Sunday
+  // block, from 25 Nov 2026.
+  // Verified 23 Nov 2026 on the operator's own booking engine (date-specific dropdowns,
+  // Thu 26 Nov and Sun 29 Nov, both directions). Nôs publishes no validity dates.
+  // Mon-Sat (ids 1-4): SV->SA 08:00, 15:00 · SA->SV 10:00, 17:00
+  // Sunday  (ids 29-32): SV->SA 08:00, 14:00 · SA->SV 10:00, 16:00
+  // This restores the structure that ran 27 Aug - 10 Oct 2026; it is the reverse of
+  // commit 22b4271, which had made ids 1-4 uniform and deleted ids 29-32.
+  // CVI and Nôs alternate in opposition. CVI's matching 07:00 window runs to 07 Jan 2027,
+  // so 07 Jan is the expected next boundary for both — inferred, not stated by Nôs.
   // ── NÔS FERRY — MAR D'CANAL (SV ↔ SA) — 14 Apr–28 May 2026 ─
   // SV→SA daily
-  {id:1,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'07:00',arr:'08:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
-  {id:2,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'14:00',arr:'15:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
+  {id:1,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'08:00',arr:'09:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat']},
+  {id:2,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'15:00',arr:'16:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat']},
   // SA→SV daily
-  {id:3,from:'SA',to:'SV',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'09:00',arr:'10:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
-  {id:4,from:'SA',to:'SV',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'16:00',arr:'17:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat','Sun']},
+  {id:3,from:'SA',to:'SV',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'10:00',arr:'11:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat']},
+  {id:4,from:'SA',to:'SV',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'17:00',arr:'18:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Mon','Tue','Wed','Thu','Fri','Sat']},
   // ── CV INTERILHAS — CHIQUINHO (SV ↔ SA) ─────────────────
   // CV Interilhas Barlavento (SV<->SA) - Chiquinho.
   // 07:00 start, valid 25 Nov 2026 - 07 Jan 2027, per the operator's published timetable
@@ -942,6 +941,11 @@ const SCHEDULES = [
   {id:26,from:'ST',to:'MA',vessel:'Liberdadi',code:'CV Interilhas',dep:'17:00',arr:'19:00',duration:'2h',priceCVE:2300,priceEUR:21,priceCVEResident:1530,priceEURResident:14,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 350 03 30',email:'info@cvinterilhas.cv',bookUrl:'https://www.cvinterilhas.cv/buy',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Fri','Sun']},
   {id:27,from:'MA',to:'ST',vessel:'Liberdadi',code:'CV Interilhas',dep:'10:00',arr:'12:00',duration:'2h',priceCVE:2300,priceEUR:21,priceCVEResident:1530,priceEURResident:14,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 350 03 30',email:'info@cvinterilhas.cv',bookUrl:'https://www.cvinterilhas.cv/buy',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Wed']},
   {id:28,from:'MA',to:'ST',vessel:'Liberdadi',code:'CV Interilhas',dep:'20:00',arr:'22:00',duration:'2h',priceCVE:2300,priceEUR:21,priceCVEResident:1530,priceEURResident:14,operator:'CV Interilhas',line:'Sotavento Line',phone:'+238 350 03 30',email:'info@cvinterilhas.cv',bookUrl:'https://www.cvinterilhas.cv/buy',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Fri','Sun']},
+  // Nôs Ferry SV↔SA Sunday
+  {id:29,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'08:00',arr:'09:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Sun']},
+  {id:30,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'14:00',arr:'15:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Sun']},
+  {id:31,from:'SA',to:'SV',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'10:00',arr:'11:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Sun']},
+  {id:32,from:'SA',to:'SV',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'16:00',arr:'17:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Sun']},
 
 ];
 

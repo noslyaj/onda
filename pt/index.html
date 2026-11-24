@@ -947,6 +947,21 @@ const SCHEDULES = [
   {id:30,from:'SV',to:'SA',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'14:00',arr:'15:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Sun']},
   {id:31,from:'SA',to:'SV',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'10:00',arr:'11:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Sun']},
   {id:32,from:'SA',to:'SV',vessel:"Mar d'Canal",code:'Nôs Ferry',dep:'16:00',arr:'17:00',duration:'60 min',priceCVE:1470,priceEUR:13,priceCVEResident:950,priceEURResident:9,operator:'Nôs Ferry',line:'Barlavento Line',phone:'+238 232 0530',email:'info@nosferry.cv',bookUrl:'https://nosferry.com/online-sale/booking',reliability:'98% Reliable',reliabilityType:'high',badge:null,days:['Sun']},
+  // LINHA RETANGULAR (ids 33-36) — fortnightly ("Quinzenal"), vessel Dona Tututa.
+  // Runs only in a SEMANA ÍMPAR, as a four-leg extension of the Redonda circuit between
+  // the Wednesday São Vicente arrival and the Friday Redonda departure.
+  // Source: CV Interilhas' published timetable PDF, page "LINHA REDONDA E TRIANGULAR /
+  // SEMANA ÍMPAR". The base Redonda (ids 13-20) is unaffected and runs every week.
+  // PARITY RULE IS INFERRED, NOT PUBLISHED: odd ISO week = ímpar. Confirmed against ISO
+  // weeks 47 (ran), 48 (did not — operator's schedule page showed zero), 49 (ran).
+  // KNOWN LIMIT: 2026 has 53 ISO weeks, so weeks 53 and 1/2027 are both odd — two ímpar
+  // weeks in a row, which a real fortnightly rotation would not do. The model is
+  // therefore cut off at RETANGULAR_MODEL_VALID_UNTIL and must be re-verified in
+  // January before that date is extended.
+  {id:33,from:'SV',to:'SN',vessel:'Dona Tututa',code:'CV Interilhas',dep:'17:00',arr:'22:00',duration:'5h',priceCVE:2850,priceEUR:26,priceCVEResident:1900,priceEURResident:17,operator:'CV Interilhas',line:'Retangular Line',phone:'+238 350 03 30',email:'info@cvinterilhas.cv',bookUrl:'https://www.cvinterilhas.cv/buy',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Wed'],weekParity:'odd'},
+  {id:34,from:'SN',to:'ST',vessel:'Dona Tututa',code:'CV Interilhas',dep:'23:00',arr:'09:00',duration:'10h',operator:'CV Interilhas',line:'Retangular Line',phone:'+238 350 03 30',email:'info@cvinterilhas.cv',bookUrl:'https://www.cvinterilhas.cv/buy',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Wed'],weekParity:'odd'},
+  {id:35,from:'ST',to:'FG',vessel:'Dona Tututa',code:'CV Interilhas',dep:'12:00',arr:'18:00',duration:'6h',priceCVE:4450,priceEUR:40,priceCVEResident:2980,priceEURResident:27,operator:'CV Interilhas',line:'Retangular Line',phone:'+238 350 03 30',email:'info@cvinterilhas.cv',bookUrl:'https://www.cvinterilhas.cv/buy',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Thu'],weekParity:'odd'},
+  {id:36,from:'FG',to:'SV',vessel:'Dona Tututa',code:'CV Interilhas',dep:'19:00',arr:'05:00',duration:'10h',operator:'CV Interilhas',line:'Retangular Line',phone:'+238 350 03 30',email:'info@cvinterilhas.cv',bookUrl:'https://www.cvinterilhas.cv/buy',reliability:'Variable',reliabilityType:'medium',badge:null,days:['Thu'],weekParity:'odd'},
 
 ];
 
@@ -1264,6 +1279,39 @@ function getDayName(dateStr) {
   return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
 }
 
+// Linha Retangular fortnightly parity is OUR inference from 3 observed weeks,
+// never published by CV Interilhas, and provably breaks at the ISO year
+// boundary (2026 has 53 weeks, so week 53 and week 1/2027 are both odd — two
+// consecutive "ímpar" weeks, which a real fortnightly rotation would not do).
+// Hard cut-off until the rotation is re-verified in January.
+const RETANGULAR_MODEL_VALID_UNTIL = '2026-12-27';
+
+function getISOWeek(dateStr) {
+  // ISO-8601: week 1 is the week containing the year's first Thursday; weeks
+  // start Monday. Standard "move to the Thursday of this week" algorithm —
+  // not a day-of-year division. Verified against 10 known vectors spanning
+  // the 2026/2027 boundary before use; see commit message.
+  const d = new Date(dateStr + 'T00:00:00Z');
+  const dayNum = (d.getUTCDay() + 6) % 7 + 1; // Mon=1 .. Sun=7
+  d.setUTCDate(d.getUTCDate() - dayNum + 4);  // Thursday of this ISO week
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+}
+
+function scheduleMatchesDate(s, dateStr) {
+  // Behaviour-preserving for every entry without weekParity: identical to the
+  // old inline `!dayName || s.days.includes(dayName)` check. An entry with
+  // weekParity additionally requires the searched date's ISO week to match
+  // that parity AND be on or before RETANGULAR_MODEL_VALID_UNTIL.
+  if(!dateStr) return true;
+  const dayName = getDayName(dateStr);
+  if(!s.days.includes(dayName)) return false;
+  if(!s.weekParity) return true;
+  if(dateStr > RETANGULAR_MODEL_VALID_UNTIL) return false;
+  const parity = getISOWeek(dateStr) % 2 === 1 ? 'odd' : 'even';
+  return parity === s.weekParity;
+}
+
 function parseDurationMinutes(dur) {
   if(dur.includes('min')) return parseInt(dur);
   const match = dur.match(/(\d+)h\s*(\d+)?/);
@@ -1445,9 +1493,8 @@ function doSearch(from, to) {
   updatePageTitle(searchState.from, searchState.to);
   trackEvent('Search', {from:ISLANDS[searchState.from]||searchState.from, to:ISLANDS[searchState.to]||searchState.to, trip_type:tripType});
 
-  const dayName = searchState.date ? getDayName(searchState.date) : null;
   currentResults = SCHEDULES.filter(s =>
-    s.from === searchState.from && s.to === searchState.to && (!dayName || s.days.includes(dayName))
+    s.from === searchState.from && s.to === searchState.to && scheduleMatchesDate(s, searchState.date)
   );
   currentResults = annotateResults(currentResults, searchState.from, searchState.to, searchState.date);
   currentResults = injectExtras(currentResults, searchState.from, searchState.to, searchState.date);
@@ -1656,9 +1703,8 @@ function renderResults() {
   // Return trip results
   if(searchState.tripType === 'return' && searchState.returnDate) {
     $('returnSection').style.display = 'block';
-    const returnDay = getDayName(searchState.returnDate);
     const returnResults = SCHEDULES.filter(s =>
-      s.from === searchState.to && s.to === searchState.from && s.days.includes(returnDay)
+      s.from === searchState.to && s.to === searchState.from && scheduleMatchesDate(s, searchState.returnDate)
     ).sort((a,b) => a.dep.localeCompare(b.dep));
     const returnContainer = $('returnResultsContainer');
     if(returnResults.length) {

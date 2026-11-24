@@ -1299,11 +1299,14 @@ function getISOWeek(dateStr) {
   return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 }
 
-function scheduleMatchesDate(s, dateStr) {
-  // Behaviour-preserving for every entry without weekParity: identical to the
-  // old inline `!dayName || s.days.includes(dayName)` check. An entry with
-  // weekParity additionally requires the searched date's ISO week to match
-  // that parity AND be on or before RETANGULAR_MODEL_VALID_UNTIL.
+function scheduleRunsOn(s, dateStr) {
+  // THE ONLY copy of the weekday + parity/cut-off matching rule. doSearch,
+  // the return-trip filter and routeHasSailingOn() all call this — never
+  // reimplement any part of it inline. Behaviour-preserving for every entry
+  // without weekParity: identical to the old inline
+  // `!dayName || s.days.includes(dayName)` check. An entry with weekParity
+  // additionally requires the searched date's ISO week to match that parity
+  // AND be on or before RETANGULAR_MODEL_VALID_UNTIL.
   if(!dateStr) return true;
   const dayName = getDayName(dateStr);
   if(!s.days.includes(dayName)) return false;
@@ -1311,6 +1314,12 @@ function scheduleMatchesDate(s, dateStr) {
   if(dateStr > RETANGULAR_MODEL_VALID_UNTIL) return false;
   const parity = getISOWeek(dateStr) % 2 === 1 ? 'odd' : 'even';
   return parity === s.weekParity;
+}
+
+function routeHasSailingOn(from, to, dateStr) {
+  // Per-date availability for the calendar: true iff some SCHEDULES entry
+  // on this route runs on this exact date, parity and cut-off included.
+  return SCHEDULES.some(s => s.from === from && s.to === to && scheduleRunsOn(s, dateStr));
 }
 
 function parseDurationMinutes(dur) {
@@ -1495,7 +1504,7 @@ function doSearch(from, to) {
   trackEvent('Search', {from:ISLANDS[searchState.from]||searchState.from, to:ISLANDS[searchState.to]||searchState.to, trip_type:tripType});
 
   currentResults = SCHEDULES.filter(s =>
-    s.from === searchState.from && s.to === searchState.to && scheduleMatchesDate(s, searchState.date)
+    s.from === searchState.from && s.to === searchState.to && scheduleRunsOn(s, searchState.date)
   );
   currentResults = annotateResults(currentResults, searchState.from, searchState.to, searchState.date);
   currentResults = injectExtras(currentResults, searchState.from, searchState.to, searchState.date);
@@ -1705,7 +1714,7 @@ function renderResults() {
   if(searchState.tripType === 'return' && searchState.returnDate) {
     $('returnSection').style.display = 'block';
     const returnResults = SCHEDULES.filter(s =>
-      s.from === searchState.to && s.to === searchState.from && scheduleMatchesDate(s, searchState.returnDate)
+      s.from === searchState.to && s.to === searchState.from && scheduleRunsOn(s, searchState.returnDate)
     ).sort((a,b) => a.dep.localeCompare(b.dep));
     const returnContainer = $('returnResultsContainer');
     if(returnResults.length) {
@@ -1894,6 +1903,9 @@ function closeCal(dropdownId, btnId) {
   $(btnId).style.borderColor = 'transparent';
 }
 
+// Weekday-aggregate only — no date, no parity, no cut-off. Do NOT use this
+// for date-specific availability (that's routeHasSailingOn); it answers
+// "which weekdays does this route ever run on", not "does it run today".
 function getRouteDays(isReturn) {
   const from = $('selFrom').value;
   const to = $('selTo').value;
@@ -1917,7 +1929,11 @@ function renderCal(dropdownId, btnId, viewDate, isReturn) {
   const startDow = (firstDay.getDay() + 6) % 7;
   const inputId = isReturn ? 'returnDate' : 'inputDate';
   const selectedVal = $(inputId).value;
-  const routeDays = getRouteDays(isReturn);
+  const calFrom = $('selFrom').value;
+  const calTo = $('selTo').value;
+  const hasRoute = !!(calFrom && calTo);
+  const routeFrom = isReturn ? calTo : calFrom;
+  const routeTo = isReturn ? calFrom : calTo;
   const minDate = isReturn && $('inputDate').value ? new Date($('inputDate').value + 'T00:00:00') : today;
 
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -1949,16 +1965,15 @@ function renderCal(dropdownId, btnId, viewDate, isReturn) {
     const isPast = date < minDate;
     const isToday = date.getTime() === today.getTime();
     const isSelected = dateStr === selectedVal;
-    const dow = DAY_NAMES[date.getDay()];
-    const hasFerry = routeDays ? routeDays.has(dow) : true;
+    const hasFerry = hasRoute ? routeHasSailingOn(routeFrom, routeTo, dateStr) : true;
     const hasExtra = !hasFerry && routeExtras.some(d => dateStr >= d.validFrom && dateStr <= d.validUntil);
-    const disabled = isPast || (routeDays && !hasFerry && !hasExtra);
+    const disabled = isPast || (hasRoute && !hasFerry && !hasExtra);
 
     let cls = 'cal-day';
     if(disabled) cls += ' cal-disabled';
     if(isToday) cls += ' cal-today';
     if(isSelected) cls += ' cal-selected';
-    const dot = (routeDays && (hasFerry || hasExtra) && !disabled) ? '<span class="cal-dot"></span>' : '';
+    const dot = (hasRoute && (hasFerry || hasExtra) && !disabled) ? '<span class="cal-dot"></span>' : '';
     html += `<div class="${cls}" data-date="${dateStr}">${d}${dot}</div>`;
   }
 
